@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
+ * @Vich\Uploadable
  */
-class Utilisateur implements UserInterface
+class Utilisateur implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -38,11 +43,47 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $Adresse;
-
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string|null
+     */
+    private $imageName;
+    /**
+     * @Vich\UploadableField(mapping="property_image", fileNameProperty="imageName")
+     * @var File|null
+     */
+    private $imageFile;
     /**
      * @ORM\Column(type="integer")
      */
     private $Telephone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="utilisateur")
+     */
+    private $commandes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="utilisateur")
+     */
+    private $produits;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+        $this->produits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -148,4 +189,140 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string|null $imageName
+     */
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+    public function serialize() {
+
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+        ));
+
+    }
+
+    public function unserialize($serialized) {
+
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUtilisateur() === $this) {
+                $commande->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getUtilisateur() === $this) {
+                $produit->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

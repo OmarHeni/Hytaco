@@ -2,31 +2,34 @@
 
 namespace App\Controller;
 
+use Monolog\Handler\Curl\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use function mysql_xdevapi\getSession;
+use App\Repository\UtilisateurRepository ;
 class BlogController extends AbstractController
 {
+    private $emailVerifier;
+
+    public function __construct(UtilisateurRepository $up)
+    {
+        $this->up = $up;
+    }
     /**
      * @Route("/blog", name="blog")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('blog/index.html.twig', [
-            'controller_name' => 'BlogController',
+   $session =  $request->getSession()->get('email');
+$us = $this->up->findOneBy(array('email'=>$session),array());
+        return $this->render('base.html.twig', [
+            'us' => $us,
         ]);
     }
 
-    /**
-     * @Route("/login", name="bloglog")
-     */
-    public function login(): Response
-    {
-        return $this->render('login.html.twig', [
-            'controller_name' => 'BlogController',
-        ]);
-    }
+
 
     /**
      * @Route("/map", name="blogmap")
@@ -105,15 +108,7 @@ class BlogController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/utilisateurs", name="blogutilisateurs")
-     */
-    public function utilisateurs(): Response
-    {
-        return $this->render('utilisateurs.html.twig', [
-            'controller_name' => 'BlogController',
-        ]);
-    }
+
 
     /**
      * @Route("/programmes", name="blogprogrammes")
