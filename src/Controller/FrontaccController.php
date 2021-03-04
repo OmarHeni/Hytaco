@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,10 +13,11 @@ class FrontaccController extends AbstractController
     /**
      * @Route("/accueil", name="frontacc")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $en=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
         return $this->render('front/acceuil.html.twig', [
-            'controller_name' => 'FrontaccController',
+            'cat' => $en,
         ]);
     }
 
@@ -49,15 +52,6 @@ class FrontaccController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/produitf", name="frontproduits")
-     */
-    public function produits(): Response
-    {
-        return $this->render('front/produits.html.twig', [
-            'controller_name' => 'FrontaccController',
-        ]);
-    }
 
     /**
      * @Route("/commandef", name="frontcommande")

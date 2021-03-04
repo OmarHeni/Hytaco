@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use App\Entity\Produits;
 use App\Form\ProduitsType;
 use App\Repository\ProduitsRepository;
@@ -13,6 +14,23 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProduitsController extends AbstractController
 {
+    /**
+     * @Route("/produitf", name="frontproduits")
+     */
+    public function produitsf(Request $request)
+    {
+        $id =   $request->get('id');
+        $ca=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findBy(['id'=>$id]);
+        $cas=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
+
+        $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$ca]);
+        //  $categorie=$this->getDoctrine()->getManager()->getRepository(Categories::class)->find($id);
+
+   //     $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$categorie]);
+        return $this->render('front/produits.html.twig', [
+            'prod' => $en,'cat'=>$cas
+        ]);
+    }
     /**
      * @Route("/produitindex", name="produitindex")
      */

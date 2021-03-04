@@ -19,16 +19,17 @@
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-     <link rel="stylesheet" href="css/bootstrap.min.css">
-     <link rel="stylesheet" href="css/font-awesome.min.css">
-     <link rel="stylesheet" href="css/magnific-popup.css">
+    <link href={{asset("css/font-awesome.min.css")}} rel="stylesheet">
+    <link href={{ asset("css/bootstrap.min.css") }} rel="stylesheet">
+    <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
+    <link href="{{asset("css/owl.theme.css")}}" rel="stylesheet">
+    <link href="{{asset("css/owl.carousel.css")}}" rel="stylesheet">
+    <link href="{{asset("css/templatemo-green.css")}}" rel="stylesheet">
+    <link href="{{asset("css/tooplate-style.css")}}" rel="stylesheet">
+    <link href="{{asset("css/magnific-popup.css")}}" rel="stylesheet">
 
-     <link rel="stylesheet" href="css/owl.theme.css">
-     <link rel="stylesheet" href="css/owl.carousel.css">
 
-  <link rel="stylesheet" href="css/templatemo-green.css">
      <!-- MAIN CSS -->
-     <link rel="stylesheet" href="css/tooplate-style.css">
 
 
 </head>
@@ -98,11 +99,11 @@
     <div class="row">
  <div class="col-lg-3">
 
-  
+
         <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
+       {% for c in cat %}
+          <a href="/produitf?id={{ c.id }}" class="list-group-item">Categorie : {{ c.nom }}</a>
+        {% endfor %}
         </div>
 
       </div>
@@ -114,23 +115,24 @@
           <div class="row">
 
 
-
+              {%for p in prod%}
           <div class="col-lg-4 col-md-6 mb-4">
+
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <a href="#"><img style="height: 200px; width: 200px" src="images/properties/{{ p.imageName }}" alt="Bicycle" class="card-img-top"></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">Item One</a>
+                  <a href="#">{{ p.nom }}</a>
                 </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                <h5>{{ p.prix }}</h5>
+                <p class="card-text">{{ p.description }}</p>
               </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
+             <!-- <div class="card-footer">
+               <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>-->
             </div>
           </div>
-
+              {% endfor %}
 
 
 

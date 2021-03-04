@@ -24,7 +24,6 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/SupprimerCategorie/{id}",name="supprimerc")
      */

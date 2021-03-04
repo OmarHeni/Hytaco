@@ -22,7 +22,7 @@ class ProduitsType extends AbstractType
             ->add('imageFile',FileType::class,[
                 'required'=>false
             ])
-            ->add('categorie',EntityType::class,['class'=>Categories::class,'choice_label'=>'name','multiple'=>false]);
+            ->add('categorie',EntityType::class,['class'=>Categories::class,'choice_label'=>'id','multiple'=>false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

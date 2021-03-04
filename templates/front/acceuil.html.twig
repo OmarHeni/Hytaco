@@ -249,15 +249,15 @@
                          <h4>Voici quelques-unes de nos catégories de produits que nous vous proposons dans notre boutique de camping en ligne.</h4>
                     </div>
                </div>
-
+               {%for c in cat%}
                <div class="clearfix"></div>
                <div id="owl-team" class="owl-carousel">
                     <div class="col-md-4 col-sm-4 item">
                          <div class="team-item">
-                              <img src="images/team-image1.jpg" class="img-responsive" alt="">
+                              <img style="height: 200px; width: 200px" src="images/properties/{{ c.imageName }}" alt="Bicycle" class="img-responsive">
                               <div class="team-overlay">
                                    <ul class="social-icon">
-                                        <li><a href="/produitf" class="fa fa-twitter"></a></li>
+                                        <li><a href="/produitf?id={{ c.id }}" class="fa fa-twitter"></a></li>
                                    </ul>
                               </div>
                          </div>
@@ -265,6 +265,8 @@
                          <h3>Head Designer</h3>
                     </div>
                </div>
+               {% endfor %}
+
           </div>
      </div>
 </section>

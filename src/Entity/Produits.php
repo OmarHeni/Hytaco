@@ -155,7 +155,7 @@ class Produits
         $this->imageFile = $imageFile;
     }
 
-    public function getCategorie(): ?Categories
+    public function getCategorie()
     {
         return $this->categorie;
     }
