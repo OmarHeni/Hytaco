@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * @IsGranted("ROLE_ADMIN")
- */
+
 class UtilisateurController extends AbstractController
 {
     private $emailVerifier;
@@ -30,11 +28,35 @@ class UtilisateurController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-
     /**
-     * @Route("/utilisateur", name="utilisateur_back")
+     * @Route("/inscription", name="utilisateur_front")
      */
     public function inscription(Request $request,UserPasswordEncoderInterface $encoder): Response
+    {
+        $user = new Utilisateur();
+        $form= $this->createForm(AddUtilisateurType::class, $user);
+        $user->getRoles(['ROLE_USER']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $hash = $encoder->encodePassword($user,$user->getPassword());
+            $user->setPassword($hash);
+            $this->em->persist($user);
+            $this->em->flush();
+            return $this->redirect("/blog");
+        }
+        else {
+            return $this->render('compte.html.twig',
+                ['form'=>$form->Createview()]);
+        }
+    }
+    /**
+     *
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @Route("/utilisateur", name="utilisateur_back")
+     */
+    public function utilisateur (Request $request,UserPasswordEncoderInterface $encoder): Response
     {   $session =  $request->getSession()->get('email');
         $us = $this->up->findOneBy(array('email'=>$session),array());
 
@@ -42,7 +64,7 @@ class UtilisateurController extends AbstractController
         $users = $this->up->findAll();
         $form= $this->createForm(AddUtilisateurType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);
@@ -58,6 +80,7 @@ class UtilisateurController extends AbstractController
         //  $form = $this->createForm(UtilisateurAddType::class,$user)
     }
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/delete_user/{id}", name="del_user")
      */
 public function delete_user($id): Response
@@ -68,13 +91,14 @@ public function delete_user($id): Response
     return $this->redirect('/utilisateur');
 }
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route ("/Edit_user/{id}",name="edit_user")
  */
 public function Edit_user($id,Request $request,UserPasswordEncoderInterface $encoder){
     $user = $this->up->findOneBy(array('id'=>$id));
      $form= $this->createForm(AddUtilisateurType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);

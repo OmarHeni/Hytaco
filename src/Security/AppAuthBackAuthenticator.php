@@ -97,8 +97,12 @@ class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        if ($this->getLoginUrl()=="/loginf"){
+            return new RedirectResponse($this->urlGenerator->generate("panier"));
+            //
+        }
         //if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($this->urlGenerator->generate('blog'));
+        return new RedirectResponse($this->urlGenerator->generate("blog"));
        // }*/
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));

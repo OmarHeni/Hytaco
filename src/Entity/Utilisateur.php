@@ -9,10 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity ;
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  * @Vich\Uploadable
+ * @UniqueEntity(
+ * fields = {"email"},
+ * message = " ce mail est déja utilisé !"
+ * )
  */
 class Utilisateur implements UserInterface, \Serializable
 {
@@ -25,6 +30,10 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="l' email ne doit pas être vide")
+     *   @Assert\Email(
+     *     message = "l' email '{{ value }}' n'est pas valid"
+     * )
      */
     private $email;
 
@@ -36,6 +45,8 @@ class Utilisateur implements UserInterface, \Serializable
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min="6",minMessage="Votre mot de passe doit etre superieur a 6 caractéres")
+     * @Assert\EqualTo(propertyPath="confirmPassword",message="Votre mot de passe doit etre identitique au mot de passe de confirmation")
      */
     private $password;
 
@@ -60,12 +71,14 @@ class Utilisateur implements UserInterface, \Serializable
     private $Telephone;
 
     /**
+     * @Assert\NotBlank(message="le nom ne doit pas etre vide")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le prenom ne doit pas etre vide")
      */
     private $prenom;
 
@@ -79,11 +92,19 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $produits;
 
+    /**
+     * @Assert\EqualTo(propertyPath="password",
+     *     message = " Vous n'avez pas tapez le meme password")
+     */
+    public $confirmPassword;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
         $this->produits = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {

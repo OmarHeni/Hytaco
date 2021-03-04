@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function mysql_xdevapi\getSession;
 use App\Repository\UtilisateurRepository ;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class BlogController extends AbstractController
 {
     private $emailVerifier;
@@ -22,8 +27,7 @@ class BlogController extends AbstractController
      */
     public function index(Request $request): Response
     {
-   $session =  $request->getSession()->get('email');
-$us = $this->up->findOneBy(array('email'=>$session),array());
+$us = $this->getUser();
         return $this->render('base.html.twig', [
             'us' => $us,
         ]);
@@ -68,15 +72,7 @@ $us = $this->up->findOneBy(array('email'=>$session),array());
             'controller_name' => 'BlogController',
         ]);
     }
-    /**
-     * @Route("/commandes", name="blogcommandes")
-     */
-    public function commandes(): Response
-    {
-        return $this->render('commandes.html.twig', [
-            'controller_name' => 'BlogController',
-        ]);
-    }
+
 
     /**
      * @Route("/preferences", name="blogperf")

@@ -29,7 +29,6 @@
 <div class="templatemo-flex-row">
     <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-
         </header>
 
         <div class="profile-photo-container" align="center">
@@ -88,99 +87,29 @@
                     <table class="table table-striped table-bordered templatemo-user-table">
                         <thead>
                         <tr>
+
                             <td><a href="" class="white-text templatemo-sort-by">#ID <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Client <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Date <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Type <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Etat <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Profit <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Produit <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Livraison <span class="caret"></span></a></td>
-                            <td>Edit</td>
                             <td>Delete</td>
                         </tr>
                         </thead>
+                        {% for com in commandes%}
                         <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                            <td><a href="" class="templatemo-link">Delete</a></td>
+                            <td>{{com.id}}</td>
+                            <td>{{ com.utilisateur.nom }}</td>
+                            <td>{{ com.dateCommande|date("m/d/Y")}}</td>
+                            <td>Achat</td>
+                            <td>{{ 0.95*com.prix }}</td>
+                            <td>{{ com.produit.nom }}</td>
+                            <td><a href="{{ path("delcom",{'id':com.id}) }}" class="templatemo-link">Delete</a></td>
                         </tr>
+                        {% endfor %}
                     </table>
                 </div>
-            </div>
-
-            <div class="templatemo-content-container">
-                <div class="templatemo-content-widget white-bg">
-                    <h2 class="margin-bottom-10" align="center">Ajouter une commande</h2>
-                    <form action="../../templatemo_455_visual_admin/index.html" class="templatemo-login-form" method="post" enctype="multipart/form-data">
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">Date</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="Date">
-                            </div>
-                        </div>
-
-
-                            <div class="row form-group">
-                                <div class="col-lg-6 col-md-6 form-group">
-                                    <label class="control-label templatemo-block">Type</label>
-                                    <select class="form-control">
-                                        <option value="html">Achat</option>
-                                        <option value="plain">Location</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                                <div class="row form-group">
-                <div class="col-lg-6 col-md-6 form-group">
-                    <label class="control-label templatemo-block">Etat</label>
-                    <select class="form-control">
-                        <option value="html">Recue</option>
-                        <option value="plain">En cours</option>
-                        <option value="plain">Annuler</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-lg-6 col-md-6 form-group">
-                    <label for="inputFirstName">Profit</label>
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="Profit">
-                </div>
-            </div>
-
-            <div class="row form-group">
-                <div class="col-lg-6 col-md-6 form-group">
-                    <label class="control-label templatemo-block">Produit</label>
-                    <select class="form-control">
-                        <option value="html">1</option>
-
-                    </select>
-                </div>
-            </div>
-
-        <div class="row form-group">
-            <div class="col-lg-6 col-md-6 form-group">
-                <label class="control-label templatemo-block">Livraison</label>
-                <select class="form-control">
-                    <option value="html">1</option>
-
-                </select>
-            </div>
-        </div>
-                            <div class="form-group text-right">
-                                <button type="submit" class="templatemo-blue-button">Ajouter</button>
-                            </div>
-                    </form>
-                </div>
-                <footer class="text-right">
-                    <p>Copyright &copy; 2021 Hytaco</p>
-                </footer>
             </div>
         </div>
     </div>
