@@ -12,9 +12,9 @@
     https://templatemo.com/tm-455-visual-admin
     -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/templatemo-style.css" rel="stylesheet">
+    <link href="{{asset("css/font-awesome.min.css")}}" rel="stylesheet">
+    <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,6 +26,7 @@
 </head>
 <body>
 <!-- Left column -->
+
 <div class="templatemo-flex-row">
     <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
@@ -53,17 +54,17 @@
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
                 <li><a href="/utilisateurs"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
                 <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>programmes</a></li>
-                <li><a href="/evenements"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
-                <li><a href="/sponsors"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
+                <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
+                <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
                 <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>locaux</a></li>
-                <li><a href="/categories"><i class="fa fa-tags fa-fw"></i>categories</a></li>
-                <li><a href="/produits"><i class="fa fa-tags fa-fw"></i>produits</a></li>
+                <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>categories</a></li>
+                <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>produits</a></li>
                 <li><a href="/commandes"><i class="fa fa-cart-arrow-down fa-fw"></i>commandes</a></li>
-                <li><a href="/livraisons"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
-                <li><a href="/livreurs"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
-                <li><a href="/transporteur"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
-                <li><a href="/alertes"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
-                <li><a href="/reclamations"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
+                <li><a href="/livraison"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
+                <li><a href="/livreur"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
+                <li><a href="/transporteurs"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
+                <li><a href="/alerts"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
+                <li><a href="/reclamation"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
                 <li><a href="/login"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -82,6 +83,7 @@
                 </nav>
             </div>
         </div>
+
         <div class="templatemo-content-container">
             <div class="templatemo-content-widget no-padding">
                 <div class="panel panel-default table-responsive">
@@ -99,29 +101,41 @@
                             <td>Delete</td>
                         </tr>
                         </thead>
+                        {%for a in aler%}
                         <tr>
-                            <td>1</td>
+                            <td>{{ a.id }}</td>
+                            <td> {{ a.type }}</td>
+                            <td> {{ a.adresse }}</td>
+                            <td> {{ a.localisation }}</td>
+                            <td> {{ a.service }}</td>
+                            <td> {{ a.rapport }}</td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                            <td><a href="" class="templatemo-link">Delete</a></td>
+                            <td><a href="/ModifierAlerts/{{a.id}}" class="templatemo-edit-btn">Edit</a></td>
+                            <td><a href={{  path("deletealertes",{'id':a.id})}}>Delete</a></td>
                         </tr>
+                        {% endfor %}
+
                     </table>
                 </div>
             </div>
-
             <div class="templatemo-content-container">
                 <div class="templatemo-content-widget white-bg">
+                    {{ form_start(form) }}
                     <h2 class="margin-bottom-10" align="center">Ajouter une alerte</h2>
-                    <form action="../../templatemo_455_visual_admin/index.html" class="templatemo-login-form" method="post" enctype="multipart/form-data">
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">Type</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="Type">
+                               {#  <input type="text" name="type" class="form-control" id="inputFirstName" placeholder="Type"> #}
+                                {{ form_widget(form.type,{'attr': {'class': 'form-control','placeholder':'type'}}) }}
+                            </div>
+
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-lg-6 col-md-6 form-group">
+                                <label for="inputFirstName">Adresse</label>
+                                {#  <input type="text" name="adresse" class="form-control" id="inputFirstName" placeholder="adresse"> #}
+                                {{ form_widget(form.adresse,{'attr': {'class': 'form-control','placeholder':'adresse'}}) }}
                             </div>
 
                         </div>
@@ -129,21 +143,24 @@
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">Localisation</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="Localisation">
+                               {#  <input type="text" name="localisation" class="form-control" id="inputFirstName" placeholder="Localisation">#}
+                                {{ form_widget(form.localisation,{'attr': {'class': 'form-control','placeholder':'localisation'}}) }}
                             </div>
                         </div>
 
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">Service</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="Service">
+                                {# <input type="text" name="service" class="form-control" id="inputFirstName" placeholder="Service">#}
+                                {{ form_widget(form.service,{'attr': {'class': 'form-control','placeholder':'service'}}) }}
                             </div>
                         </div>
 
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">Rapport</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="Rapport">
+                               {#  <input type="text" name="rapport" class="form-control" id="inputFirstName" placeholder="Rapport">#}
+                                {{ form_widget(form.rapport,{'attr': {'class': 'form-control','placeholder':'rapport'}}) }}
                             </div>
                         </div>
 
@@ -160,23 +177,23 @@
                         <div class="form-group text-right">
                             <button type="submit" class="templatemo-blue-button">Ajouter</button>
                         </div>
-                    </form>
                 </div>
             </div>
-
+            {{ form_end(form) }}
 
         </div>
 
-        <footer class="text-right">
-            <p>Copyright &copy; 2021 Hytaco</p>
-        </footer>
-    </div>
-</div>
-</div>
 
-<!-- JS -->
-<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
-<script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
-<script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+                <footer class="text-right">
+                    <p>Copyright &copy; 2021 Hytaco</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
+    <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
+    <script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
 </body>
 </html>

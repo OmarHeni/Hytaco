@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Locaux;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,6 +16,9 @@ class LocauxType extends AbstractType
             ->add('nom')
             ->add('adresse')
             ->add('description')
+            ->add('imageFile',FileType::class,[
+                'required'=>false
+            ])
         ;
     }
 

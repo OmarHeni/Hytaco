@@ -6,6 +6,9 @@ use App\Entity\Sponsors;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class SponsorsType extends AbstractType
 {
@@ -16,6 +19,9 @@ class SponsorsType extends AbstractType
             ->add('adresse')
             ->add('mail')
             ->add('numero')
+            ->add('imageFile',FileType::class,[
+                'required'=>false
+            ])
         ;
     }
 
