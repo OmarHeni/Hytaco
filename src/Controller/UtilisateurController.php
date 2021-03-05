@@ -43,10 +43,10 @@ class UtilisateurController extends AbstractController
             $user->setPassword($hash);
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirect("/blog");
+            return $this->redirect("/accueil");
         }
         else {
-            return $this->render('compte.html.twig',
+            return $this->render('front/compte.html.twig',
                 ['form'=>$form->Createview()]);
         }
     }
@@ -73,7 +73,7 @@ class UtilisateurController extends AbstractController
             return $this->redirect("/blog");
         }
         else {
-            return $this->render('utilisateurs.html.twig',
+            return $this->render('back/utilisateurs.html.twig',
                 ['form'=>$form->Createview(),'users'=>$users,'us'=>$us]);
         }
 
@@ -106,7 +106,7 @@ public function Edit_user($id,Request $request,UserPasswordEncoderInterface $enc
            $this->em->flush();
             return $this->redirect("/utilisateur");
         }
-return $this->render('profile.html.twig',
+return $this->render('back/profile.html.twig',
     ['form'=>$form->Createview()]);
 }
 }

@@ -12,9 +12,9 @@
     https://templatemo.com/tm-455-visual-admin
     -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/templatemo-style.css" rel="stylesheet">
+    <link href="{{asset("css/font-awesome.min.css")}}" rel="stylesheet">
+    <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,10 +26,13 @@
 </head>
 <body>
 <!-- Left column -->
+
 <div class="templatemo-flex-row">
     <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
+
         </header>
+
         <div class="profile-photo-container" align="center">
             <img src="images/profile-photo.jpg" alt="Bicycle" class="img-circle img-thumbnail">
             <div class="profile-photo-overlay"></div>
@@ -51,17 +54,17 @@
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
                 <li><a href="/utilisateurs"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
                 <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>programmes</a></li>
-                <li><a href="/evenements"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
-                <li><a href="/sponsors"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
+                <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
+                <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
                 <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>locaux</a></li>
-                <li><a href="/categories"><i class="fa fa-tags fa-fw"></i>categories</a></li>
-                <li><a href="/produits"><i class="fa fa-tags fa-fw"></i>produits</a></li>
+                <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>categories</a></li>
+                <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>produits</a></li>
                 <li><a href="/commandes"><i class="fa fa-cart-arrow-down fa-fw"></i>commandes</a></li>
-                <li><a href="/livraisons"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
-                <li><a href="/livreurs"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
-                <li><a href="/transporteur"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
-                <li><a href="/alertes"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
-                <li><a href="/reclamations"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
+                <li><a href="/livraison"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
+                <li><a href="/livreur"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
+                <li><a href="/transporteurs"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
+                <li><a href="/alerts"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
+                <li><a href="/reclamation"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
                 <li><a href="/login"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -90,63 +93,51 @@
                             <td><a href="" class="white-text templatemo-sort-by">Nom <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Adresse <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Image <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">lien google map <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Rating <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">description <span class="caret"></span></a></td>
                             <td>Edit</td>
                             <td>Delete</td>
                         </tr>
                         </thead>
-                        <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                            <td><a href="" class="templatemo-link">Delete</a></td>
-                        </tr>
+                        {%for p in loc%}
+                            <tr>
+                                <td>{{ p.id }}</td>
+                                <td> {{ p.nom }}</td>
+                                <td> {{ p.adresse }}</td>
+                                <td><img style="height: 200px; width: 200px" src="images/properties/{{ p.imageName }}" alt="Bicycle" class="img-circle img-thumbnail"></td>
+                                <td> {{ p.description }}</td>
+                                <td><a href="/ModifierLocaux/{{p.id}}" class="templatemo-edit-btn">Edit</a></td>
+                                <td><a href={{  path("deletelocaux",{'id':p.id})}}>Delete</a></td>
+                            </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </div>
 
             <div class="templatemo-content-container">
                 <div class="templatemo-content-widget white-bg">
+                    {{ form_start(form) }}
                     <h2 class="margin-bottom-10" align="center">Ajouter un locale</h2>
-                    <form action="../../templatemo_455_visual_admin/index.html" class="templatemo-login-form" method="post" enctype="multipart/form-data">
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">Nom</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="nom">
+                                {#<input type="text" class="form-control" id="inputFirstName" placeholder="nom">#}
+                                {{ form_widget(form.nom,{'attr': {'class': 'form-control','placeholder':'nom'}}) }}
                             </div>
 
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">lien google maps</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="lien google maps">
-                            </div>
                         </div>
 
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">Adresse</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="Adresse">
+                                {#<input type="text" class="form-control" id="inputFirstName" placeholder="adresse">#}
+                                {{ form_widget(form.adresse,{'attr': {'class': 'form-control','placeholder':'adresse'}}) }}
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 form-group">
                                 <label for="inputFirstName">description</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="description">
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">rating</label>
-                                <input type="text" class="form-control" id="inputFirstName" placeholder="rating">
+                                {# <input type="text" class="form-control" id="inputFirstName" placeholder="description"> #}
+                                {{ form_widget(form.description,{'attr': {'class': 'form-control','placeholder':'description'}}) }}
                             </div>
                         </div>
 
@@ -155,14 +146,17 @@
                                     <div class="col-lg-12">
                                         <label class="control-label templatemo-block">Image</label>
                                         <!-- <input type="file" name="fileToUpload" id="fileToUpload" class="margin-bottom-10"> -->
-                                        <input type="file" name="fileToUpload" id="fileToUpload" class="filestyle" data-buttonName="btn-primary" data-buttonBefore="true" data-icon="false">
+                                        {# <input type="file" name="fileToUpload" id="fileToUpload" class="filestyle" data-buttonName="btn-primary" data-buttonBefore="true" data-icon="false">#}
+                                        {{ form_widget(form.imageFile,{'attr': {'class': 'form-control','placeholder':'image'}}) }}
                                         <p>Maximum upload size is 5 MB.</p>
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
                                     <button type="submit" class="templatemo-blue-button">Ajouter</button>
                                 </div>
-                    </form>
+
+                    {{ form_end(form) }}
+
                 </div>
                 <footer class="text-right">
                     <p>Copyright &copy; 2021 Hytaco</p>

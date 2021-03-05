@@ -88,7 +88,7 @@ class Utilisateur implements UserInterface, \Serializable
     private $commandes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="utilisateur")
+     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="utilisateur")
      */
     private $produits;
 
@@ -316,14 +316,14 @@ class Utilisateur implements UserInterface, \Serializable
     }
 
     /**
-     * @return Collection|Produit[]
+     * @return Collection|Produits[]
      */
     public function getProduits(): Collection
     {
         return $this->produits;
     }
 
-    public function addProduit(Produit $produit): self
+    public function addProduit(Produits $produit): self
     {
         if (!$this->produits->contains($produit)) {
             $this->produits[] = $produit;
@@ -333,7 +333,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this;
     }
 
-    public function removeProduit(Produit $produit): self
+    public function removeProduit(Produits $produit): self
     {
         if ($this->produits->removeElement($produit)) {
             // set the owning side to null (unless already changed)

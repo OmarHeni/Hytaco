@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitRepository;
+use App\Repository\ProduitsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 /**
- * @ORM\Entity(repositoryClass=ProduitRepository::class)
+ * @Vich\Uploadable
+ * @ORM\Entity(repositoryClass=ProduitsRepository::class)
  */
-class Produit
+class Produits
 {
     /**
      * @ORM\Id
@@ -20,19 +24,9 @@ class Produit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $nom;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $categorie;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
 
     /**
      * @ORM\Column(type="float")
@@ -42,12 +36,29 @@ class Produit
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $quantite;
+    private $description;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $promotion;
+    private $quantite;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string|null
+     */
+    private $imageName;
+    /**
+     * @Vich\UploadableField(mapping="property_image", fileNameProperty="imageName")
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Categories::class)
+     */
+    private $categorie;
 
     /**
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="produits")
@@ -59,15 +70,11 @@ class Produit
      */
     private $commandes;
 
-
-
-
-
     public function __construct()
     {
-        $this->produits = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -86,14 +93,15 @@ class Produit
         return $this;
     }
 
-    public function getCategorie(): ?string
+
+    public function getPrix(): ?float
     {
-        return $this->categorie;
+        return $this->prix;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setPrix(float $prix): self
     {
-        $this->categorie = $categorie;
+        $this->prix = $prix;
 
         return $this;
     }
@@ -110,41 +118,64 @@ class Produit
         return $this;
     }
 
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(string $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getQuantite(): ?string
+    public function getQuantite(): ?int
     {
         return $this->quantite;
     }
 
-    public function setQuantite(string $quantite): self
+    public function setQuantite(int $quantite): self
     {
         $this->quantite = $quantite;
 
         return $this;
     }
 
-    public function getPromotion(): ?string
+
+
+    /**
+     * @return string|null
+     */
+    public function getImageName(): ?string
     {
-        return $this->promotion;
+        return $this->imageName;
     }
 
-    public function setPromotion(string $promotion): self
+    /**
+     * @param string|null $imageName
+     */
+    public function setImageName(?string $imageName): void
     {
-        $this->promotion = $promotion;
+        $this->imageName = $imageName;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categories $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
+
 
     public function getUtilisateur(): ?Utilisateur
     {

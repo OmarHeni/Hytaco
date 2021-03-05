@@ -31,7 +31,7 @@ class Commande
     private $utilisateur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="commandes")
+     * @ORM\ManyToOne(targetEntity=Produits::class, inversedBy="commandes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $produit;
@@ -82,12 +82,12 @@ class Commande
         return $this;
     }
 
-    public function getProduit(): ?Produit
+    public function getProduit(): ?Produits
     {
         return $this->produit;
     }
 
-    public function setProduit(?Produit $produit): self
+    public function setProduit(?Produits $produit): self
     {
         $this->produit = $produit;
 

@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('back/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     /**
      * @Route("/loginf", name="app_loginf")
@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('back/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
