@@ -29,17 +29,17 @@
 	          <div class="square"></div>
 	          <h1>Visual Admin</h1>
 	        </header>
-	        <form action="../../templatemo_455_visual_admin/index.html" class="templatemo-login-form">
+	        <form method="POST" class="templatemo-login-form">
 	        	<div class="form-group">
 	        		<div class="input-group">
 		        		<div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>	        		
-		              	<input type="text" class="form-control" placeholder="js@dashboard.com">           
+		              	<input type="text" class="form-control"  name="email" placeholder="js@dashboard.com">
 		          	</div>	
 	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
 		        		<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>	        		
-		              	<input type="password" class="form-control" placeholder="******">           
+		              	<input type="password" name="password" class="form-control" placeholder="******">
 		          	</div>	
 	        	</div>	          	
 	          	<div class="form-group">
@@ -48,7 +48,11 @@
 						<label for="c1"><span></span>Remember me</label>
 				    </div>				    
 				</div>
+
 				<div class="form-group">
+					<input type="hidden" name="_csrf_token"
+						   value="{{ csrf_token('authenticate') }}"
+					>
 					<button type="submit" class="templatemo-blue-button width-100">Login</button>
 				</div>
 	        </form>

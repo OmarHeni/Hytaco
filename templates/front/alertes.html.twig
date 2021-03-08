@@ -119,11 +119,9 @@
                </div>
 
                <div class="clearfix"></div>
-
                <div class="col-md-offset-2 col-md-8 col-sm-12">
                     <!-- CONTACT FORM HERE -->
-                    <form id="contact-form" action="#" method="get" role="form">
-
+                    {{ form_start(form) }}
                          <!-- IF MAIL SENT SUCCESSFULLY -->
                          <h6 class="text-success">Your message has been sent successfully. </h6>
 
@@ -131,16 +129,27 @@
                          <h6 class="text-danger">E-mail must be valid and message must be longer than 1 character.</h6>
 
                          <div class="col-md-6 col-sm-6">
-                              <input type="text" class="form-control" id="cf-type" name="cf-type" placeholder="Type d'alerte">
+                              {#  <input type="text" name="type" class="form-control" id="cf-type" placeholder="Type"> #}
+                              {{ form_widget(form.type,{'attr': {'class': 'form-control','placeholder':'type'}}) }}
                          </div>
 
                          <div class="col-md-6 col-sm-6">
-                              <input type="email" class="form-control" id="cf-localisation" name="cf-localisation" placeholder="Votre localisation">
+                              {#  <input type="text" name="adresse" class="form-control" id="cf-localisation" placeholder="adresse"> #}
+                              {{ form_widget(form.adresse,{'attr': {'class': 'form-control','placeholder':'adresse'}}) }}
                          </div>
 
                          <div class="col-md-12 col-sm-12">
                               <input type="text" class="form-control" id="cf-service" name="service" placeholder="Service">
-                              <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>
+                              {#  <input type="text" name="localisation" class="form-control" id="inputFirstName" placeholder="Localisation">#}
+                              {{ form_widget(form.localisation,{'attr': {'class': 'form-control','placeholder':'localisation'}}) }}
+
+                              {# <input type="text" name="service" class="form-control" id="inputFirstName" placeholder="Service">#}
+                              {{ form_widget(form.service,{'attr': {'class': 'form-control','placeholder':'service'}}) }}
+
+                            {#  <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>#}
+                              {{ form_widget(form.rapport,{'attr': {'class': 'form-control','placeholder':'rapport'}}) }}
+
+
                          </div>
 
                          <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
@@ -148,8 +157,9 @@
                                    <button type="submit" class="form-control" id="cf-submit" name="submit"><span data-hover="Send Message">Send Message</span></button>
                               </div>
                          </div>
-                    </form>
+
                </div>
+               {{ form_end(form) }}
 
           </div>
      </div>

@@ -22,27 +22,6 @@ class FrontaccController extends AbstractController
     }
 
     /**
-     * @Route("/comptef", name="frontcompte")
-     */
-    public function compte(): Response
-    {
-        return $this->render('front/compte.html.twig', [
-            'controller_name' => 'FrontaccController',
-        ]);
-    }
-
-
-    /**
-     * @Route("/alertsf", name="alertesfff")
-     */
-    public function alets(): Response
-    {
-        return $this->render('front/alertes.html.twig', [
-            'controller_name' => 'FrontaccController',
-        ]);
-    }
-
-    /**
      * @Route("/visitorf", name="frontcomptee")
      */
     public function visitor(): Response
@@ -52,6 +31,16 @@ class FrontaccController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/connexionf", name="frontconnect")
+     */
+    public function connexion(): Response
+    {
+        return $this->render('front/connexion.html.twig', [
+            'controller_name' => 'FrontaccController',
+        ]);
+    }
 
     /**
      * @Route("/commandef", name="frontcommande")

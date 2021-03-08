@@ -40,6 +40,7 @@ class EvenementsController extends AbstractController
      */
     public function AjouterEvenement(Request $request)
     {
+        $user=$this->getUser();
         $en=$this->getDoctrine()
             ->getManager()
             ->getRepository(Evenements::class)
@@ -55,7 +56,7 @@ class EvenementsController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('evenements');
         }
-        return $this->render('back/evenements.html.twig', ['form'=>$form->createView(),'formations'=>$en
+        return $this->render('back/evenements.html.twig', ['form'=>$form->createView(),'formations'=>$en , 'us'=>$user
         ]);
     }
 

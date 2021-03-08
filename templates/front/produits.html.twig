@@ -81,8 +81,8 @@
                    <li><a href="/accueil#aboutlocaux" class="smoothScroll">Locaux</a></li>
                    <li><a href="/accueil#team" class="smoothScroll">Categories</a></li>
                    <li><a href="/alertsf" class="smoothScroll">Alertes</a></li>
-                   <li><a href="/accueil#alerts" class="smoothScroll">Reclamations</a></li>
-                   <li><a href="/profilef" class="smoothScroll">Profile</a></li>
+                   <li><a href="/commandesf" class="smoothScroll">Commandes</a></li>
+                   <li><a href="/panier" class="smoothScroll">Panier</a></li>
                    <li><a href="#" class="smoothScroll">Deconnexion</a></li>
 
 
@@ -92,7 +92,7 @@
 
      </div>
 </div>
-<br><br><br><br><br>
+<br><br><br><br><br><br><br>
 
  <div class="container">
 
@@ -126,6 +126,9 @@
                 </h4>
                 <h5>{{ p.prix }}</h5>
                 <p class="card-text">{{ p.description }}</p>
+                  <p style="display: none">{{ p.id }}</p>
+                  <a href="#"  class ="ajoutlink" id="a{{ p.id }}">
+                      <div class="cadreAj"><div class="fas fa-cart-plus" id ="f{{p.id}}"></div></div></a>
               </div>
              <!-- <div class="card-footer">
                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -195,7 +198,7 @@
 
 
 <!-- SCRIPTS -->
-<script src="js/jquery.js"></script>
+<!--<script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.parallax.js"></script>
 <script src="js/owl.carousel.min.js"></script>
@@ -203,7 +206,21 @@
 <script src="js/magnific-popup-options.js"></script>
 <script src="js/modernizr.custom.js"></script>
 <script src="js/smoothscroll.js"></script>
-<script src="js/custom.js"></script>
+<script src="js/custom.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".ajoutlink").click(function(event) {
+ var id =         event.target.id.substring(1,event.target.id.length);
+            axios.get("http://127.0.0.1:8000/ajoutpanier/"+id).then(function (res){
+                console.log(response);
+            });
+        });
+    });
+
+
+</script>
 
 </body>
 </html>

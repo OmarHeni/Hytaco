@@ -12,9 +12,9 @@
     https://templatemo.com/tm-455-visual-admin
     -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/templatemo-style.css" rel="stylesheet">
+    <link href="{{asset("css/font-awesome.min.css")}}" rel="stylesheet">
+    <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,7 +26,6 @@
 </head>
 <body>
 <!-- Left column -->
-
 <div class="templatemo-flex-row">
     <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
@@ -34,7 +33,7 @@
         </header>
 
         <div class="profile-photo-container" align="center">
-            <img src="images/profile-photo.jpg" alt="Bicycle" class="img-circle img-thumbnail">
+            <img style="height: 200px; width: 200px" src="images/properties/{{ us.imageName }}" alt="Bicycle" class="img-circle img-thumbnail">
             <div class="profile-photo-overlay"></div>
         </div>
         <!-- Search box -->
@@ -54,17 +53,17 @@
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
                 <li><a href="/utilisateurs"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
                 <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>programmes</a></li>
-                <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
-                <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
+                <li><a href="/evenements"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
+                <li><a href="/sponsors"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
                 <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>locaux</a></li>
-                <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>categories</a></li>
-                <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>produits</a></li>
+                <li><a href="/categories"><i class="fa fa-tags fa-fw"></i>categories</a></li>
+                <li><a href="/produits"><i class="fa fa-tags fa-fw"></i>produits</a></li>
                 <li><a href="/commandes"><i class="fa fa-cart-arrow-down fa-fw"></i>commandes</a></li>
-                <li><a href="/livraison"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
-                <li><a href="/livreur"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
-                <li><a href="/transporteurs"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
-                <li><a href="/alerts"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
-                <li><a href="/reclamation"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
+                <li><a href="/livraisons"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
+                <li><a href="/livreurs"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
+                <li><a href="/transporteur"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
+                <li><a href="/alertes"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
+                <li><a href="/reclamations"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
                 <li><a href="/login"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -85,69 +84,55 @@
         </div>
         <div class="templatemo-content-container">
             <div class="templatemo-content-widget white-bg">
-                <form action="index.html" class="templatemo-login-form" method="post" enctype="multipart/form-data">
-                    <div class="row form-group">
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputFirstName">Nom</label>
-                            <input type="text" class="form-control" id="inputFirstName" placeholder="Nom">
-                        </div>
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputLastName">Prenom</label>
-                            <input type="text" class="form-control" id="inputLastName" placeholder="Prenom">
-                        </div>
+                {{ form_start(form) }}
+                <div class="row form-group">
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.nom,{'attr':{'class':'form-control','id':'inputLastName'}}) }}
                     </div>
-                    <div class="row form-group">
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputUsername">Adresse</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="Adresse">
-                        </div>
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputEmail">Email</label>
-                            <input type="email" class="form-control" id="inputEmail" placeholder="admin@company.com">
-                        </div>
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputEmail">Telephone</label>
-                            <input type="email" class="form-control" id="inputEmail" placeholder="+21612345678">
-                        </div>
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.prenom,{'attr':{'class':'form-control','id':'inputLastName'}}) }}
                     </div>
-                    <div class="row form-group">
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputCurrentPassword">Current Password</label>
-                            <input type="password" class="form-control highlight" id="inputCurrentPassword" placeholder="*********************">
-                        </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.Adresse,{'attr':{'class':'form-control','id':'inputAdresse'}}) }}
                     </div>
-                    <div class="row form-group">
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputNewPassword">New Password</label>
-                            <input type="password" class="form-control" id="inputNewPassword">
-                        </div>
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputConfirmNewPassword">Confirm New Password</label>
-                            <input type="password" class="form-control" id="inputConfirmNewPassword">
-                        </div>
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.email,{'attr':{'class':'form-control','id':'inputEmail'}}) }}
                     </div>
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.Telephone,{'attr':{'class':'form-control','id':'inputTelephone'}}) }}
+
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.password,{'attr':{'class':'form-control','id':'inputPassword'}}) }}
+                    </div>
+                    <div class="col-lg-6 col-md-6 form-group">
+                        {{ form_row(form.confirmPassword,{'attr':{'class':'form-control','id':'inputPassword'}}) }}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 form-group" style="display: none">
+                    {{ form_row(form.roles,{'attr':{'class':'form-control'}}) }}
+
+                </div>
+                <div class="row form-group">
 
                     <div class="row form-group">
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label class="control-label templatemo-block">Type</label>
-                            <select class="form-control">
-                                <option value="html">Admin</option>
-                                <option value="plain">Fournisseur</option>
-                            </select>
-                        </div>
-                    <div class="row form-group">
                         <div class="col-lg-12">
+
                             <label class="control-label templatemo-block">File Input</label>
-                            <!-- <input type="file" name="fileToUpload" id="fileToUpload" class="margin-bottom-10"> -->
-                            <input type="file" name="fileToUpload" id="fileToUpload" class="filestyle" data-buttonName="btn-primary" data-buttonBefore="true" data-icon="false">
+                            {{ form_widget(form.imageFile,{'attr':{'class':'filestyle','id':'fileToUpload','data-icon':'false'}}) }}
                             <p>Maximum upload size is 5 MB.</p>
                         </div>
                     </div>
                     <div class="form-group text-right">
-                        <button type="submit" class="templatemo-blue-button">Update</button>
-                        <button type="reset" class="templatemo-white-button">Reset</button>
+                        {{ form_row(form.Submit,{'attr':{'class':'templatemo-blue-button'}}) }}
+
                     </div>
-                </form>
+                    {{form_end(form)}}
             </div>
             <footer class="text-right">
                 <p>Copyright &copy; 2084 Company Name

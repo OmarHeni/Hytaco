@@ -45,6 +45,7 @@ class CategoriesController extends AbstractController
     function Add(Request $request)
     {
         $categories=new Categories();
+        $user=$this->getUser();
         $form=$this->createForm(CategoriesType::class, $categories);
         $en=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
         $form->handleRequest($request);
@@ -57,7 +58,7 @@ class CategoriesController extends AbstractController
         }
         return $this->render('back/categories.html.twig',
             [
-                'form'=>$form->createView(), 'cat'=>$en
+                'form'=>$form->createView(), 'cat'=>$en, 'us'=>$user
             ]
         );
     }

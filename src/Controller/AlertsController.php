@@ -33,7 +33,29 @@ class AlertsController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($alertes);
         $em->flush();//mise a jour
-        return $this->redirectToRoute('ajouteralertes');
+        return $this->redirectToRoute('afficheralerts');
+    }
+
+    /**
+     * @Route("/alerts",name="afficheralerts")
+     */
+    public function Affiche(AlertsRepository $repository)
+    {
+        $user=$this->getUser();
+        $alerts=$repository->findAll();
+        return $this->render('back/alertes.html.twig',
+            ['aler'=>$alerts, 'us'=>$user]);
+    }
+
+
+    /**
+     * @Route("/alertsff", name="alertesfff")
+     */
+    public function alets(): Response
+    {
+        return $this->render('front/alertes.html.twig', [
+            'controller_name' => 'FrontaccController',
+        ]);
     }
 
 
@@ -41,11 +63,14 @@ class AlertsController extends AbstractController
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route ("/alerts",name="ajouteralertes")
+     * @Route ("/alertsf",name="ajouteralertes")
      */
     function Add(Request $request)
     {
+        $user=$this->getUser();
         $alerts=new Alerts();
+        $alerts->setUtilisateur($user);
+
         $form=$this->createForm(AlertsType::class, $alerts);
         $en=$this->getDoctrine()->getManager()->getRepository(Alerts::class)->findAll();
         $form->handleRequest($request);
@@ -56,37 +81,13 @@ class AlertsController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('ajouteralertes');
         }
-        return $this->render('back/alertes.html.twig',
+        return $this->render('front/alertes.html.twig',
             [
                 'form'=>$form->createView(), 'aler'=>$en
             ]
         );
     }
 
-
-    /**
-     * @param Request $request
-     * @Route("/ModifierAlerts/{id}",name="modifieralerts")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    function modifier(AlertsRepository $repository,$id,Request $request)
-    {
-        $alerts=$repository->find($id);
-        $form=$this->createForm(AlertsType::class,$alerts);
-        $en=$this->getDoctrine()->getManager()->getRepository(Alerts::class)->findAll();
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $em=$this->getDoctrine()->getManager();
-            $em->flush();
-            return $this->redirectToRoute('ajouteralertes');
-        }
-        return $this->render('back/alertes.html.twig',
-            [
-                'form'=>$form->createView(), 'aler'=>$en
-            ]
-        );
-    }
 
 
 

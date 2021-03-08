@@ -5,28 +5,22 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class BackaccController extends AbstractController
 {
     /**
+     * * @IsGranted("ROLE_ADMIN")
      * @Route("/blog", name="blog")
      */
     public function index(): Response
     {
-        return $this->render('back/blog/index.html.twig', [
-            'controller_name' => 'BackaccController',
+        $us = $this->getUser();
+        return $this->render('back/base.html.twig', [
+            'us' => $us,
         ]);
     }
 
-    /**
-     * @Route("/login", name="bloglog")
-     */
-    public function login(): Response
-    {
-        return $this->render('back/login.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
+
 
     /**
      * @Route("/map", name="blogmap")
@@ -38,15 +32,7 @@ class BackaccController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/profile", name="blogprofile")
-     */
-    public function profile(): Response
-    {
-        return $this->render('back/profile.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
+
     /**
      * @Route("/fournisseur", name="blogfournisseur")
      */
@@ -65,15 +51,7 @@ class BackaccController extends AbstractController
             'controller_name' => 'BackaccController',
         ]);
     }
-    /**
-     * @Route("/commandes", name="blogcommandes")
-     */
-    public function commandes(): Response
-    {
-        return $this->render('back/commandes.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
+
 
     /**
      * @Route("/preferences", name="blogperf")
@@ -105,15 +83,6 @@ class BackaccController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/utilisateurs", name="blogutilisateurs")
-     */
-    public function utilisateurs(): Response
-    {
-        return $this->render('back/utilisateurs.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
 
     /**
      * @Route("/programmess", name="blogprogrammes")

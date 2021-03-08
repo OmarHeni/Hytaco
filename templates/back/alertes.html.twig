@@ -34,7 +34,7 @@
         </header>
 
         <div class="profile-photo-container" align="center">
-            <img src="images/profile-photo.jpg" alt="Bicycle" class="img-circle img-thumbnail">
+            <img style="height: 200px; width: 200px" src="images/properties/{{ us.imageName }}" alt="Bicycle" class="img-circle img-thumbnail">
             <div class="profile-photo-overlay"></div>
         </div>
         <!-- Search box -->
@@ -97,7 +97,6 @@
                             <td><a href="" class="white-text templatemo-sort-by">Service <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Rapport <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Utilisateur <span class="caret"></span></a></td>
-                            <td>Edit</td>
                             <td>Delete</td>
                         </tr>
                         </thead>
@@ -110,7 +109,6 @@
                             <td> {{ a.service }}</td>
                             <td> {{ a.rapport }}</td>
                             <td></td>
-                            <td><a href="/ModifierAlerts/{{a.id}}" class="templatemo-edit-btn">Edit</a></td>
                             <td><a href={{  path("deletealertes",{'id':a.id})}}>Delete</a></td>
                         </tr>
                         {% endfor %}
@@ -118,68 +116,6 @@
                     </table>
                 </div>
             </div>
-            <div class="templatemo-content-container">
-                <div class="templatemo-content-widget white-bg">
-                    {{ form_start(form) }}
-                    <h2 class="margin-bottom-10" align="center">Ajouter une alerte</h2>
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">Type</label>
-                               {#  <input type="text" name="type" class="form-control" id="inputFirstName" placeholder="Type"> #}
-                                {{ form_widget(form.type,{'attr': {'class': 'form-control','placeholder':'type'}}) }}
-                            </div>
-
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">Adresse</label>
-                                {#  <input type="text" name="adresse" class="form-control" id="inputFirstName" placeholder="adresse"> #}
-                                {{ form_widget(form.adresse,{'attr': {'class': 'form-control','placeholder':'adresse'}}) }}
-                            </div>
-
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">Localisation</label>
-                               {#  <input type="text" name="localisation" class="form-control" id="inputFirstName" placeholder="Localisation">#}
-                                {{ form_widget(form.localisation,{'attr': {'class': 'form-control','placeholder':'localisation'}}) }}
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">Service</label>
-                                {# <input type="text" name="service" class="form-control" id="inputFirstName" placeholder="Service">#}
-                                {{ form_widget(form.service,{'attr': {'class': 'form-control','placeholder':'service'}}) }}
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label for="inputFirstName">Rapport</label>
-                               {#  <input type="text" name="rapport" class="form-control" id="inputFirstName" placeholder="Rapport">#}
-                                {{ form_widget(form.rapport,{'attr': {'class': 'form-control','placeholder':'rapport'}}) }}
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label class="control-label templatemo-block">Utilisateur</label>
-                                <select class="form-control">
-                                    <option value="html">1</option>
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group text-right">
-                            <button type="submit" class="templatemo-blue-button">Ajouter</button>
-                        </div>
-                </div>
-            </div>
-            {{ form_end(form) }}
 
         </div>
 

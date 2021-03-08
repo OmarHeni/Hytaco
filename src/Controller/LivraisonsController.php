@@ -43,6 +43,7 @@ class LivraisonsController extends AbstractController
      */
     function Add(Request $request)
     {
+        $user=$this->getUser();
         $livraisons=new Livraisons();
         $form=$this->createForm(LivraisonsType::class, $livraisons);
         $en=$this->getDoctrine()->getManager()->getRepository(Livraisons::class)->findAll();
@@ -56,7 +57,7 @@ class LivraisonsController extends AbstractController
         }
         return $this->render('back/livraisons.html.twig',
             [
-                'form'=>$form->createView(), 'livr'=>$en
+                'form'=>$form->createView(), 'livr'=>$en ,'us'=>$user
             ]
         );
     }
