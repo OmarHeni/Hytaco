@@ -6,6 +6,7 @@ use App\Entity\Categories;
 use App\Entity\Produits;
 use App\Form\ProduitsType;
 use App\Repository\ProduitsRepository;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProduitsController extends AbstractController
-{
+{    private $up ;
+
     /**
      * @Route("/produitf", name="frontproduits")
      */
@@ -59,16 +61,16 @@ class ProduitsController extends AbstractController
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route ("/produit",name="ajouterproduits")
+     * @Route ("/produit",name="ajouterproduitsa")
      */
     function Add(Request $request)
     {
         $produits=new Produits();
         $user=$this->getUser();
+       // $fournisseur=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy($role);
         $form=$this->createForm(ProduitsType::class,$produits);
         $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid())
         {
             $em=$this->getDoctrine()->getManager();

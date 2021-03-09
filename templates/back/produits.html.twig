@@ -99,6 +99,7 @@
                             <td><a href="" class="white-text templatemo-sort-by">Image <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Prix <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Categorie <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Fournisseur <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Description <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Quantite <span class="caret"></span></a></td>
                             <td>Edit</td>
@@ -112,6 +113,7 @@
                                 <td><img style="height: 200px; width: 200px" src="images/properties/{{ p.imageName }}" alt="Bicycle" class="img-circle img-thumbnail"></td>
                                 <td>{{ p.prix }}</td>
                                 <td>{{ p.categorie.nom }}</td>
+                                <td>{{ p.utilisateur.nom }}</td>
                                 <td>{{ p.description }}</td>
                                 <td>{{ p.quantite }}</td>
                                 <td><a href="/ModifierProduits/{{p.id}}" class="templatemo-edit-btn">Edit</a></td>
@@ -167,8 +169,15 @@
                                 {#  <option value="html">Admin</option>>#}
                                 {{ form_widget(form.categorie,{'attr': {'class': 'form-control','placeholder':'categorie'}}) }}
                         </div>
-
-                            <div class="row form-group">
+                    </div>
+                    <div class="row form-group">
+                    <div class="col-lg-6 col-md-6 form-group">
+                            <label class="control-label templatemo-block">Utilisateur</label>
+                            {#  <option value="html">utilisateur</option>>#}
+                            {{ form_widget(form.utilisateur,{'attr': {'class': 'form-control','placeholder':'utilisateur'}}) }}
+                        </div>
+                    </div>
+                        <div class="row form-group">
                                 <div class="col-lg-12">
                                     <label class="control-label templatemo-block">Image</label>
                                     <!-- <input type="file" name="fileToUpload" id="fileToUpload" class="margin-bottom-10"> -->

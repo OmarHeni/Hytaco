@@ -19,41 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="">
+    <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/BackaccController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BackaccController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LivraisonsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LivraisonsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LivreursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LivreursController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LocauxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LocauxController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ProduitsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProduitsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ProgrammesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProgrammesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReclamationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReclamationsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SponsorsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SponsorsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TransporteurController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TransporteurController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/Fournisseurs.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/Fournisseurs.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/alertes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/alertes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/categories.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/categories.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/commandes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/commandes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/data-visualization.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/data-visualization.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/evenements.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/evenements.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/list_utilisateurs.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/list_utilisateurs.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/livraisons.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/livraisons.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/livreurs.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/livreurs.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/locaux.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/locaux.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/manage-users.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/manage-users.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/maps.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/maps.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ProduitsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProduitsType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/back/produits.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/produits.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/profile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/profile.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/programmes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/programmes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/reclamations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/reclamations.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/sponsors.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/sponsors.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/transporteur.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/transporteur.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/utilisateurs.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/utilisateurs.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/acceuil.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/acceuil.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/compte.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/compte.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/visitor.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/visitor.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +166,9 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1p2LSMQDwMiNTjmhReHCJZs5sM5" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -217,14 +189,14 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\web\campi\templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\web\Hytaco\templates\front" />
       <recent name="C:\xampp\web\Hytaco\templates\front\frontacc" />
       <recent name="C:\xampp\web\campi\public\images" />
       <recent name="C:\xampp\web\campi\public" />
+      <recent name="C:\xampp\web\campi\templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\web\campi\templates" />
     </key>
   </component>
@@ -256,6 +228,8 @@
       <workItem from="1615208524350" duration="1423000" />
       <workItem from="1615235735143" duration="11213000" />
       <workItem from="1615247297549" duration="7155000" />
+      <workItem from="1615328553080" duration="232000" />
+      <workItem from="1615328999558" duration="907000" />
     </task>
     <servers />
   </component>
@@ -275,6 +249,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="254" y="90" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1615328602561">
+      <screen x="0" y="0" width="1600" height="870" />
+    </state>
+    <state x="254" y="90" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615328602561" />
     <state x="476" y="73" key="#com.intellij.ide.util.MemberChooser" timestamp="1614867442736">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -295,10 +273,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1614869452690" />
-    <state x="542" y="142" key="FileChooserDialogImpl" timestamp="1615289446552">
+    <state x="542" y="142" key="FileChooserDialogImpl" timestamp="1615328550004">
       <screen x="0" y="0" width="1600" height="870" />
     </state>
-    <state x="542" y="142" key="FileChooserDialogImpl/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615289446552" />
+    <state x="542" y="142" key="FileChooserDialogImpl/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615328550004" />
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1614772026825" />
     <state x="301" y="80" key="SettingsEditor" timestamp="1615289664414">
       <screen x="0" y="0" width="1600" height="870" />
@@ -308,10 +286,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1366.728@0.0.1366.728" timestamp="1614710838497" />
-    <state x="392" y="168" key="Vcs.Push.Dialog.v2" timestamp="1615247898951">
+    <state x="392" y="168" key="Vcs.Push.Dialog.v2" timestamp="1615328702692">
       <screen x="0" y="0" width="1600" height="870" />
     </state>
-    <state x="392" y="168" key="Vcs.Push.Dialog.v2/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615247898951" />
+    <state x="392" y="168" key="Vcs.Push.Dialog.v2/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615328702692" />
     <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1614869452690">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -320,6 +298,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1614682344862" />
+    <state x="617" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1615328495925">
+      <screen x="0" y="0" width="1600" height="870" />
+    </state>
+    <state x="617" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615328495925" />
     <state x="580" y="148" key="git4idea.branch.GitSmartOperationDialog" timestamp="1615247917195">
       <screen x="0" y="0" width="1600" height="870" />
     </state>

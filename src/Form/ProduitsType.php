@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Categories;
 use App\Entity\Produits;
+use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +23,9 @@ class ProduitsType extends AbstractType
             ->add('imageFile',FileType::class,[
                 'required'=>false
             ])
-            ->add('categorie',EntityType::class,['class'=>Categories::class,'choice_label'=>'id','multiple'=>false]);
+            ->add('categorie',EntityType::class,['class'=>Categories::class,'choice_label'=>'nom','multiple'=>false])
+             ->add('utilisateur',EntityType::class,['class'=>Utilisateur::class,'choice_label'=>'nom','multiple'=>false]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
