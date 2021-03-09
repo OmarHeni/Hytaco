@@ -39,6 +39,7 @@ class SponsorsController extends AbstractController
      */
     public function Ajouter(Request $request)
     {
+        $user=$this->getUser();
         $en=$this->getDoctrine()->getManager()->getRepository(Sponsors::class)->findAll();
         $sponsors=new Sponsors();
         $form=$this->createForm(SponsorsType::class , $sponsors);
@@ -49,7 +50,7 @@ class SponsorsController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('ajoutsponsors');
         }
-        return $this->render('back/sponsors.html.twig', ['form'=>$form->createView(),'formations'=>$en
+        return $this->render('back/sponsors.html.twig', ['form'=>$form->createView(),'formations'=>$en, 'us'=>$user
         ]);
     }
 

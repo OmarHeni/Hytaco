@@ -16,9 +16,10 @@ class CommandeController extends AbstractController
      */
     public function index(CommandeRepository $cr): Response
     {
-   $coms =  $cr->findAll();
+        $user=$this->getUser();
+        $coms =  $cr->findAll();
         return $this->render('back/commandes.html.twig', [
-            'commandes' => $coms,
+            'commandes' => $coms,'us'=>$user
         ]);
     }
     /**

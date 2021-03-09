@@ -42,6 +42,7 @@ class TransporteurController extends AbstractController
      */
     function Add(Request $request)
     {
+        $user=$this->getUser();
         $transporteur=new Transporteur();
         $form=$this->createForm(TransporteurType::class, $transporteur);
         $en=$this->getDoctrine()->getManager()->getRepository(Transporteur::class)->findAll();
@@ -55,7 +56,7 @@ class TransporteurController extends AbstractController
         }
         return $this->render('back/transporteur.html.twig',
             [
-                'form'=>$form->createView(), 'trans'=>$en
+                'form'=>$form->createView(), 'trans'=>$en, 'us'=>$user
             ]
         );
     }

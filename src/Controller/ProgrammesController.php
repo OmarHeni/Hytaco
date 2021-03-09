@@ -47,6 +47,7 @@ class ProgrammesController extends AbstractController
     function Add(Request $request)
     {
         $programmes=new Programmes();
+        $user=$this->getUser();
         $form=$this->createForm(ProgrammesType::class, $programmes);
         $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
         $form->handleRequest($request);
@@ -59,7 +60,7 @@ class ProgrammesController extends AbstractController
         }
         return $this->render('back/programmes.html.twig',
             [
-                'form'=>$form->createView(), 'prog'=>$en
+                'form'=>$form->createView(), 'prog'=>$en , 'us'=>$user
             ]
         );
     }

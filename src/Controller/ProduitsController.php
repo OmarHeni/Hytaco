@@ -64,6 +64,7 @@ class ProduitsController extends AbstractController
     function Add(Request $request)
     {
         $produits=new Produits();
+        $user=$this->getUser();
         $form=$this->createForm(ProduitsType::class,$produits);
         $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
         $form->handleRequest($request);
@@ -77,7 +78,7 @@ class ProduitsController extends AbstractController
         }
         return $this->render('back/produits.html.twig',
             [
-                'form'=>$form->createView(),'prod'=>$en
+                'form'=>$form->createView(),'prod'=>$en, 'us'=>$user
             ]
         );
     }

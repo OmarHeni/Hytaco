@@ -27,8 +27,9 @@ class BackaccController extends AbstractController
      */
     public function map(): Response
     {
+        $user=$this->getUser();
         return $this->render('back/maps.html.twig', [
-            'controller_name' => 'BackaccController',
+            'controller_name' => 'BackaccController','us'=>$user
         ]);
     }
 
@@ -42,13 +43,15 @@ class BackaccController extends AbstractController
             'controller_name' => 'BackaccController',
         ]);
     }
+
     /**
      * @Route("/listutili", name="bloglistutili")
      */
     public function listutili(): Response
     {
+        $user=$this->getUser();
         return $this->render('back/list_utilisateurs.html.twig', [
-            'controller_name' => 'BackaccController',
+            'controller_name' => 'BackaccController', 'us'=>$user
         ]);
     }
 
@@ -68,8 +71,9 @@ class BackaccController extends AbstractController
      */
     public function datav(): Response
     {
+        $user=$this->getUser();
         return $this->render('back/data-visualization.html.twig', [
-            'controller_name' => 'BackaccController',
+            'controller_name' => 'BackaccController','us'=>$user
         ]);
     }
 
@@ -78,8 +82,9 @@ class BackaccController extends AbstractController
      */
     public function manage(): Response
     {
+        $user=$this->getUser();
         return $this->render('back/manage-users.html.twig', [
-            'controller_name' => 'BackaccController',
+            'controller_name' => 'BackaccController','us'=>$user
         ]);
     }
 
@@ -117,7 +122,7 @@ class BackaccController extends AbstractController
     /**
      * @Route("/locauxx", name="bloglocaux")
      */
-    public function locaux(): Response
+    public function locauxx(): Response
     {
         return $this->render('back/locaux.html.twig', [
             'controller_name' => 'BackaccController',

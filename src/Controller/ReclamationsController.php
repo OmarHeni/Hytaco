@@ -42,6 +42,8 @@ class ReclamationsController extends AbstractController
      */
     function Add(Request $request)
     {
+        $user=$this->getUser();
+
         $reclamations=new Reclamations();
         $form=$this->createForm(ReclamationsType::class, $reclamations);
         $en=$this->getDoctrine()->getManager()->getRepository(Reclamations::class)->findAll();
@@ -55,7 +57,7 @@ class ReclamationsController extends AbstractController
         }
         return $this->render('back/reclamations.html.twig',
             [
-                'form'=>$form->createView(), 'reclam'=>$en
+                'form'=>$form->createView(), 'reclam'=>$en, 'us'=>$user
             ]
         );
     }

@@ -45,6 +45,7 @@ class LocauxController extends AbstractController
     function Add(Request $request)
     {
         $locaux=new Locaux();
+        $user=$this->getUser();
         $form=$this->createForm(LocauxType::class, $locaux);
         $en=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findAll();
         $form->handleRequest($request);
@@ -57,7 +58,7 @@ class LocauxController extends AbstractController
         }
         return $this->render('back/locaux.html.twig',
             [
-                'form'=>$form->createView(), 'loc'=>$en
+                'form'=>$form->createView(), 'loc'=>$en, 'us'=>$user
             ]
         );
     }
