@@ -20,11 +20,11 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'app_loginf';
 
     private $entityManager;
     private $urlGenerator;
@@ -56,11 +56,6 @@ class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements
             Security::LAST_USERNAME,
             $credentials['email']
         );
-        $request->getSession()->set(
-            'email',
-            $credentials['email']
-        );
-
 
         return $credentials;
     }
@@ -97,10 +92,8 @@ class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-
-        //if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-        return new RedirectResponse($this->urlGenerator->generate("blog"));
-       // }*/
+            return new RedirectResponse($this->urlGenerator->generate("accueil"));
+            //
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);

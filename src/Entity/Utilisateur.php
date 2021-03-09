@@ -98,6 +98,11 @@ class Utilisateur implements UserInterface, \Serializable
      */
     public $confirmPassword;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activationToken;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -341,6 +346,25 @@ class Utilisateur implements UserInterface, \Serializable
                 $produit->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    /**
+     * @param string|null $activationToken
+     * @return $this
+     */
+    public function setActivationToken( $activationToken): self
+    {
+        $this->activationToken = $activationToken;
 
         return $this;
     }
