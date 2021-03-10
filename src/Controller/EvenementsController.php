@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Repository\EvenementsRepository;
 
 class EvenementsController extends AbstractController
 {
@@ -24,6 +25,19 @@ class EvenementsController extends AbstractController
     }
 
 
+    /**
+     * @param EvenementsRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/affiche", name="affiche")
+     */
+    public function Affichage(EvenementsRepository $repository)
+    {
+        //$en=$this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
+        // var_dump($en);
+        $en=$repository->findAll();
+        return $this->render('front/evenements.html.twig ',
+            ['event'=>$en]);
+    }
 
     /**
      * @Route("/supprimer{id}", name="supprimer")

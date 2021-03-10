@@ -20,10 +20,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/campi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/campi.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ProduitsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProduitsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ProduitsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProduitsType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/produits.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/produits.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210309202121.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210309202351.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210309204709.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210309211031.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AlertsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AlertsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EvenementsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EvenementsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SponsorsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SponsorsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Alerts.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Alerts.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Evenements.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenements.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Sponsors.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Sponsors.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/AlertsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AlertsType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/back/alertes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/alertes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/back/sponsors.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/sponsors.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/acceuil.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/acceuil.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/alertes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/alertes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/evenements.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/evenements.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +183,9 @@
       <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/vendor/symfony/google-mailer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle" />
+      <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
     </include_path>
   </component>
   <component name="ProjectId" id="1p2LSMQDwMiNTjmhReHCJZs5sM5" />
@@ -229,7 +252,7 @@
       <workItem from="1615235735143" duration="11213000" />
       <workItem from="1615247297549" duration="7155000" />
       <workItem from="1615328553080" duration="232000" />
-      <workItem from="1615328999558" duration="907000" />
+      <workItem from="1615328999558" duration="11761000" />
     </task>
     <servers />
   </component>
@@ -286,10 +309,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1366.728@0.0.1366.728" timestamp="1614710838497" />
-    <state x="392" y="168" key="Vcs.Push.Dialog.v2" timestamp="1615328702692">
+    <state x="392" y="168" key="Vcs.Push.Dialog.v2" timestamp="1615330419424">
       <screen x="0" y="0" width="1600" height="870" />
     </state>
-    <state x="392" y="168" key="Vcs.Push.Dialog.v2/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615328702692" />
+    <state x="392" y="168" key="Vcs.Push.Dialog.v2/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1615330419424" />
     <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1614869452690">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -316,16 +339,5 @@
     </state>
     <state x="463" y="182" width="672" height="678" key="search.everywhere.popup/-1920.2.1536.840/0.0.1600.870@0.0.1600.870" timestamp="1614474309686" />
     <state x="395" y="152" width="672" height="568" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1614710259472" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/templates/front/produits.html.twig</url>
-          <line>122</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

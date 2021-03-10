@@ -96,70 +96,26 @@
      <div class="container">
           <div class="row">
 
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image1.jpg" class="image-popup">
-                              <img src="images/project-image1.jpg" class="img-responsive" alt="">
+
+               {%for e in event%}
+                    <div class="col-md-6 col-sm-6">
+                         <!-- PROJECT ITEM -->
+                         <div class="project-item">
+                              <a href="#"><img style="height: 400px; width: 400px" src="images/properties/{{ e.imageName }}" alt="Bicycle" class="card-img-top"></a>
+                              <img src="images/properties" class="img-responsive" alt="">
 
                               <div class="project-overlay">
                                    <div class="project-info">
-                                    <h1>Nom Lieux</h1>
-                                        <h3>Date</h3>
-                                        
+                                        <h1>    <a href="#">{{ e.nom }}</a> </h1>
+                                        <h5>{{ e.date|date("m/d/Y") }}</h5>
+
                                    </div>
                               </div>
-                         </a>
+                              </a>
+                         </div>
                     </div>
-               </div>
+               {% endfor %}
 
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image2.jpg" class="image-popup">
-                              <img src="images/project-image2.jpg" class="img-responsive" alt="">
-
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                       <h1>Nom Lieux</h1>
-                                        <h3>Date</h3>
-                                   </div>
-                              </div>
-                         </a>
-                    </div>
-               </div>
-
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image3.jpg" class="image-popup">
-                              <img src="images/project-image3.jpg" class="img-responsive" alt="">
-
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                        <h1>Nom Lieux</h1>
-                                        <h3>Date</h3>
-                                   </div>
-                              </div>
-                         </a>
-                    </div>
-               </div>
-
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image4.jpg" class="image-popup">
-                              <img src="images/project-image4.jpg" class="img-responsive" alt="">
-
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                        <h1>Nom Lieux</h1>
-                                        <h3>Date</h3>
-                                   </div>
-                              </div>
-                         </a>
-                    </div>
-               </div>
 
           </div>
      </div>

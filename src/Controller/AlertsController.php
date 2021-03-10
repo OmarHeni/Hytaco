@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+
 
 class AlertsController extends AbstractController
 {
@@ -65,7 +67,7 @@ class AlertsController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route ("/alertsf",name="ajouteralertes")
      */
-    function Add(Request $request)
+    function Add(Request $request,\Swift_Mailer $mailer)
     {
         $user=$this->getUser();
         $alerts=new Alerts();
@@ -78,8 +80,31 @@ class AlertsController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $em->persist($alerts);
+            $message = (new \Swift_Message('Alerte!'))
+                ->setFrom('campihytaco@gmail.com')
+                ->setTo($alerts->getMail())
+                ->setBody(
+                    'Par cet email présent nous vous promosons ces numéros pour vous aider: 
+                193          : Garde nationale.
+                197          : Police nationale.
+                198          : Protection civile.
+                801111      : numéro vert.
+                ,'
+                );
+            $mailer->send($message);
             $em->flush();
             return $this->redirectToRoute('ajouteralertes');
+        }
+
+        if($request->isMethod("POST"))
+        {
+            $type = $request->get('adresse');
+            $alerts = $this->getDoctrine()->getManager()->getRepository(Alerts::class)->findBy(array('adresse' => $type));
+            return $this->render('back/alertes.html.twig',
+                [
+                    'form' => $form->createView(), 'aler' => $alerts
+                ]
+            );
         }
         return $this->render('front/alertes.html.twig',
             [

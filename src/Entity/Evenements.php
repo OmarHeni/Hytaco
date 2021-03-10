@@ -48,6 +48,16 @@ class Evenements
      */
     private $imageFile;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Sponsors::class, inversedBy="evenements")
+     */
+    private $sponsor;
+
+    public function __construct()
+    {
+        $this->sponsor = new ArrayCollection();
+    }
+
 
 
     public function getId(): ?int
@@ -109,6 +119,30 @@ class Evenements
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
+    }
+
+    /**
+     * @return Collection|Sponsors[]
+     */
+    public function getSponsor(): Collection
+    {
+        return $this->sponsor;
+    }
+
+    public function addSponsor(Sponsors $sponsor): self
+    {
+        if (!$this->sponsor->contains($sponsor)) {
+            $this->sponsor[] = $sponsor;
+        }
+
+        return $this;
+    }
+
+    public function removeSponsor(Sponsors $sponsor): self
+    {
+        $this->sponsor->removeElement($sponsor);
+
+        return $this;
     }
 
 

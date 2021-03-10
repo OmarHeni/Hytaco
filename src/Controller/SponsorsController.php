@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+
+
 class SponsorsController extends AbstractController
 {
     /**
@@ -37,7 +40,7 @@ class SponsorsController extends AbstractController
     /**
      * @Route("/sponsor", name="ajoutsponsors")
      */
-    public function Ajouter(Request $request)
+    public function Ajouter(Request $request,\Swift_Mailer $mailer)
     {
         $user=$this->getUser();
         $en=$this->getDoctrine()->getManager()->getRepository(Sponsors::class)->findAll();
@@ -47,6 +50,11 @@ class SponsorsController extends AbstractController
         if ($form->isSubmitted()&& $form->isValid()){
             $em=$this->getDoctrine()->getManager();
             $em->persist($sponsors);
+            $message = (new \Swift_Message('Mail de confirmation'))
+                ->setFrom('campihytaco@gmail.com')->setTo($sponsors->getMail())->setBody(
+                    'Par cet email présent nous vous informons que vous etes officiellement notre sponsor.Merci'
+                );
+            $mailer->send($message);
             $em->flush();
             return $this->redirectToRoute('ajoutsponsors');
         }

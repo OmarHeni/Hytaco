@@ -17,6 +17,7 @@ class AlertsType extends AbstractType
             ->add('service')
             ->add('rapport')
             ->add('adresse')
+            ->add('mail')
         ;
     }
 

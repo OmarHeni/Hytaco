@@ -149,8 +149,12 @@
                             {#  <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>#}
                               {{ form_widget(form.rapport,{'attr': {'class': 'form-control','placeholder':'rapport'}}) }}
 
+                              {#  <input type="text" name="mail" class="form-control" id="cf-localisation" placeholder="mail"> #}
+                              {{ form_widget(form.mail,{'attr': {'class': 'form-control','placeholder':'mail'}}) }}
 
                          </div>
+                    <div class="col-md-6 col-sm-6">
+                    </div>
 
                          <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
                               <div class="section-btn">

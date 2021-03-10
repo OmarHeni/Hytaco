@@ -92,6 +92,11 @@
         <div class="templatemo-content-container">
             <div class="templatemo-content-widget no-padding">
                 <div class="panel panel-default table-responsive">
+                    <form method="POST">
+                        <input type="text" name="adresse">
+                        <input type="submit" value="recherche">
+                    </form>
+
                     <table class="table table-striped table-bordered templatemo-user-table">
                         <thead>
                         <tr>
@@ -101,10 +106,11 @@
                             <td><a href="" class="white-text templatemo-sort-by">Localisation <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Service <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Rapport <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Utilisateur <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">mail <span class="caret"></span></a></td>
                             <td>Delete</td>
                         </tr>
                         </thead>
+
                         {%for a in aler%}
                         <tr>
                             <td>{{ a.id }}</td>
@@ -113,7 +119,7 @@
                             <td> {{ a.localisation }}</td>
                             <td> {{ a.service }}</td>
                             <td> {{ a.rapport }}</td>
-                            <td></td>
+                            <td> {{ a.mail }}</td>
                             <td><a href={{  path("deletealertes",{'id':a.id})}}>Delete</a></td>
                         </tr>
                         {% endfor %}
