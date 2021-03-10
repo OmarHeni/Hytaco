@@ -45,6 +45,7 @@ class SponsorsController extends AbstractController
         $user=$this->getUser();
         $en=$this->getDoctrine()->getManager()->getRepository(Sponsors::class)->findAll();
         $sponsors=new Sponsors();
+        $sponsors->getEvenements($this->getUser());
         $form=$this->createForm(SponsorsType::class , $sponsors);
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()){

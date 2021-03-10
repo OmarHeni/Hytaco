@@ -111,7 +111,7 @@
                             <td><img style="height: 200px; width: 200px" src="images/properties/{{ c.imageName }}" alt="Bicycle" class="img-circle img-thumbnail"></td>
                             <td>{{ c.description }}</td>
                             <td><a href="/ModifierCategories/{{c.id}}" class="templatemo-edit-btn">Edit</a></td>
-                            <td><a href={{  path("supprimerc",{'id':c.id})}}>Delete</a></td>
+                            <td><a onclick="return confirm('Voulez vous vraiment supprimer cette categorie');"  href= {{  path("supprimerc",{'id':c.id})}}>Delete</a></td>
                         </tr>
                         {% endfor %}
 

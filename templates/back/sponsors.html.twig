@@ -97,8 +97,9 @@
                             <td><a href="" class="white-text templatemo-sort-by">Nom <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Adresse <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Image <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">telephone <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">mail <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Telephone <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Mail <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Evenement <span class="caret"></span></a></td>
 
                             <td>Edit</td>
                             <td>Delete</td>
@@ -112,8 +113,9 @@
                             <td><img style="height: 200px; width: 200px" src="images/properties/{{ f.imageName }}" alt="Bicycle" class="img-circle img-thumbnail"></td>
                             <td>{{ f.numero }}</td>
                             <td>{{ f.mail }}</td>
+                            <td>{{ f.evenements }}</td>
                             <td><a href="/ModifierSponsors/{{f.id}}" class="templatemo-edit-btn">Edit</a></td>
-                            <td><a href={{  path("suppression",{'id':f.id})}}>Delete</a></td>
+                            <td><a onclick="return confirm('Voulez vous vraiment supprimer ce sponsor');" href={{  path("suppression",{'id':f.id})}}>Delete</a></td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -158,6 +160,14 @@
                         </div>
                     </div>
 
+
+                    <div class="row form-group">
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <label class="control-label templatemo-block">evenements</label>
+                            {#  <option value="html">evenements</option>>#}
+                            {{ form_widget(form.evenements,{'attr': {'class': 'form-control','placeholder':'evenements'}}) }}
+                        </div>
+                    </div>
                     <div class="row form-group">
                         <div class="col-lg-12">
                             <label class="control-label templatemo-block">Image</label>

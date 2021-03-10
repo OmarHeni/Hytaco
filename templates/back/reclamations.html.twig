@@ -109,7 +109,7 @@
                                 <td> {{ r.description }}</td>
                                 <td></td>
                                 <td><a href="/ModifierReclamations/{{r.id}}" class="templatemo-edit-btn">Edit</a></td>
-                                <td><a href={{  path("deletereclamations",{'id':r.id})}}>Delete</a></td>
+                                <td><a onclick="return confirm('Voulez vous vraiment supprimer cette reclamation');" href={{  path("deletereclamations",{'id':r.id})}}>Delete</a></td>
                             </tr>
                         {% endfor %}
                     </table>

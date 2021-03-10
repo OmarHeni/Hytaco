@@ -120,7 +120,7 @@
                             <td> {{ a.service }}</td>
                             <td> {{ a.rapport }}</td>
                             <td> {{ a.mail }}</td>
-                            <td><a href={{  path("deletealertes",{'id':a.id})}}>Delete</a></td>
+                            <td><a onclick="return confirm('Voulez vous vraiment supprimer cet alerts');" href={{  path("deletealertes",{'id':a.id})}}>Delete</a></td>
                         </tr>
                         {% endfor %}
 

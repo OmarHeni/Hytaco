@@ -67,7 +67,6 @@ class ProduitsController extends AbstractController
     {
         $produits=new Produits();
         $user=$this->getUser();
-       // $fournisseur=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy($role);
         $form=$this->createForm(ProduitsType::class,$produits);
         $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
         $form->handleRequest($request);
