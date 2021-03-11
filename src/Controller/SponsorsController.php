@@ -52,7 +52,7 @@ class SponsorsController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->persist($sponsors);
             $message = (new \Swift_Message('Mail de confirmation'))
-                ->setFrom('campihytaco@gmail.com')->setTo($sponsors->getMail())->setBody(
+                ->setFrom('HYTACOCAMPII@gmail.com')->setTo($sponsors->getMail())->setBody(
                     'Par cet email présent nous vous informons que vous etes officiellement notre sponsor.Merci'
                 );
             $mailer->send($message);
@@ -70,6 +70,7 @@ class SponsorsController extends AbstractController
      */
     function modifier(SponsorsRepository $repository,$id,Request $request)
     {
+        $user=$this->getUser();
         $sponsors=$repository->find($id);
         $form=$this->createForm(SponsorsType::class,$sponsors);
         $en=$this->getDoctrine()->getManager()->getRepository(Sponsors::class)->findAll();
@@ -82,7 +83,7 @@ class SponsorsController extends AbstractController
         }
         return $this->render('back/sponsors.html.twig',
             [
-                'form'=>$form->createView(), 'formations'=>$en
+                'form'=>$form->createView(), 'formations'=>$en, 'us'=>$user
             ]
         );
     }

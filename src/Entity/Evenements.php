@@ -49,9 +49,10 @@ class Evenements
     private $imageFile;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sponsors::class, inversedBy="evenements")
+     * @ORM\Column(type="integer")
      */
-    private $sponsor;
+    private $nbrplace;
+
 
     public function __construct()
     {
@@ -141,6 +142,18 @@ class Evenements
     public function removeSponsor(Sponsors $sponsor): self
     {
         $this->sponsor->removeElement($sponsor);
+
+        return $this;
+    }
+
+    public function getNbrplace(): ?int
+    {
+        return $this->nbrplace;
+    }
+
+    public function setNbrplace(int $nbrplace): self
+    {
+        $this->nbrplace = $nbrplace;
 
         return $this;
     }

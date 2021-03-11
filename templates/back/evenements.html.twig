@@ -98,7 +98,7 @@
                             <td><a href="" class="white-text templatemo-sort-by">#ID <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Nom <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Date <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Sponsor <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Nombre de places <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Image <span class="caret"></span></a></td>
                             <td>Edit</td>
                             <td>Delete</td>
@@ -110,9 +110,9 @@
                                 <td>{{ f.id }}</td>
                                 <td>{{ f.nom }}</td>
                                 <td>{{ f.date|date('Y-m-d') }}</td>
-                                <td>{{ f.sponsor }}</td>
+                                <td>{{ f.nbrplace }}</td>
                                 <td><img style="height: 200px; width: 200px" src="images/properties/{{ f.imageName }}" alt="Bicycle" class="img-circle img-thumbnail"></td>
-                                <td><a href="" class="templatemo-edit-btn">Edit</a></td>
+                                <td><a href="/ModifierEvenements/{{f.id}}" class="templatemo-edit-btn">Edit</a></td>
                                 <td><a onclick="return confirm('Voulez vous vraiment supprimer cet evenement');" href={{  path("supprimer",{'id':f.id})}}>Delete</a></td>
                             </tr>
                         {% endfor %}
@@ -142,9 +142,9 @@
 
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
-                            <label class="control-label templatemo-block">Sponsor</label>
-                            {#  <option value="html">sponsor</option>>#}
-                            {{ form_widget(form.sponsor,{'attr': {'class': 'form-control','placeholder':'sponsor'}}) }}
+                            <label for="inputFirstName">Nombre de place</label>
+                            {{ form_widget(form.nbrplace,{'attr': {'class': 'form-control','placeholder':'nom de l nbrplace'}}) }}
+                            {# <input type="nbrplace" class="form-control" id="inputFirstName" placeholder="nbrplace">#}
                         </div>
                     </div>
 
@@ -169,6 +169,24 @@
         </div>
 
 
+        <div class="templatemo-flex-row flex-content-row templatemo-overflow-hidden"> <!-- overflow hidden for iPad mini landscape view-->
+            <div class="col-1 templatemo-overflow-hidden">
+                <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
+                    <i class="fa fa-times"></i>
+                    <div class="templatemo-flex-row flex-content-row">
+                        <div class="col-1 col-lg-6 col-md-12">
+                            <h2 class="text-center">Gestion des evenements</h2>
+                            <div id="pie_chart_div" class="templatemo-chart"></div> <!-- Pie chart div -->
+                        </div>
+                        <div class="col-1 col-lg-6 col-md-12">
+                            <h2 class="text-center">Gestion des evenements</h2>
+                            <div id="bar_chart_div" class="templatemo-chart"></div> <!-- Bar chart div -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer class="text-right">
             <p>Copyright &copy; 2021 Hytaco</p>
         </footer>
@@ -180,5 +198,66 @@
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
 <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
 <script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+
+
+<!-- JS -->
+<script src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+<script src="js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+<script src="https://www.google.com/jsapi"></script> <!-- Google Chart -->
+<script>
+    /* Google Chart
+    -------------------------------------------------------------------*/
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'place');
+        data.addRows([
+            {% for p in formations%}
+            ['{{ p.nom }}', {{ p.nbrplace }}],
+            {% endfor %}
+        ]);
+
+        // Set chart options
+        var options = {'title':'Statistique des evenements par nombre de places'};
+
+        // Instantiate and draw our chart, passing in some options.
+        var pieChart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
+        pieChart.draw(data, options);
+
+        var barChart = new google.visualization.BarChart(document.getElementById('bar_chart_div'));
+        barChart.draw(data, options);
+    }
+
+    $(document).ready(function(){
+        if($.browser.mozilla) {
+            //refresh page on browser resize
+            // http://www.sitepoint.com/jquery-refresh-page-browser-resize/
+            $(window).bind('resize', function(e)
+            {
+                if (window.RT) clearTimeout(window.RT);
+                window.RT = setTimeout(function()
+                {
+                    this.location.reload(false); /* false to get page from cache */
+                }, 200);
+            });
+        } else {
+            $(window).resize(function(){
+                drawChart();
+            });
+        }
+    });
+
+</script>
+<script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
 </body>
 </html>

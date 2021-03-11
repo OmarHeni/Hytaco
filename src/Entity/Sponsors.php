@@ -63,11 +63,6 @@ class Sponsors
      */
     private $imageFile;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Evenements::class, mappedBy="sponsor")
-     */
-    private $evenements;
-
     public function __construct()
     {
         $this->evenements = new ArrayCollection();

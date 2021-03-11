@@ -18,8 +18,8 @@ class EvenementsType extends AbstractType
             ->add('nom')
             ->add('date')
             ->add('imageFile',FileType::class,['required'=>false])
-            ->add('sponsor',EntityType::class,['class'=>Sponsors::class,'choice_label'=>'id','multiple'=>false]);
-
+            ->add('nbrplace')
+        ;
 
     }
 

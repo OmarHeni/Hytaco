@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Evenements;
 use App\Form\EvenementsType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Repository\RepositoryFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,15 +35,16 @@ class EvenementsController extends AbstractController
     {
         //$en=$this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
         // var_dump($en);
-        $en=$repository->findAll();
+        $en = $repository->findAll();
         return $this->render('front/evenements.html.twig ',
-            ['event'=>$en]);
+            ['event' => $en]);
     }
 
     /**
      * @Route("/supprimer{id}", name="supprimer")
      */
-    public function supprimer (Evenements $event,  EntityManagerInterface $entityManager){
+    public function supprimer(Evenements $event, EntityManagerInterface $entityManager)
+    {
         $entityManager->remove($event);
         $entityManager->flush();
         return $this->redirectToRoute('evenements');
@@ -54,24 +56,47 @@ class EvenementsController extends AbstractController
      */
     public function AjouterEvenement(Request $request)
     {
-        $user=$this->getUser();
-        $en=$this->getDoctrine()
-            ->getManager()
-            ->getRepository(Evenements::class)
-            ->findAll();
-        $evenement=new Evenements();
-        $form=$this->createForm(EvenementsType::class , $evenement);
-
+        $user = $this->getUser();
+        $en = $this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
+        $evenement = new Evenements();
+        $form = $this->createForm(EvenementsType::class, $evenement);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()){
-            $em=$this->getDoctrine()->getManager();
+        if ($form->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);
             $em->flush();
             return $this->redirectToRoute('evenements');
         }
-        return $this->render('back/evenements.html.twig', ['form'=>$form->createView(),'formations'=>$en , 'us'=>$user
+        return $this->render('back/evenements.html.twig', ['form' => $form->createView(), 'formations' => $en, 'us' => $user
         ]);
+    }
+
+
+
+    /**
+     * @param Request $request
+     * @Route("/ModifierEvenements/{id}",name="modifierevenement")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    function modifier(EvenementsRepository $repository,$id,Request $request)
+    {
+        $user = $this->getUser();
+        $sponsors = $repository->find($id);
+        $form = $this->createForm(EvenementsType::class, $sponsors);
+        $en = $this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('evenements');
+        }
+        return $this->render('back/evenements.html.twig',
+            [
+                'form' => $form->createView(), 'formations' => $en, 'us' => $user
+            ]
+        );
+
     }
 
 
