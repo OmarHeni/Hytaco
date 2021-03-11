@@ -81,7 +81,7 @@ class AlertsController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->persist($alerts);
             $message = (new \Swift_Message('Alerte!'))
-                ->setFrom('campihytaco@gmail.com')
+                ->setFrom('HYTACOCAMPII@gmail.com')
                 ->setTo($alerts->getMail())
                 ->setBody(
                     'Par cet email présent nous vous promosons ces numéros pour vous aider: 

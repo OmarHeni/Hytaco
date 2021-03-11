@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 
 class ProduitsController extends AbstractController
 {    private $up ;
@@ -53,7 +54,7 @@ class ProduitsController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($produits);
         $em->flush();//mise a jour
-        return $this->redirectToRoute('ajouterproduits');
+        return $this->redirectToRoute('ajouterproduitsa');
     }
 
 
@@ -63,7 +64,7 @@ class ProduitsController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route ("/produit",name="ajouterproduitsa")
      */
-    function Add(Request $request)
+    function Add(Request $request,\Swift_Mailer $mailer)
     {
         $produits=new Produits();
         $user=$this->getUser();
@@ -74,12 +75,24 @@ class ProduitsController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $em->persist($produits);
+            $message = (new \Swift_Message('Alerte!'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($produits->getUtilisateur()->getEmail())
+                ->setBody(
+                    'Par cet email présent nous vous promosons ces numéros pour vous aider: 
+                193          : Garde nationale.
+                197          : Police nationale.
+                198          : Protection civile.
+                801111      : numéro vert.
+                ,'
+                );
+            $mailer->send($message);
             $em->flush();
-            return $this->redirectToRoute('ajouterproduits');
+            return $this->redirectToRoute('ajouterproduitsa');
         }
         return $this->render('back/produits.html.twig',
             [
-                'form'=>$form->createView(),'prod'=>$en, 'us'=>$user
+                'form'=>$form->createView(),'prod'=>$en, 'us'=>$user ,'uss'=>$user
             ]
         );
     }
@@ -92,6 +105,7 @@ class ProduitsController extends AbstractController
      */
     function modifier(ProduitsRepository $repository,$id,Request $request)
     {
+        $user=$this->getUser();
         $produits=$repository->find($id);
         $form=$this->createForm(ProduitsType::class,$produits);
         $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
@@ -100,12 +114,10 @@ class ProduitsController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $em->flush();
-            return $this->redirectToRoute('ajouterproduits');
+            return $this->redirectToRoute('ajouterproduitsa');
         }
         return $this->render('back/produits.html.twig',
-            [
-                'form'=>$form->createView(), 'prod'=>$en            ]
-        );
+            ['form'=>$form->createView(), 'prod'=>$en, 'uss'=>$user]);
     }
 
 }

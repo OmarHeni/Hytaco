@@ -56,6 +56,7 @@ class UtilisateurController extends AbstractController
     public function utilisateur (Request $request,UserPasswordEncoderInterface $encoder): Response
     {   $session =  $request->getSession()->get('email');
         $us = $this->up->findOneBy(array('email'=>$session),array());
+        $uss = $this->getUser();
 
         $user = new Utilisateur();
         $users = $this->up->findAll();
@@ -71,7 +72,7 @@ class UtilisateurController extends AbstractController
         }
         else {
             return $this->render('back/utilisateurs.html.twig',
-                ['form'=>$form->Createview(),'users'=>$users,'us'=>$us]);
+                ['form'=>$form->Createview(),'users'=>$users,'us'=>$us,'uss'=>$uss]);
         }
 
         //  $form = $this->createForm(UtilisateurAddType::class,$user)
@@ -105,4 +106,8 @@ class UtilisateurController extends AbstractController
         return $this->render('back/profile.html.twig',
             ['form'=>$form->Createview()]);
     }
+
+
+
+
 }
