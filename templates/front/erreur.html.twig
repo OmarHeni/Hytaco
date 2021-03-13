@@ -72,61 +72,8 @@ http://www.tooplate.com/view/2099-scenic
 
 
 <br><br><br><br><br><br><br>
-<div class="wrap cf">
-    <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
-    <div class="heading cf">
-        <h1>My Cart</h1>
-        <a href="produitf" class="continue">Continue Shopping</a>
-    </div>
-    {% for pr in produits %}
-
-    <div class="cart">
-        <ul class="cartWrap">
-            <li class="items odd">
-
-                <div class="infoWrap">
-                    <div class="cartSection">
-                        <img style="height: 200px; width: 200px" src="images/properties/{{ pr.imageName }}" alt="Bicycle" class="itemImg"></a>
-                        <p class="itemNumber">#{{pr.id}}</p>
-                        <h3>{{ pr.nom }}</h3>
-                        <p> <input type="text" value="1"  class="qty" placeholder="3"/> x  <p>{{ pr.prix }}</p></p>
-                      {% if pr.Existe %}
-                        <p class="stockStatus"> In Stock</p>
-                        {% else  %}
-                            <p class="stockStatus out"> Out of Stock</p>
-                            {% endif %}
-                    </div>
-
-
-                    <div class="prodTotal cartSection">
-                        <p>{{ pr.prix}}</p>
-                    </div>
-                    <div class="cartSection removeWrap">
-                        <a href="#{{ pr.id }}"  class="remove">x</a>
-                    </div>
-                </div>
-            </li>
-
-
-
-            <!--<li class="items even">Item 2</li>-->
-
-        </ul>
-    </div>
-{% endfor %}
-    <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
-        <a href="#" class="btn"></a></div>
-
-    <div class="subtotal cf">
-        <ul>
-
-
-            <li class="totalRow"><span class="label">Livraison</span><span class="value">0</span></li>
-            <li class="totalRow final"><span class="label">Total</span><span class="value" id="finaltotal"> {{ total }}</span></li>
-            <li class="totalRow"><a href="#" class="btn continue" id ="checksub">Checkout</a></li>
-        </ul>
-    </div>
-</div>
+<h1>Erreur</h1>
+<h2>{{ erreur }}</h2>
 <footer>
 
 
@@ -196,9 +143,8 @@ console.log(array);
 document.getElementById("checksub").addEventListener("click",submit);
         function  Delete(event){
             event.preventDefault();
-            document.getElementById('finaltotal').innerHTML = document.getElementById('finaltotal').innerHTML - event.target.parentNode.previousSibling.parentNode.lastChild.previousSibling.previousSibling.previousSibling.lastChild.previousSibling.innerHTML ;
  var x =   event.target.parentNode.parentNode.parentNode;
- //console.log( x);
+ console.log( x);
  x.style.display = "none" ;
             var l = event.target.href;
       var id =    l.substring(l.indexOf("#")+1,l.length);

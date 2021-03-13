@@ -12,13 +12,41 @@ use Symfony\Component\HttpFoundation\Request;
 class CommandeController extends AbstractController
 {
     /**
+     * @Route("/affcommandes", name="commandeaffs")
+     */
+
+    public function affcoms(CommandeRepository $cr): Response
+    {
+         $i = 0;
+        $array= [];
+        $array2=[];
+        $stats = $cr->findAllPerDate();
+
+        foreach ($stats as $com) {
+
+            foreach ($com as $coma) {
+                if($coma instanceof \DateTime){
+                    $array[]=$coma->format('d-m-Y');
+                }else {
+                    $array[] = $coma;
+                }
+            }
+
+            $array2[]=$array;
+            $array=[];
+        }
+          return $this->json($array2);
+
+
+    }
+    /**
      * @Route("/commandes", name="commande")
      */
     public function index(CommandeRepository $cr): Response
     {
    $coms =  $cr->findAll();
         return $this->render('back/commandes.html.twig', [
-            'commandes' => $coms,
+            'commandes' => $coms
         ]);
     }
     /**

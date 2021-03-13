@@ -18,7 +18,24 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
+    /**
+     * @return Commande[]
+     */
+    public function findAllPerDate(): array
+    {
 
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery('
+            SELECT c.dateCommande,sum(c.prix) as revenue FROM App\Entity\Commande c
+            GROUP BY c.dateCommande ORDER BY c.dateCommande ASC '
+        );
+
+        // returns an array of Product objects
+
+        return $query->getResult();
+
+}
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */

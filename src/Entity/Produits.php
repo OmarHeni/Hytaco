@@ -218,6 +218,8 @@ class Produits
 
         return $this;
     }
-
+public function Existe ():bool{
+        return ($this->quantite>0);
+}
 
 }

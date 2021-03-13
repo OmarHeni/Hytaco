@@ -8,6 +8,7 @@ use App\Form\AddUtilisateurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -15,13 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+use Symfony\Component\Routing\Generator\UrlGenerator ;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UtilisateurController extends AbstractController
 {
     private $em ;
     private $up ;
-    public function __construct(UtilisateurRepository $up,EntityManagerInterface $em)
+    public function __construct(UtilisateurRepository $up,EntityManagerInterface $em,UrlGeneratorInterface $urlGenerator)
     {
+        $this->urlGenerator = $urlGenerator;
+
         $this->up = $up;
         $this->em = $em ;
     }
@@ -33,7 +38,8 @@ class UtilisateurController extends AbstractController
     {
         $user = new Utilisateur();
         $form= $this->createForm(AddUtilisateurType::class, $user);
-        $user->getRoles(['ROLE_USER']);
+        $user->setActivationToken(md5(uniqid()));
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -41,7 +47,17 @@ class UtilisateurController extends AbstractController
             $user->setPassword($hash);
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirect("/accueil");
+            $message = (new \Swift_Message('Activation de votre compte'))
+                ->setFrom('hytacocampi@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView('front/activation.html.twig',['token'=>$user->getActivationToken()]
+                    ),
+                    'text/html'
+                )
+            ;
+            $status= $mailer->send($message);
+            return $this->redirect("/loginf");
         }
         else {
             return $this->render('front/compte.html.twig',
@@ -67,7 +83,7 @@ class UtilisateurController extends AbstractController
            $this->em->persist($user);
            $this->em->flush();
           $message = (new \Swift_Message('Activation de votre compte'))
-                ->setFrom('elheniomar@gmail.com')
+                ->setFrom('hytacocampi@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView('front/activation.html.twig',['token'=>$user->getActivationToken()]
@@ -75,8 +91,8 @@ class UtilisateurController extends AbstractController
                     'text/html'
                 )
             ;
-            $mailer->send($message);
-            return $this->redirect("/blog");
+           $status= $mailer->send($message);
+            return $this->redirect("/utilisateur");
         }
         else {
             return $this->render('back/utilisateurs.html.twig',
@@ -126,7 +142,7 @@ public function activation ($token, UtilisateurRepository $up){
         $en->persist($user);
         $en->flush();
     }
-    return $this->redirect('frontacc');
+    return new RedirectResponse($this->urlGenerator->generate("frontproduits"));
   /*  $en=$this->getDoctrine()->getManager();
     $en->persist($user);
     $en->flush();

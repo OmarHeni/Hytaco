@@ -369,5 +369,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this;
     }
 
-
+public function isVerified () : bool{
+        return($this->activationToken==null);
+}
 }

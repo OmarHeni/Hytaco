@@ -46,7 +46,14 @@ class PanierController extends AbstractController
         $this->session->set('Pid', $produits);
         return $this->json(['code' => 200, 'pid' => $produits], 200);
     }
-
+    /**
+     * @Route("/erreur", name="erreur")
+     */
+    public function erreur(Request $request): Response
+    {
+        $er =   $request->get('er');
+        return $this->render('front/erreur.html.twig', ['erreur' => $er]);
+    }
         /**
      * @Route("/panierdel/{id}", name="panierdel")
      */
@@ -65,10 +72,11 @@ class PanierController extends AbstractController
 
     /**
      * @Route ("/ajoutcom", name="ajoutcom")
-     *
      */
     public function ajoutcom(ProduitsRepository $produitRepository, Request $request): Response
-    {
+    { $user = $this->getUser();
+    if ($user) {
+        if ($user->isVerified()) {
             $idP = $this->session->get('Pid', []);
             $parametersAsArray = [];
             if ($content = $request->getContent()) {
@@ -79,21 +87,31 @@ class PanierController extends AbstractController
                 $Utilisateur = $this->getUser();
                 $produits = $produitRepository->findBy(['id' => $idP]);
                 foreach ($produits as $prod) {
-                    $Commande = new Commande();
-                    $Commande->setDateCommande(new \DateTime());
-                    $Commande->setUtilisateur($Utilisateur);
-                    $Commande->setProduit($prod);
-                    $Commande->setQuantite($parametersAsArray['qty'][$i]);
-                    $Commande->setPrix($prod->getPrix() * $parametersAsArray['qty'][$i]);
-                    $en = $this->getDoctrine()->getManager();
-                    $en->persist($Commande);
-                    $en->flush();
-                    $i = $i + 1;
+                    if ($prod->getQuantite()>= $parametersAsArray['qty'][$i] ) {
+                        $prod->setQuantite($prod->getQuantite()- $parametersAsArray['qty'][$i]);
+                        $Commande = new Commande();
+                        $Commande->setDateCommande(new \DateTime());
+                        $Commande->setUtilisateur($Utilisateur);
+                        $Commande->setProduit($prod);
+                        $Commande->setQuantite($parametersAsArray['qty'][$i]);
+                        $Commande->setPrix($prod->getPrix() * $parametersAsArray['qty'][$i]);
+                        $en = $this->getDoctrine()->getManager();
+                        $en->persist($Commande);
+                        $en->flush();
+                        $i = $i + 1;
+                    }else {
+                        return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/erreur?er=cette quantite n'existe pas"], 200);
+                    }
                 }
                 $this->session->set('Pid', []);
                 return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/produitf?id=1"], 200);
             }
             return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/panier"], 200);
-
+        } else {
+            return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/erreur?er=verfier votre compte par mail stp"], 200);
+        }
+    }else {
+        return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/loginf"], 200);
+    }
 }
 }

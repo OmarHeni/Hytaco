@@ -111,12 +111,100 @@
                     </table>
                 </div>
             </div>
+            <div class="panel panel-default no-border">
+                <div class="panel-heading border-radius-10">
+                    <h2>Area Chart</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="templatemo-flex-row flex-content-row">
+                        <div class="col-1">
+                            <div id="area_chart_div" class="templatemo-chart"></div>
+                            <h3 class="text-center margin-bottom-5">Company Performance</h3>
+                            <p class="text-center">Fusce mi lacus</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         </div>
     </div>
+{% set packages = [1, 2, 3, 4] %}
 
     <!-- JS -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
     <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
     <script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script> <!-- Google Chart -->
+    <script>
+        var gaugeChart;
+        var gaugeData;
+        var gaugeOptions;
+        var timelineChart;
+        var timelineDataTable;
+        var timelineOptions;
+        var areaData;
+        var areaOptions;
+        var areaChart;
+
+        /* Gauage
+        --------------------------------------------------*/
+
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+
+        $(document).ready(function(){
+            if($.browser.mozilla) {
+                //refresh page on browser resize
+                // http://www.sitepoint.com/jquery-refresh-page-browser-resize/
+                $(window).bind('resize', function(e)
+                {
+                    if (window.RT) clearTimeout(window.RT);
+                    window.RT = setTimeout(function()
+                    {
+                        this.location.reload(false); /* false to get page from cache */
+                    }, 200);
+                });
+            } else {
+                $(window).resize(function(){
+                    drawCharts();
+                });
+            }
+        });
+
+
+        /* Area Chart
+        --------------------------------------------------*/
+       async function drawChart() {
+   var res =      await   axios.get("http://127.0.0.1:8000/affcommandes");
+  var array =  res.data.map(x=>[x[0],parseInt(x[1])]);
+   console.log(array);
+array.unshift(['Date', 'Sales'])
+                areaData = google.visualization.arrayToDataTable(
+                array
+            );
+
+            areaOptions = {
+                title: 'Company Performance',
+                hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0}
+            };
+
+            areaChart = new google.visualization.AreaChart(document.getElementById('area_chart_div'));
+            areaChart.draw(areaData, areaOptions);
+        } // End function drawChart
+
+        function drawCharts () {
+            gaugeChart.draw(gaugeData, gaugeOptions);
+            timelineChart.draw(timelineDataTable, timelineOptions);
+            areaChart.draw(areaData, areaOptions);
+        }
+
+    </script>
+    <script type="text/javascript" src="js/templatemo-script.js"></script>
 </body>
 </html>
