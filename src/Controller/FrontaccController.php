@@ -32,6 +32,7 @@ class FrontaccController extends AbstractController
     }
 
 
+
     /**
      * @Route("/connexionf", name="frontconnect")
      */

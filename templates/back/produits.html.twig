@@ -49,13 +49,13 @@
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="/datav"><i class="fa fa-bar-chart fa-fw"></i>Statistiques</a></li>
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
                 <li><a href="/utilisateur"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
                 <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>programmes</a></li>
                 <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
                 <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
+                <li><a href="/publicite" class="active"><i class="fa fa-desktop"></i>Publicite</a></li>
                 <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>locaux</a></li>
                 <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>categories</a></li>
                 <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>produits</a></li>
@@ -117,13 +117,13 @@
                                 <td>{{ p.description }}</td>
                                 <td>{{ p.quantite }}</td>
                                 <td><a href="/ModifierProduits/{{p.id}}" class="templatemo-edit-btn">Edit</a></td>
-                                <td><a href={{  path("deleteproduits",{'id':p.id})}}>Delete</a></td>
+                                <td><a onclick="return confirm('Voulez vous vraiment supprimer cette produit');"  href={{  path("deleteproduits",{'id':p.id})}}>Delete</a></td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
             </div>
-
+            {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
             <div class="templatemo-content-container">
                 <div class="templatemo-content-widget white-bg">
                     {{ form_start(form) }}
@@ -133,6 +133,7 @@
                                 <label for="inputFirstName">Nom</label>
                                {#  <input type="text" class="form-control" id="inputFirstName" placeholder="nom">#}
                                 {{ form_widget(form.nom,{'attr': {'class': 'form-control','placeholder':'nom'}}) }}
+                                {{ form_errors(form.nom) }}
 
                             </div>
 
@@ -143,6 +144,8 @@
                                 <label for="inputFirstName">Prix</label>
                                 {#  <input type="text" class="form-control" id="inputFirstName" placeholder="prix">#}
                                 {{ form_widget(form.prix,{'attr': {'class': 'form-control','placeholder':'prix'}}) }}
+                                {{ form_errors(form.prix) }}
+
                             </div>
                         </div>
 
@@ -151,6 +154,7 @@
                                 <label for="inputFirstName">description</label>
                                 {#  <input type="text" class="form-control" id="inputFirstName" placeholder="description">#}
                                 {{ form_widget(form.description,{'attr': {'class': 'form-control','placeholder':'description'}}) }}
+                                {{ form_errors(form.description) }}
 
                             </div>
                         </div>
@@ -160,6 +164,7 @@
                             <label for="inputFirstName">Quantite</label>
                             {#  <input type="text" class="form-control" id="inputFirstName" placeholder="Quantite">#}
                             {{ form_widget(form.quantite,{'attr': {'class': 'form-control','placeholder':'quantite'}}) }}
+                            {{ form_errors(form.quantite) }}
 
                         </div>
                     </div>
@@ -172,7 +177,7 @@
                     </div>
                     <div class="row form-group">
                     <div class="col-lg-6 col-md-6 form-group">
-                            <label class="control-label templatemo-block">Utilisateur</label>
+                            <label class="control-label templatemo-block">Fournisseur</label>
                             {#  <option value="html">utilisateur</option>>#}
                             {{ form_widget(form.utilisateur,{'attr': {'class': 'form-control','placeholder':'utilisateur'}}) }}
                         </div>

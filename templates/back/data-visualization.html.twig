@@ -49,13 +49,13 @@
         </div>
         <nav class="templatemo-left-nav">
           <ul>
-            <li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
             <li><a href="/datav"><i class="fa fa-bar-chart fa-fw"></i>Statistiques</a></li>
             <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
             <li><a href="/utilisateur"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
             <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>programmes</a></li>
             <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
             <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
+            <li><a href="/publicite" class="active"><i class="fa fa-desktop"></i>Publicite</a></li>
             <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>locaux</a></li>
             <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>categories</a></li>
             <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>produits</a></li>
@@ -167,10 +167,10 @@
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('number', 'quantite');
         data.addRows([
           {% for p in produit%}
-          ['{{ p.nom }}', {{ p.utilisateur.id }}],
+          ['{{ p.utilisateur.nom }}', {{ p.quantite }}],
           {% endfor %}
         ]);
 

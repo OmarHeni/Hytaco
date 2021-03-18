@@ -29,7 +29,7 @@ class EvenementsController extends AbstractController
     /**
      * @param EvenementsRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/affiche", name="affiche")
+     * @Route("/evenementf", name="affiche")
      */
     public function Affichage(EvenementsRepository $repository)
     {

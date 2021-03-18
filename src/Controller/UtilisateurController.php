@@ -91,7 +91,9 @@ class UtilisateurController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      * @Route ("/Edit_user/{id}",name="edit_user")
      */
-    public function Edit_user($id,Request $request,UserPasswordEncoderInterface $encoder){
+    public function Edit_user($id,Request $request,UserPasswordEncoderInterface $encoder)
+    {
+        $uss = $this->getUser();
         $user = $this->up->findOneBy(array('id'=>$id));
         $form= $this->createForm(AddUtilisateurType::class, $user);
         $form->handleRequest($request);
@@ -104,7 +106,7 @@ class UtilisateurController extends AbstractController
             return $this->redirect("/utilisateur");
         }
         return $this->render('back/profile.html.twig',
-            ['form'=>$form->Createview()]);
+            ['form'=>$form->Createview(),'uss'=>$uss]);
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Entity\Produits;
+use App\Entity\Publicite;
 use App\Form\ProduitsType;
 use App\Repository\ProduitsRepository;
 use App\Repository\UtilisateurRepository;
@@ -18,22 +19,38 @@ class ProduitsController extends AbstractController
 {    private $up ;
 
     /**
-     * @Route("/produitf", name="frontproduits")
+     * @Route("/produitsolo", name="produitsolos")
      */
-    public function produitsf(Request $request)
+    public function produitsolo(Request $request)
     {
         $id =   $request->get('id');
-        $ca=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findBy(['id'=>$id]);
-        $cas=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
-
-        $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$ca]);
-        //  $categorie=$this->getDoctrine()->getManager()->getRepository(Categories::class)->find($id);
-
-   //     $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$categorie]);
-        return $this->render('front/produits.html.twig', [
-            'prod' => $en,'cat'=>$cas
+        $ca=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['id'=>$id]);
+        return $this->render('front/produitsolo.html.twig', [
+            'prod' => $ca
         ]);
     }
+
+
+
+    /**
+     * @Route("/produitf", name="frontproduitss")
+     */
+    public function produi(Request $request)
+    {
+        $id =   $request->get('id');
+        $cas=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
+        $pubicite=$this->getDoctrine()->getManager()->getRepository(Publicite::class)->findAll();
+
+        if ($id){
+            $ca=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findBy(['id'=>$id]);
+            $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$ca]);
+        }else {
+            $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
+        }
+
+        return $this->render('front/prod.html.twig', [             'prod' => $en,'cat'=>$cas,'pubicite' => $pubicite        ]);
+    }
+
     /**
      * @Route("/produitindex", name="produitindex")
      */
@@ -96,6 +113,7 @@ class ProduitsController extends AbstractController
             ]
         );
     }
+
 
 
     /**

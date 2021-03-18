@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Reclamations;
 use App\Entity\Utilisateur;
 use App\Entity\Produits;
 use App\Form\AddUtilisateurType;
+use App\Form\ReclamationsType;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,7 +57,30 @@ class BackaccController extends AbstractController
 
     }
 
+    /**
+     * @Route("/listutili", name="bloglistutili")
+     */
+    public function listutili(): Response
+    {
+        $user=$this->getUser();
+        $users = $this->up->findByRole('ROLE_ADMIN');
+        return $this->render('back/list_utilisateurs.html.twig', [
+            'controller_name' => 'BackaccController', 'us'=>$user,"users"=>$users
+        ]);
+    }
 
+
+    /**
+     * @Route("/listadmin", name="bloglistadmins")
+     */
+    public function listadmin(): Response
+    {
+        $user=$this->getUser();
+        $users = $this->up->findByRole('ROLE_ADMIN');
+        return $this->render('back/listadmins.html.twig', [
+            'controller_name' => 'BackaccController', 'us'=>$user,"users"=>$users
+        ]);
+    }
 
 
     /**
@@ -118,6 +143,7 @@ class BackaccController extends AbstractController
 $us = $this->getUser();
         $user = new Utilisateur();
         $users = $this->up->findAll();
+        $userss = $this->up->findByRole('ROLE_FOUR');
         $form= $this->createForm(AddUtilisateurType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
@@ -130,23 +156,12 @@ $us = $this->getUser();
         }
         else {
             return $this->render('back/Fournisseurs.html.twig',
-                ['form'=>$form->Createview(),'users'=>$users,'us'=>$us]);
+                ['form'=>$form->Createview(),'users'=>$users,'us'=>$us,'userss'=>$userss]);
         }
 
         //  $form = $this->createForm(UtilisateurAddType::class,$user)
     }
 
-
-    /**
-     * @Route("/listutili", name="bloglistutili")
-     */
-    public function listutili(): Response
-    {
-        $user=$this->getUser();
-        return $this->render('back/list_utilisateurs.html.twig', [
-            'controller_name' => 'BackaccController', 'us'=>$user
-        ]);
-    }
 
 
     /**
@@ -167,6 +182,50 @@ $us = $this->getUser();
         $user=$this->getUser();
         $produit=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
         return $this->render('back/data-visualization.html.twig', [
+            'controller_name' => 'BackaccController','us'=>$user, 'produit'=>$produit
+        ]);
+    }
+
+
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route ("/reclamfour",name="ajouterreclamationsss")
+     */
+    function Addd(Request $request,\Swift_Mailer $mailer)
+    {
+        $user=$this->getUser();
+
+        $reclamations=new Reclamations();
+        $form=$this->createForm(ReclamationsType::class, $reclamations);
+        $en=$this->getDoctrine()->getManager()->getRepository(Reclamations::class)->findAll();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($reclamations);
+            $em->flush();
+            return $this->redirectToRoute('ajouterreclamationsss');
+        }
+        return $this->render('back/reclam.html.twig',
+            [
+                'form'=>$form->createView(), 'reclam'=>$en, 'us'=>$user
+            ]
+        );
+    }
+
+
+
+
+    /**
+     * @Route("/statfour", name="blogdatalkl")
+     */
+    public function stat(): Response
+    {
+        $user=$this->getUser();
+        $produit=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
+        return $this->render('back/statfour.html.twig', [
             'controller_name' => 'BackaccController','us'=>$user, 'produit'=>$produit
         ]);
     }

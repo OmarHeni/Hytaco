@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -25,20 +26,24 @@ class Produits
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="*nom est obligatoire")
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="*donnez le prix svp")
      * @ORM\Column(type="float")
      */
     private $prix;
 
     /**
+     * @Assert\NotBlank(message="*remplir le champ description svp ")
      * @ORM\Column(type="string", length=255)
      */
     private $description;
 
     /**
+     * @Assert\NotBlank(message="*quantite d'une produit est obligatoire")
      * @ORM\Column(type="integer")
      */
     private $quantite;
