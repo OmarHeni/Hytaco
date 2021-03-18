@@ -7,6 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
+use App\Repository\CommentaireRepository;
+use App\Entity\Locaux;
+use Doctrine\ORM\EntityManagerInterface;
 
 class FrontaccController extends AbstractController
 {
@@ -15,9 +20,11 @@ class FrontaccController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        $enl=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findAll();
+
         $en=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
         return $this->render('front/acceuil.html.twig', [
-            'cat' => $en,
+            'cat' => $en,'locx'=>$enl
         ]);
     }
 
@@ -84,6 +91,37 @@ class FrontaccController extends AbstractController
         return $this->render('front/evenements.html.twig', [
             'controller_name' => 'FrontaccController',
         ]);
+    }
+
+
+    /**
+     * @Route("/commentairef", name="frontcommentaire")
+     */
+
+    public function AjouterCommentaire(Request $request,CommentaireRepository $comp)
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $coms = $comp->findAll();
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commentaire);
+            $em->flush();
+            return $this->redirectToRoute('frontcommentaire');
+        }
+        return $this->render('front/frontacc/commentaires.html.twig', ['form' => $form->createView(),'coms'=>$coms
+        ]);
+    }
+
+    /**
+     * @Route("/supprimer{id}", name="supprimer")
+     */
+    public function delete (CommentaireRepository $comp,$id,  EntityManagerInterface $entityManager){
+        $com=  $comp->find($id);
+        $entityManager->remove($com);
+        $entityManager->flush();
+        return $this->redirectToRoute('frontcommentaire');
     }
 
 }

@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ProgrammesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ProgrammesRepository::class)
@@ -21,23 +24,37 @@ class Programmes
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank(message="Nom obligatoire")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan("today")
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message="Duree obligatoire")
+     */
+    private $duree;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="Details obligatoire")
+     */
+    private $details;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Transporteur::class, inversedBy="programmes")
+     */
+    private $transporteur;
 
     /**
      * @ORM\OneToMany(targetEntity=Alerts::class, mappedBy="programme")
      */
     private $alerts;
-
-    public function __construct()
-    {
-        $this->alerts = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -67,6 +84,54 @@ class Programmes
 
         return $this;
     }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
+
+        return $this;
+    }
+
+    public function getTransporteur(): ?Transporteur
+    {
+        return $this->transporteur;
+    }
+
+    public function setTransporteur(?Transporteur $transporteur): self
+    {
+        $this->transporteur = $transporteur;
+
+        return $this;
+    }
+
+
+
+
+
+
+    public function __construct()
+    {
+        $this->alerts = new ArrayCollection();
+    }
+
+
 
     /**
      * @return Collection|Alerts[]

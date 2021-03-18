@@ -127,110 +127,34 @@
 
 
 
-
-<!-- ABOUT -->
-<section id="aboutlocaux" class="parallax-section">
-     <div class="container">
-          <div class="row">
-
-               <div class="col-md-offset-1 col-md-10 col-sm-12">
-                    <div class="col-md-offset-1 col-md-10 col-sm-4 item">
-                         <h3>Locaux</h3>
-
-
-                         <h4>Ici, vous pouvez trouvez les meilleurs locaux de camping choisis par notre equipe et nos utilisateurs.</h4>
-                    </div>
-               </div>
-
-          </div>
-     </div>
-</section>
-
-
-
-
-
-
 <!-- PROJECT -->
 <section id="locaux" class="parallax-section">
      <div class="container">
-          <div class="row">
+          {% for loc in locx %}
 
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image1.jpg" class="image-popup">
-                              <img src="images/project-image1.jpg" class="img-responsive" alt="">
+               <div class="row">
+                    <div class="col-md-6 col-sm-4">
+                         <!-- PROJECT ITEM -->
+                         <div class="project-item">
+                              <a href="images/properties/{{ loc.imageName }}" class="image-popup">
+                                   <img src="images/properties/{{ loc.imageName }}" class="img-responsive" alt="mllm">
 
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                        <h3>Beautiful Women</h3>
+                                   <div class="project-overlay">
+                                        <div class="project-info">
+                                             <h3>{{ loc.nom }}</h3>
+                                             <a href="/commentairef">Conversation</a>
 
+                                        </div>
                                    </div>
-                              </div>
-                         </a>
+                              </a>
+                         </div>
                     </div>
+
                </div>
+          {% endfor %}
 
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image2.jpg" class="image-popup">
-                              <img src="images/project-image2.jpg" class="img-responsive" alt="">
-
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                        <h3>Nulla efficitur quam</h3>
-
-                                   </div>
-                              </div>
-                         </a>
-                    </div>
-               </div>
-
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image3.jpg" class="image-popup">
-                              <img src="images/project-image3.jpg" class="img-responsive" alt="">
-
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                        <h3>Large Sea Wave</h3>
-
-                                   </div>
-                              </div>
-                         </a>
-                    </div>
-               </div>
-
-               <div class="col-md-6 col-sm-6">
-                    <!-- PROJECT ITEM -->
-                    <div class="project-item">
-                         <a href="images/project-image4.jpg" class="image-popup">
-                              <img src="images/project-image4.jpg" class="img-responsive" alt="">
-
-                              <div class="project-overlay">
-                                   <div class="project-info">
-                                        <h3>Lorem ipsum dolor</h3>
-
-                                   </div>
-                              </div>
-                         </a>
-                    </div>
-               </div>
-
-          </div>
      </div>
 </section>
-
-
-
-
-
-
-
-
 
 
 
@@ -265,8 +189,8 @@
                                         </ul>
                                    </div>
                               </div>
-                              <p>{{ c.description }}</p>
                               <h3>{{ c.nom }}</h3>
+                              <p>{{ c.description }}</p>
                          </div>
                          {% endfor %}
                     </div>

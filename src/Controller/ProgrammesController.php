@@ -23,6 +23,16 @@ class ProgrammesController extends AbstractController
             'controller_name' => 'ProgrammesController',
         ]);
     }
+    /**
+     * @Route("/programmesf", name="programmesf")
+     */
+    public function affprog(): Response
+    {
+        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        return $this->render('front/programmes.html.twig', [
+            'controller_name' => 'ProgrammesController','progs'=>$en
+        ]);
+    }
 
 
     /**
@@ -44,23 +54,39 @@ class ProgrammesController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route ("/programmes",name="ajouterprogrammes")
      */
-    function Add(Request $request)
+    function Add(Request $request,\Swift_Mailer $mailer)
     {
         $programmes=new Programmes();
-        $user=$this->getUser();
+        $us= $this->getUser();
         $form=$this->createForm(ProgrammesType::class, $programmes);
         $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+            $message = (new \Swift_Message('Nouvelle programme'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($programmes->getTransporteur()->getMail())
+                ->setBody(
+                    'Vouz etes le transporteur du programme '.$programmes->getNom());
+            $status= $mailer->send($message);
             $em=$this->getDoctrine()->getManager();
             $em->persist($programmes);
             $em->flush();
             return $this->redirectToRoute('ajouterprogrammes');
         }
+        if($request->isMethod("POST"))
+        {
+            $nom = $request->get('nom');
+            $programmes=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findBy(array('nom'=>$nom));
+            return $this->render('back/programmes.html.twig',
+                [
+                    'form'=>$form->createView(), 'prog'=>$programmes,'us'=>$us
+                ]
+            );
+        }
         return $this->render('back/programmes.html.twig',
             [
-                'form'=>$form->createView(), 'prog'=>$en , 'us'=>$user
+                'form'=>$form->createView(), 'prog'=>$en,'us'=>$us
             ]
         );
     }
@@ -74,6 +100,7 @@ class ProgrammesController extends AbstractController
     function modifier(ProgrammesRepository $repository,$id,Request $request)
     {
         $programmes=$repository->find($id);
+        $us= $this->getUser();
         $form=$this->createForm(ProgrammesType::class,$programmes);
         $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
         $form->handleRequest($request);
@@ -85,7 +112,7 @@ class ProgrammesController extends AbstractController
         }
         return $this->render('back/programmes.html.twig',
             [
-                'form'=>$form->createView(), 'prog'=>$en
+                'form'=>$form->createView(), 'prog'=>$en,'us'=>$us
             ]
         );
     }

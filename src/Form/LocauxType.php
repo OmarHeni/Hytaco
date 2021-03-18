@@ -19,6 +19,7 @@ class LocauxType extends AbstractType
             ->add('imageFile',FileType::class,[
                 'required'=>false
             ])
+            ->add('note')
         ;
     }
 
