@@ -19,7 +19,24 @@ class PanierController extends AbstractController
     {
         $this->session = $session;
     }
+    /**
+     * @Route("/pay",name="payement")
+     */
+    public function payement(Request $request) : Response{
+        if ($request->isMethod('POST')) {
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_51IXl9nAyyifkJ2GTw02VQPccPVPzbU7UW382UezlP4Npm0ajBpy9eJMhiFk3PHdfvO7Co06fR2dzmXlqMei3CqPC00ZksblkBB'
+            );
+            $stripe->charges->create([
+                'amount' => $request->get('amount')*0.3,
+                'currency' => 'eur',
+                'source' => $request->request->get('stripeToken'),
+                'description' => 'My First Test Charge (created for API docs)',
+            ]);
+        }
+        return $this->render('front/payement.html.twig');
 
+    }
     /**
      * @Route("/panier", name="panier")
      */
@@ -74,7 +91,8 @@ class PanierController extends AbstractController
      * @Route ("/ajoutcom", name="ajoutcom")
      */
     public function ajoutcom(ProduitsRepository $produitRepository, Request $request): Response
-    { $user = $this->getUser();
+    {$total = 0 ;
+        $user = $this->getUser();
     if ($user) {
         if ($user->isVerified()) {
             $idP = $this->session->get('Pid', []);
@@ -95,6 +113,7 @@ class PanierController extends AbstractController
                         $Commande->setProduit($prod);
                         $Commande->setQuantite($parametersAsArray['qty'][$i]);
                         $Commande->setPrix($prod->getPrix() * $parametersAsArray['qty'][$i]);
+                        $total += ($prod->getPrix() * $parametersAsArray['qty'][$i]);
                         $en = $this->getDoctrine()->getManager();
                         $en->persist($Commande);
                         $en->flush();
@@ -104,7 +123,7 @@ class PanierController extends AbstractController
                     }
                 }
                 $this->session->set('Pid', []);
-                return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/produitf?id=1"], 200);
+                return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/pay?amount=".strval($total)], 200);
             }
             return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/panier"], 200);
         } else {

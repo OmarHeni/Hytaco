@@ -6,6 +6,7 @@ use App\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -19,8 +20,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface ;
 
-class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface,LogoutSuccessHandlerInterface
 {
     use TargetPathTrait;
 
@@ -92,6 +94,9 @@ class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implement
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($this->urlGenerator->generate($targetPath));
+        }
             return new RedirectResponse($this->urlGenerator->generate("panier"));
             //
 
@@ -103,4 +108,10 @@ class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implement
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
+
+    public function onLogoutSuccess(Request $request)
+    {
+        return new RedirectResponse($this->urlGenerator->generate("app_loginf"));
+    }
+
 }

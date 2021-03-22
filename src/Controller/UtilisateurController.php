@@ -8,6 +8,7 @@ use App\Form\AddUtilisateurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Component\Routing\Generator\UrlGenerator ;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 
 class UtilisateurController extends AbstractController
 {
@@ -26,7 +31,6 @@ class UtilisateurController extends AbstractController
     public function __construct(UtilisateurRepository $up,EntityManagerInterface $em,UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
-
         $this->up = $up;
         $this->em = $em ;
     }
@@ -76,9 +80,11 @@ class UtilisateurController extends AbstractController
         $users = $this->up->findAll();
         $form= $this->createForm(AddUtilisateurType::class, $user);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid())
         {
-            $hash = $encoder->encodePassword($user,$user->getPassword());
+
+        /*    $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);
            $this->em->persist($user);
            $this->em->flush();
@@ -91,7 +97,7 @@ class UtilisateurController extends AbstractController
                     'text/html'
                 )
             ;
-           $status= $mailer->send($message);
+           $status= $mailer->send($message);*/
             return $this->redirect("/utilisateur");
         }
         else {
@@ -149,4 +155,64 @@ public function activation ($token, UtilisateurRepository $up){
     $this->addFlash('message','vous avez activé votre compte');
 return $this->redirect('accueil');*/
 }
+    /**
+     * @Route("/Entermail",name="entermail")
+     */
+public function entermail(Request $request,TokenGeneratorInterface $generator , \Swift_Mailer $mailer,UrlGeneratorInterface $ur): Response{
+    $form = $this->createFormBuilder()
+        ->add('email', TextType::class)
+        ->getForm();
+    $en = $this->getDoctrine()->getManager();
+    $form->handleRequest($request);
+
+    if($form->isSubmitted() && $form->isValid())
+    {
+        $data = $form->getData();
+
+        $user=$en->getRepository(Utilisateur::class)->findOneBy(['email'=>$data['email']]);
+
+        $token = $generator->generateToken();
+$user->setChangeToken($token);
+$en->persist($user);
+$en->flush();
+        $url="http://127.0.0.1:8000/change_password/".$token;
+        $message = (new \Swift_Message('Changement du mot de passe'))
+            ->setFrom('hytacocampi@gmail.com')
+            ->setTo($user->getEmail())
+            ->setBody('<p>Bonjour'.$user->getPrenom().'</p> <p> une demande de changement de mot de passe a été effectué
+pour l application campi .Veuillez cliquer sur <a href='.$url.'> Cliquez ici </a> '
+                              ,
+                'text/html'
+            )
+        ;
+        $status= $mailer->send($message);
+
+        return $this->redirectToRoute('frontacc');
+    }
+    return $this->render("front/mailrequest.html.twig",['form'=>$form->createView()]);
 }
+    /**
+     * @Route("/change_password/{token}",name="change_password")
+     */
+    public function changepassword($token,Request $request,UserPasswordEncoderInterface $encoder)
+    {
+        $form = $this->createFormBuilder()
+            ->add('password', PasswordType::class)
+            ->getForm();
+        $en = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $user = $en->getRepository(Utilisateur::class)->findOneBy(['change_token' => $token]);
+            $hash = $encoder->encodePassword($user,$data['password']);
+            $user->setPassword($hash);
+            $en->persist($user);
+            $en->flush();
+            return $this->redirectToRoute('frontacc');
+
+        }
+        return $this->render("front/modifierpassword.html.twig", ['form' => $form->createView()]);
+    }
+
+    }

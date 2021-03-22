@@ -11,6 +11,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity ;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
+
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  * @Vich\Uploadable
@@ -44,18 +46,18 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      * @Assert\Length(min="6",minMessage="Votre mot de passe doit etre superieur a 6 caractéres")
      * @Assert\EqualTo(propertyPath="confirmPassword",message="Votre mot de passe doit etre identitique au mot de passe de confirmation")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Adresse;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string|null
      */
@@ -66,18 +68,18 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $imageFile;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $Telephone;
 
     /**
      * @Assert\NotBlank(message="le nom ne doit pas etre vide")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="le prenom ne doit pas etre vide")
      */
     private $prenom;
@@ -102,6 +104,20 @@ class Utilisateur implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $activationToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $change_token;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $githubId;
+
+public $captcha;
+
+
 
     public function __construct()
     {
@@ -160,12 +176,12 @@ class Utilisateur implements UserInterface, \Serializable
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -197,7 +213,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->Adresse;
     }
 
-    public function setAdresse(string $Adresse): self
+    public function setAdresse(?string $Adresse): self
     {
         $this->Adresse = $Adresse;
 
@@ -209,7 +225,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->Telephone;
     }
 
-    public function setTelephone(int $Telephone): self
+    public function setTelephone(?int $Telephone): self
     {
         $this->Telephone = $Telephone;
 
@@ -253,7 +269,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -265,7 +281,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -372,4 +388,29 @@ class Utilisateur implements UserInterface, \Serializable
 public function isVerified () : bool{
         return($this->activationToken==null);
 }
+
+public function getChangeToken(): ?string
+{
+    return $this->change_token;
+}
+
+public function setChangeToken(?string $change_token): self
+{
+    $this->change_token = $change_token;
+
+    return $this;
+}
+
+public function getGithubId(): ?int
+{
+    return $this->githubId;
+}
+
+public function setGithubId(?int $githubId): self
+{
+    $this->githubId = $githubId;
+
+    return $this;
+}
+
 }

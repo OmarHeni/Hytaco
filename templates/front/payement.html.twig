@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Scenic HTML Template</title>
+
+<!--
+
+Template 2099 Scenic
+
+http://www.tooplate.com/view/2099-scenic
+
+-->
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="css/stylep.css?jhh">
+<link rel="stylesheet" href="css/owl.theme.css">
+<link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/tooplate-style.css">
+<!-- MAIN CSS -->
+
+<style>
+    @media(min-width:768px) {
+        .custom-navbar {
+            background: #4dc47d;
+        }
+    }
+    .form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+</style>
+
+</head>
+<body>
+
+
+
+
+<!-- MENU -->
+<div class="navbar custom-navbar navbar-fixed-top" role="navigation">
+     <div class="container">
+
+          <!-- NAVBAR HEADER -->
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+               <!-- lOGO -->
+               <a href="visitor.html" class="navbar-brand">Campi</a>
+          </div>
+
+          <!-- MENU LINKS -->
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#services" class="smoothScroll">Decouvrir plus</a></li>
+                    <li><a href="compte.html" class="smoothScroll">Connectez-vous</a></li>
+
+               </ul>
+          </div>
+
+     </div>
+</div>
+
+
+
+<br><br><br><br><br><br><br>
+<form method="post" id="payment-form">
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display Element errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button>Submit Payment</button>
+</form>
+
+<footer>
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-5 col-sm-6">
+                    <h3>Hytaco</h3>
+                    <p>08 Rue Ibn Kholdoun , El Ghazela , <br>Riadh El Andalous</p>
+
+
+               </div>
+
+               <div class="col-md-4 col-sm-6">
+                    <div class="footer-info">
+                    	<h3>Restez en contact</h3>
+                         <p><a href="tel:55039837">+216 55 039 837</a></p>
+                         <p><a href="mailto:info@company.com">hytaco.group@gmail.com</a></p>
+                         <p><a href="#">@ESPRIT</a></p>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-12">
+
+                    <h3>A propos de nous</h3>
+                    <p>Nous somme un groupe de 6 personnes de l'etabliseement ESPRIT<br> avec une seule motivation , créer<br>le premier site de camping en Tunisie.</p>
+                    <ul class="social-icon">
+                         <li><a href="#" class="fa fa-twitter"></a></li>
+                         <li><a href="#" class="fa fa-facebook"></a></li>
+                         <li><a href="#" class="fa fa-instagram"></a></li>
+                         <li><a href="#" class="fa fa-linkedin"></a></li>
+                    </ul>
+
+               </div>
+
+               <div class="clearfix"></div>
+
+
+          </div>
+     </div>
+</footer>
+
+
+<!-- SCRIPTS -->
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+	var stripe = Stripe('pk_test_51IXl9nAyyifkJ2GTqDRXbWplMhM2wBsSGb0q4yGcNigtMQtFF7nQ1VfhNI1a06QMiKjxaed9psFGGsBCInn4BDXL00rBMajIGF');
+var elements = stripe.elements();
+	// Custom styling can be passed to options when creating an Element.
+var style = {
+  base: {
+    // Add your base input styles here. For example:
+    fontSize: '16px',
+    color: '#32325d',
+  },
+};
+
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
+
+// Create a token or display an error when the form is submitted.
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the customer that there was an error.
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+function stripeTokenHandler(token) {
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+
+  // Submit the form
+  form.submit();
+}
+</script>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +13,6 @@
     https://templatemo.com/tm-455-visual-admin
     -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
 
@@ -102,7 +102,7 @@
                             <td>{{ user.Adresse }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.telephone }}</td>
-                            <td><img style="height: 100px; width:100px" src="images/properties/{{ user.imageName }}"></td>
+                            <td><img style="height: 100px; width:100px" src="images/properties/{{ user.imageName }} " alt="{{ user.nom }}"></td>
                             <td><a href="{{ path('edit_user',{'id':user.id}) }}"class="templatemo-edit-btn">Edit</a></td>
                             <td><a href="{{ path('del_user',{'id':user.id}) }}" class="templatemo-link">Delete</a></td>
                         </tr>
@@ -155,11 +155,21 @@
                                 <p>Maximum upload size is 5 MB.</p>
                             </div>
                         </div>
+
+
+
+
                         <div class="form-group text-right">
+
+
                             {{ form_row(form.Submit,{'attr':{'class':'templatemo-blue-button'}}) }}
                         </div>
+
                         {{form_end(form)}}
+
                     </div>
+
+
                     <footer class="text-right">
                         <p>Copyright &copy; 2021 Hytaco</p>
                     </footer>
@@ -167,9 +177,24 @@
             </div>
         </div>
 
+    </div>
+</div>
         <!-- JS -->
-        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
-        <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
-        <script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+         <!-- Templatemo Script -->
 </body>
+<script src="//www.google.com/recaptcha/api.js?hl=en"></script>
+
+<script>
+   function Ask(event){
+       var val = confirm("Voulez-vous supprimer?");
+       if( val == false ) {
+           event.preventDefault();
+       }
+    }
+    document.querySelectorAll('.templatemo-link').forEach(function (qty){
+        qty.addEventListener('click',Ask);
+    });
+</script>
+
+
 </html>

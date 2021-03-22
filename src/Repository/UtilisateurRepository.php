@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use League\OAuth2\Client\Provider\GithubResourceOwner;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,7 +36,33 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
+public function findOrCreateFromGithubOauth(GithubResourceOwner $owner){
+        /** @var Utilisateur|null $user */
+        $user = $this->createQueryBuilder('u')
+            ->where('u.githubId= :githubId')
+            ->orWhere('u.email = :email')
+            ->setParameters([
+                'email'=> $owner->getEmail(),
+                'githubId'=> $owner->getId()
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+        if ($user){
+            if ($user->getGithubId()== null){
+                $user->setGithubId($owner->getId());
+                $this->getEntityManager()->flush();
+            }
+            return $user ;
+        }
+        $user = (new Utilisateur())
+            ->setGithubId($owner->getId())
+            ->setEmail($owner->getEmail())
+            ->setNom($owner->getName())
+            ->setRoles(['ROLE_CLIENT']);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        return $user ;
+}
     // /**
     //  * @return Utilisateur[] Returns an array of Utilisateur objects
     //  */
