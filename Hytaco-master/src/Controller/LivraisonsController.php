@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface ;
+use CalendarBundle\CalendarEvents;
+use CalendarBundle\Entity\Event;
+use CalendarBundle\Event\CalendarEvent;
+
 class LivraisonsController extends AbstractController
 {
     /**
@@ -25,9 +30,15 @@ class LivraisonsController extends AbstractController
     /**
      * @Route("/SupprimerLivraisons/{id}",name="deletelivraisons")
      */
-    function Delete($id,LivraisonsRepository $repository)
+    function Delete($id,LivraisonsRepository $repository, \Swift_Mailer $mailer)
     {
         $livraisons=$repository->find($id);
+        $body = 'La livrasion #'.strval($id).'a été supprimée';
+       $message = (new \Swift_Message('Livraison annulé'))
+            ->setFrom('HYTACOCAMPII@gmail.com')
+            ->setTo($livraisons->getLivreur()->getMail())
+            ->setBody($body);
+        $mailer->send($message);
         $em=$this->getDoctrine()->getManager();
         $em->remove($livraisons);
         $em->flush();//mise a jour
@@ -85,4 +96,6 @@ class LivraisonsController extends AbstractController
             ]
         );
     }
+
+
 }

@@ -33,6 +33,7 @@ class LivreursController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($livreurs);
         $em->flush();//mise a jour
+
         return $this->redirectToRoute('ajouterlivreurs');
     }
 
@@ -55,7 +56,19 @@ class LivreursController extends AbstractController
             $em->persist($livreurs);
             $em->flush();
             return $this->redirectToRoute('ajouterlivreurs');
+
         }
+        if($request->isMethod("POST"))
+        {
+            $nom = $request->get('nom');
+            $livreurs=$this->getDoctrine()->getManager()->getRepository(Livreurs::class)->findBy(array('nom'=>$nom));
+            return $this->render('back/livreurs.html.twig',
+                [
+                    'form'=>$form->createView(), 'liv'=>$livreurs
+                ]
+            );
+        }
+
         return $this->render('back/livreurs.html.twig',
             [
                 'form'=>$form->createView(), 'liv'=>$en

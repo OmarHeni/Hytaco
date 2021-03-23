@@ -15,7 +15,9 @@
     <link href="{{asset("css/font-awesome.min.css")}}" rel="stylesheet">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -92,7 +94,6 @@
                             <td><a href="" class="white-text templatemo-sort-by">#ID <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Date <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Adresse <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Livreur <span class="caret"></span></a></td>
                             <td>Edit</td>
                             <td>Delete</td>
                         </tr>
@@ -102,7 +103,6 @@
                                 <td>{{ li.id }}</td>
                                 <td> {{ li.datelivraison|date('Y-m-d')}}</td>
                                 <td> {{ li.adresse }}</td>
-                                <td>    </td>
                                 <td><a href="/ModifierLivraisons/{{li.id}}" class="templatemo-edit-btn">Edit</a></td>
                                 <td><a href={{  path("deletelivraisons",{'id':li.id})}}>Delete</a></td>
                             </tr>
@@ -132,15 +132,14 @@
                             </div>
                         </div>
 
+                    <div class="row form-group">
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <label for="inputFirstName">Livreur</label>
+                            {#  <input type="text" name="adresse" class="form-control" id="inputFirstName" placeholder="adresse"> #}
+                            {{ form_widget(form.livreur,{'attr': {'class': 'form-control','placeholder':'adresse'}}) }}
+                        </div>
+                    </div>
 
-                        <div class="row form-group">
-                            <div class="col-lg-6 col-md-6 form-group">
-                                <label class="control-label templatemo-block">Livreur</label>
-                                <select class="form-control">
-                                    <option value="html">1</option>
-
-                                </select>
-                            </div>
 
                             <div class="form-group text-right">
                                 <button type="submit" class="templatemo-blue-button">Ajouter</button>
@@ -151,6 +150,7 @@
                 {{ form_end(form) }}
 
         </div>
+        <div id="calendar-holder"></div>
 
         <footer class="text-right">
             <p>Copyright &copy; 2021 Hytaco</p>
@@ -160,8 +160,39 @@
 </div>
 
 <!-- JS -->
-<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
-<script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
-<script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var calendarEl = document.getElementById('calendar-holder');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            defaultView: 'dayGridMonth',
+            editable: true,
+            eventSources: [
+                {
+                    url: "/fc-load-events",
+                    method: "POST",
+                    extraParams: {
+                    },
+                    failure: () => {
+                        alert("There was an error while fetching FullCalendar!");
+                    },
+                },
+            ],
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            },
+            plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+            timeZone: 'CET',
+        });
+        calendar.render();
+    });
+</script>
 </body>
 </html>

@@ -27,6 +27,12 @@ class Livraisons
      */
     private $adresse;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Livreurs::class, inversedBy="livraisons")
+     */
+    private $livreur;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,4 +61,18 @@ class Livraisons
 
         return $this;
     }
+
+    public function getLivreur(): ?Livreurs
+    {
+        return $this->livreur;
+    }
+
+    public function setLivreur(?Livreurs $livreur): self
+    {
+        $this->livreur = $livreur;
+
+        return $this;
+    }
+
+
 }
