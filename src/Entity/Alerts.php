@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AlertsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
 
 /**
  * @ORM\Entity(repositoryClass=AlertsRepository::class)
@@ -53,7 +54,22 @@ class Alerts
      * @ORM\ManyToOne(targetEntity=Programmes::class, inversedBy="alerts")
      */
     private $programme;
+    /**
+     * @CaptchaAssert\ValidCaptcha(
+     *      message = "CAPTCHA validation failed, try again."
+     * )
+     */
+    protected $captchaCode;
 
+    public function getCaptchaCode()
+    {
+        return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+    }
     public function getId(): ?int
     {
         return $this->id;

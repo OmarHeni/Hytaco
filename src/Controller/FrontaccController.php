@@ -12,6 +12,8 @@ use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use App\Entity\Locaux;
 use Doctrine\ORM\EntityManagerInterface;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 class FrontaccController extends AbstractController
 {
@@ -38,6 +40,19 @@ class FrontaccController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/contactf", name="fcontact")
+     */
+    public function contact(): Response
+    {
+        $httpClient = new \Http\Adapter\Guzzle6\Client();
+        $provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient, null, 'AIzaSyB0zkek9cGyGPwkFIYy8uNhbzppD_s4gpE');
+        $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
+        $result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+        return $this->render('front/contact.html.twig', [
+            'controller_name' => 'FrontaccController',
+        ]);
+    }
 
 
     /**

@@ -11,6 +11,8 @@
     Visual Admin Template
     https://templatemo.com/tm-455-visual-admin
     -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
     <link href="{{asset("css/font-awesome.min.css")}}" rel="stylesheet">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
@@ -273,5 +275,8 @@
 
 
 </script>
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 </body>
 </html>

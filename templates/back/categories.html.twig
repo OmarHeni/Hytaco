@@ -79,6 +79,7 @@
                         <li><a href="/blog" class="active">
                                 {{ us.prenom }}
                                 {{ us.nom }}
+                                <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
                             </a></li>
                         <li><a href="/profile">Profile</a></li>
                         <li><a href="/listutili">Administrateurs</a></li>
@@ -231,6 +232,9 @@
 
 
     </script>
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 
 </body>
 </html>

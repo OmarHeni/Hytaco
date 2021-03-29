@@ -15,6 +15,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -118,7 +119,9 @@
             </div>
         </div>
     </div>
-
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
     <!-- JS -->
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
     <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->

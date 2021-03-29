@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use App\Entity\Postlike;
 use App\Entity\Produits;
 use App\Entity\Publicite;
 use App\Form\ProduitsType;
+use App\Repository\PostlikeRepository;
 use App\Repository\ProduitsRepository;
 use App\Repository\UtilisateurRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ProduitsController extends AbstractController
 {    private $up ;
@@ -24,9 +28,13 @@ class ProduitsController extends AbstractController
     public function produitsolo(Request $request)
     {
         $id =   $request->get('id');
+        $pubicite=$this->getDoctrine()->getManager()->getRepository(Publicite::class)->findAll();
+        $cas=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
+        $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
+
         $ca=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['id'=>$id]);
         return $this->render('front/produitsolo.html.twig', [
-            'prod' => $ca
+            'prod' => $ca,'pubicite' => $pubicite,'cat'=>$cas,'prods' => $en
         ]);
     }
 
@@ -35,20 +43,75 @@ class ProduitsController extends AbstractController
     /**
      * @Route("/produitf", name="frontproduitss")
      */
-    public function produi(Request $request)
+    public function produi(Request $request,PaginatorInterface $paginator)
     {
         $id =   $request->get('id');
         $cas=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findAll();
         $pubicite=$this->getDoctrine()->getManager()->getRepository(Publicite::class)->findAll();
 
+
         if ($id){
-            $ca=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findBy(['id'=>$id]);
-            $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$ca]);
-        }else {
-            $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
+        $ca=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findBy(['id'=>$id]);
+            $produits=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findBy(['categorie'=>$ca]);
+            $en=$paginator->paginate(
+                $produits,
+                $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+                4);
+            }
+        else {
+            $produits=$this->getDoctrine()->getRepository(Produits::class)->findBy([],['nom' => 'desc']);
+            $en=$paginator->paginate(
+                $produits,
+                $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+                8
+            );
+
         }
 
         return $this->render('front/prod.html.twig', [             'prod' => $en,'cat'=>$cas,'pubicite' => $pubicite        ]);
+    }
+
+    /**
+     * @Route ("/post/{id}/like",name="post_like")
+     * @param Produits $produits
+     * @param PostlikeRepository $likerepo
+     *
+     * @return Response
+     */
+    public function like (Produits $produits,PostlikeRepository $likerepo,EntityManagerInterface $entityManager):Response
+    { $user=$this->getUser();
+        if(!$user) return $this->json([
+            'code'=> 403,
+            'message'=> "unsuthorised"
+        ],403);
+
+        if($produits->islikedByUser($user)){
+            $like=$likerepo->findOneBy([
+                'post'=>$produits,
+                'user'=>$user
+            ]);
+            $entityManager->remove($like);
+            $entityManager->flush();
+            return $this->json(
+                [
+                    'code'=> 200,
+                    'message'=>'like bien supprime',
+                    'likes'=>$likerepo->count(['post'=>$produits])
+                ],200
+
+            );
+        }
+        $like =new Postlike();
+        $like->setPost($produits)
+            ->setUser($user);
+        $entityManager->persist($like);
+        $entityManager->flush();
+
+
+
+
+        return $this->json(['code'=> 200, 'message'=>'clike bien ajoute','likes'=>$likerepo->count(['post'=>$produits])],200);
+
     }
 
     /**

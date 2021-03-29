@@ -98,6 +98,7 @@
                         {{ uss.nom }}
                         ...
                     </h2><hr>
+                    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
                     <p>... </p>
                     <p></p>
                 </div>
@@ -172,7 +173,9 @@
         </div>
     </div>
 </div>
-
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 <!-- JS -->
 <script src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
 <script src="js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->

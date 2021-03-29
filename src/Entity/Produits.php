@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\PostlikeRepository;
+
 
 
 /**
@@ -75,9 +77,15 @@ class Produits
      */
     private $commandes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="post")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
 
@@ -224,5 +232,48 @@ class Produits
         return $this;
     }
 
+    /**
+     * @return Collection|Postlike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
 
+    public function addLike(Postlike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Postlike $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * permet de savaoir si cet article est like par un utilisateur
+     * @param Utilisateur $user
+     * @return boolean
+     */
+    public function islikedByUser(Utilisateur $user ):bool{
+        foreach ($this->likes as $like)
+        {
+            if ($like->getUser() == $user)
+                return true;
+        }
+        return false;
+
+    }
 }

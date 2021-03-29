@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 
 class AlertsType extends AbstractType
 {
@@ -22,6 +23,8 @@ class AlertsType extends AbstractType
             ->add('rapport',TextareaType::class)
             ->add('telephone')
             ->add('mail')
+            ->add('captchaCode', CaptchaType::class, array('captchaConfig' => 'ExampleCaptcha'))
+
         ;
     }
 

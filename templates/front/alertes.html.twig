@@ -84,14 +84,14 @@
           <!-- MENU LINKS -->
           <div class="collapse navbar-collapse">
                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/accueil#aboutproject" class="smoothScroll">Programmes</a></li>
-                    <li><a href="/evenementf" class="smoothScroll">Evenements</a></li>
-                    <li><a href="/accueil#aboutlocaux" class="smoothScroll">Locaux</a></li>
-                    <li><a href="/accueil#team" class="smoothScroll">Categories</a></li>
-                    <li><a href="/alertsf" class="smoothScroll">Alertes</a></li>
-                    <li><a href="/accueil#alerts" class="smoothScroll">Reclamations</a></li>
-                    <li><a href="/profilef" class="smoothScroll">Profile</a></li>
-                    <li><a href="#" class="smoothScroll">Deconnexion</a></li>
+                    <li><a href="/accueil#aboutproject" class="smoothScroll">{% trans %}Programmes{% endtrans %}</a></li>
+                    <li><a href="/evenementf" class="smoothScroll">{% trans %}Evenements{% endtrans %}</a></li>
+                    <li><a href="/accueil#aboutlocaux" class="smoothScroll">{% trans %}Locaux{% endtrans %}</a></li>
+                    <li><a href="/accueil#team" class="smoothScroll">{% trans %}Categories{% endtrans %}</a></li>
+                    <li><a href="/alertsf" class="smoothScroll">{% trans %}Alertes{% endtrans %}</a></li>
+                    <li><a href="/accueil#alerts" class="smoothScroll">{% trans %}Reclamations{% endtrans %}</a></li>
+                    <li><a href="/profilef" class="smoothScroll">{% trans %}Profile{% endtrans %}</a></li>
+                    <li><a href="#" class="smoothScroll">{% trans %}Deconnexion{% endtrans %}</a></li>
 
 
 
@@ -113,6 +113,11 @@
 
                <div class="col-md-offset-3 col-md-6 col-sm-12">
                     <div class="section-title">
+                         {% for message in app.flashes('success') %}
+                              <div class="alert alert-success">
+                                   {{ message }}
+                              </div>
+                         {% endfor %}
                          <h3>Envoyez une alerte</h3>
                          <h4>Ici, vous pouvez nous envoyer une alerte si quelque chose s'est mal passé durant le programme.</h4>
                     </div>
@@ -154,12 +159,14 @@
 
 
 
-                    <div class="col-md-6 col-sm-6">
+                    <div style="margin-left: 150px" class="col-md-12 col-sm-12">
+                         {{ form_row(form.captchaCode) }}
                     </div>
-
+                    </div>
+                    {# <input type="captchaCode" class="form-control" id="inputFirstName" placeholder="captchaCode">#}
                          <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
                               <div class="section-btn">
-                                   <button type="submit" class="form-control" id="cf-submit" name="submit"><span data-hover="Send Message">Send Message</span></button>
+                                   <button type="submit" onclick="noti()" class="form-control" id="cf-submit" name="submit"><span data-hover="Send Message">Send Message</span></button>
                               </div>
                          </div>
 
@@ -229,6 +236,22 @@
 </footer>
 
 
+<script type="text/javascript" src="{{ asset('vendors/scripts/push.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendors/scripts/serviceWorker.min.js') }}"></script>
+
+<script>
+     function noti(){
+
+          Push.create(" Notification  :",{
+               body: "offre bien ajouté  ! : ",
+               timeout: 10000,
+
+
+          });
+
+     };
+</script>
+
 <!-- SCRIPTS -->
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -239,6 +262,7 @@
 <script src="js/modernizr.custom.js"></script>
 <script src="js/smoothscroll.js"></script>
 <script src="js/custom.js"></script>
+
 
 </body>
 </html>

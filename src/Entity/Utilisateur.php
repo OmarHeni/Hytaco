@@ -103,11 +103,17 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $alerts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="user")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
         $this->produits = new ArrayCollection();
         $this->alerts = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
 
@@ -375,6 +381,36 @@ class Utilisateur implements UserInterface, \Serializable
             // set the owning side to null (unless already changed)
             if ($alert->getUtilisateur() === $this) {
                 $alert->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Postlike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Postlike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Postlike $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
             }
         }
 
