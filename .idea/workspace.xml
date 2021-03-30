@@ -20,29 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Security/AppGoogle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/campi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/campi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/dev/web_profiler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/dev/web_profiler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/knpu_oauth2_client.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/knpu_oauth2_client.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/stylep.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/stylep.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PanierController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PanierController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Security2Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security2Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Utilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Utilisateur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AppAuthBackAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AppAuthBackAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AppAuthFrontAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AppAuthFrontAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/commandes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/commandes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/loginf.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/loginf.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/panier.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/panier.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/payement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/payement.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,6 +245,7 @@
       <workItem from="1617019925117" duration="10499000" />
       <workItem from="1617053328585" duration="1615000" />
       <workItem from="1617055477987" duration="2862000" />
+      <workItem from="1617107084853" duration="785000" />
     </task>
     <servers />
   </component>
