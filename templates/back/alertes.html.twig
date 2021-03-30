@@ -15,7 +15,6 @@
     <link href="{{asset("css/font-awesome.min.css")}}" rel="stylesheet">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -115,7 +114,6 @@
                             <td>Delete</td>
                         </tr>
                         </thead>
-
                         {%for a in aler%}
                         <tr>
                             <td>{{ a.id }}</td>
@@ -128,11 +126,10 @@
                             <td><a onclick="return confirm('Voulez vous vraiment supprimer cet alerts');" href={{  path("deletealertes",{'id':a.id})}}>Delete</a></td>
                         </tr>
                         {% endfor %}
-
                     </table>
+
                 </div>
             </div>
-
         </div>
 
 
@@ -196,8 +193,6 @@
             }
         });
     });
-
-
 </script>
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
