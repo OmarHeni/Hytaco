@@ -72,6 +72,7 @@ class PanierController extends AbstractController
      */
     public function ajoutpanier($id): Response
     {
+
         $produits = $this->session->get('Pid', []);
         $produits = \array_diff($produits, [$id]);
         $produits[]=$id ;
