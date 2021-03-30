@@ -139,7 +139,7 @@ p {
 
 .csstransforms3d .section-btn button:hover span::before,
 .csstransforms3d .section-btn button:hover span::before {
-  background: #000000;  
+  background: #000000;
 }
 
 
@@ -193,18 +193,16 @@ a:hover, a:active, a:focus {
   background-size: cover !important;
 }
 
-#aboutproject, #project,#event,#locaux,#abouteven,#aboutlocaux,#alerts,programme,
-#team, #connexion,#inscription,#contact, footer {
+#locaux,#aboutlocaux,#alerts,#team,footer {
   background: #ffffff;
 }
 
-#aboutproject,#abouteven,#aboutlocaux,#alerts,programme,
-#team, #connexion,#inscription, #contact {
+#aboutproject,#abouteven,#aboutlocaux,#alerts,#team
+{
   padding-top: 100px;
   padding-bottom: 100px;
   text-align: center;
 }
-
 
 /*---------------------------------------
   PRE LOADER              
@@ -235,7 +233,7 @@ a:hover, a:active, a:focus {
   transition: all ease-in-out 0.4s;
   padding: 0;
   margin: 15px 20px;
- 
+
 }
 
 .custom-navbar .navbar-nav > li > a:hover,
@@ -283,7 +281,7 @@ a:hover, a:active, a:focus {
 
 @media(min-width:768px) {
   .custom-navbar {
-    background: 0 0; 
+    background: 0 0;
   }
   .custom-navbar.top-nav-collapse {
     background: #4dc47d;
@@ -484,6 +482,71 @@ a:hover, a:active, a:focus {
 }
 
 .team-item:hover .team-overlay {
+  opacity: 1;
+}
+
+
+
+
+
+/*---------------------------------------
+   CATEG
+-----------------------------------------*/
+
+#categ .item {
+  display: block;
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+#categ h3,
+#categ p {
+  margin: 0;
+}
+
+.categ-item {
+  overflow: hidden;
+  position: relative;
+  margin-top: 34px;
+  margin-bottom: 16px;
+}
+
+.categ-item img {
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
+}
+.categ-item:hover img {
+  transform: scale(1.1);
+}
+
+.categ-overlay {
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
+}
+
+.categ-overlay .social-icon {
+  position: relative;
+  top: 45%;
+}
+.categ-overlay .social-icon li a {
+  background: #ffffff;
+  color: #191919;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}
+
+.categ-item:hover .categ-overlay {
   opacity: 1;
 }
 
@@ -942,7 +1005,7 @@ footer .copyright-text {
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 15px;
- 
+
 }
 
 #services .title a {

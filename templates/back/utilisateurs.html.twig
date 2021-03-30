@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +13,6 @@
     https://templatemo.com/tm-455-visual-admin
     -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
 
@@ -31,7 +31,6 @@
         <header class="templatemo-site-header">
         </header>
         <div class="profile-photo-container" align="center">
-            <img style="height: 200px; width: 200px" src="images/properties/{{ uss.imageName }}" alt="Bicycle" class="img-circle img-thumbnail">
             <div class="profile-photo-overlay"></div>
         </div>
         <!-- Search box -->
@@ -46,22 +45,22 @@
         </div>
         <nav class="templatemo-left-nav">
             <ul>
+                <li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="/datav"><i class="fa fa-bar-chart fa-fw"></i>Statistiques</a></li>
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
-                <li><a href="/utilisateur" class="active"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
+                <li><a href="/utilisateurs"><i class="fa fa-user fa-fw"></i>utilisateurs</a></li>
                 <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>programmes</a></li>
-                <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
-                <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
-                <li><a href="/publicite"><i class="fa fa-desktop"></i>Publicite</a></li>
+                <li><a href="/evenements"><i class="fa fa fa-calendar fa-fw"></i>evenements</a></li>
+                <li><a href="/sponsors"><i class="fa fa-building fa-fw"></i>sponsors</a></li>
                 <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>locaux</a></li>
-                <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>categories</a></li>
-                <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>produits</a></li>
+                <li><a href="/categories"><i class="fa fa-tags fa-fw"></i>categories</a></li>
+                <li><a href="/produits"><i class="fa fa-tags fa-fw"></i>produits</a></li>
                 <li><a href="/commandes"><i class="fa fa-cart-arrow-down fa-fw"></i>commandes</a></li>
-                <li><a href="/livraison"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
-                <li><a href="/livreur"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
-                <li><a href="/transporteurs"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
-                <li><a href="/alerts"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
-                <li><a href="/reclamation"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
+                <li><a href="/livraisons"><i class="fa fa-truck fa-fw"></i>livraisons</a></li>
+                <li><a href="/livreurs"><i class="fa fa-male fa-fw"></i>livreurs</a></li>
+                <li><a href="/transporteur"><i class="fa fa-male fa-fw"></i>transporteur</a></li>
+                <li><a href="/alertes"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
+                <li><a href="/reclamations"><i class="fa fa-comments fa-fw"></i>reclamations</a></li>
                 <li><a href="/login"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -72,15 +71,10 @@
             <div class="row">
                 <nav class="templatemo-top-nav col-lg-12 col-md-12">
                     <ul class="text-uppercase">
-
-                        <li><a href="/blog" class="active">
-                                {{ uss.prenom }}
-                                {{ uss.nom }}
-                            </a></li>
+                        <li><a href="/blog" class="active">Admin ... </a></li>
                         <li><a href="/profile">Profile</a></li>
                         <li><a href="/listutili">Administrateurs</a></li>
                         <li><a href="/datav">Statistiques</a></li>
-                        <li><a href="/visitorf">Campi</a></li>
                     </ul>
                 </nav>
             </div>
@@ -108,7 +102,7 @@
                             <td>{{ user.Adresse }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.telephone }}</td>
-                            <td><img style="height: 100px; width:100px" src="images/properties/{{ user.imageName }}"></td>
+                            <td><img style="height: 100px; width:100px" src="images/properties/{{ user.imageName }} " alt="{{ user.nom }}"></td>
                             <td><a href="{{ path('edit_user',{'id':user.id}) }}"class="templatemo-edit-btn">Edit</a></td>
                             <td><a href="{{ path('del_user',{'id':user.id}) }}" class="templatemo-link">Delete</a></td>
                         </tr>
@@ -161,11 +155,21 @@
                                 <p>Maximum upload size is 5 MB.</p>
                             </div>
                         </div>
+
+
+
+
                         <div class="form-group text-right">
+
+
                             {{ form_row(form.Submit,{'attr':{'class':'templatemo-blue-button'}}) }}
                         </div>
+
                         {{form_end(form)}}
+
                     </div>
+
+
                     <footer class="text-right">
                         <p>Copyright &copy; 2021 Hytaco</p>
                     </footer>
@@ -173,9 +177,23 @@
             </div>
         </div>
 
+    </div>
+</div>
         <!-- JS -->
-        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
-        <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
-        <script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+         <!-- Templatemo Script -->
 </body>
+
+<script>
+   function Ask(event){
+       var val = confirm("Voulez-vous supprimer?");
+       if( val == false ) {
+           event.preventDefault();
+       }
+    }
+    document.querySelectorAll('.templatemo-link').forEach(function (qty){
+        qty.addEventListener('click',Ask);
+    });
+</script>
+
+
 </html>

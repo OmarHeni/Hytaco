@@ -102,7 +102,7 @@ class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements
         $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(array('email'=>$session));
         if ($user) {
             if ($user->getRoles() == ["ROLE_FOUR","ROLE_USER"]) {
-                return new RedirectResponse($this->urlGenerator->generate("blogg"));
+                return new RedirectResponse($this->urlGenerator->generate("blog"));
             }
             if ($this->getLoginUrl() == "/loginf") {
                 return new RedirectResponse($this->urlGenerator->generate("panier"));

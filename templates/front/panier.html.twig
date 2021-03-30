@@ -22,11 +22,17 @@ http://www.tooplate.com/view/2099-scenic
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/magnific-popup.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="css/stylep.css?jhh">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/stylep.css?jjllllklkkluhh">
 <link rel="stylesheet" href="css/owl.theme.css">
 <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/tooplate-style.css">
-<!-- MAIN CSS -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+    <!-- MAIN CSS -->
 
 <style>
     @media(min-width:768px) {
@@ -69,14 +75,21 @@ http://www.tooplate.com/view/2099-scenic
      </div>
 </div>
 
-
+<div id="popup1" class="overlay">
+    <div class="popup">
+        <h2>Reduction</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content" >
+        </div>
+    </div>
+</div>
 
 <br><br><br><br><br><br><br>
 <div class="wrap cf">
     <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
     <div class="heading cf">
         <h1>My Cart</h1>
-        <a href="#" class="continue">Continue Shopping</a>
+        <a href="produitf" class="continue">Continue Shopping</a>
     </div>
     {% for pr in produits %}
 
@@ -89,8 +102,12 @@ http://www.tooplate.com/view/2099-scenic
                         <img style="height: 200px; width: 200px" src="images/properties/{{ pr.imageName }}" alt="Bicycle" class="itemImg"></a>
                         <p class="itemNumber">#{{pr.id}}</p>
                         <h3>{{ pr.nom }}</h3>
-                        <p> <input type="text" value="0"  class="qty" placeholder="3"/> x  <p>{{ pr.prix }}</p></p>
+                        <p> <input type="text" value="1"  class="qty" placeholder="3"/> x  <p>{{ pr.prix }}</p></p>
+                      {% if pr.Existe %}
                         <p class="stockStatus"> In Stock</p>
+                        {% else  %}
+                            <p class="stockStatus out"> Out of Stock</p>
+                            {% endif %}
                     </div>
 
 
@@ -110,9 +127,23 @@ http://www.tooplate.com/view/2099-scenic
         </ul>
     </div>
 {% endfor %}
-    <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
-        <a href="#" class="btn"></a></div>
+    <div class="promoCode"><label for="promo">Have A Promo Code?</label><input id="promoc" type="text" name="promo" placholder="Enter Code" />
+        <a href="#popup1" class="btn" id="promob"></a></div>
 
+
+    <div class="container">
+
+    </div>
+    <hr>
+    <br>
+
+
+
+</div>
+</div>
+
+<br>
+</div>
     <div class="subtotal cf">
         <ul>
 
@@ -120,7 +151,9 @@ http://www.tooplate.com/view/2099-scenic
             <li class="totalRow"><span class="label">Livraison</span><span class="value">0</span></li>
             <li class="totalRow final"><span class="label">Total</span><span class="value" id="finaltotal"> {{ total }}</span></li>
             <li class="totalRow"><a href="#" class="btn continue" id ="checksub">Checkout</a></li>
+
         </ul>
+        <input type="hidden" value="0" id ="reductionpour">
     </div>
 </div>
 <footer>
@@ -173,6 +206,35 @@ http://www.tooplate.com/view/2099-scenic
 {% block javascripts %}
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+        document.querySelectorAll('.close').forEach(function (close) {
+            close.addEventListener("click", function (e) {
+                e.preventDefault();
+             var  overlay =  document.getElementById('popup1')
+                    overlay.style.visibility = "hidden";
+                    overlay.style.opacity = 0;
+
+            });
+        });
+        document.getElementById("promob").addEventListener("click",async function (event){
+            event.preventDefault();
+      var res =     await axios.get("http://127.0.0.1:8000/getpour?code="+document.getElementById("promoc").value);
+          if (res.status=='200') {
+          var overlay =    document.getElementById('popup1');
+                  overlay.style.visibility="visible";
+                  overlay.style.opacity = 1 ;
+              document.querySelectorAll('.content').forEach(function (popup) {
+                  popup.innerHTML = "Vouz avez appliqué une reduction de "+res.data.pourcentage+"%"
+              });
+              var result = parseFloat(document.getElementById('finaltotal').innerHTML)
+                  / (1 - (document.getElementById('reductionpour').value / 100));
+              document.getElementById('finaltotal').innerHTML = result.toFixed(3)
+              document.getElementById('reductionpour').value = parseInt(res.data.pourcentage);
+               result  = parseFloat(document.getElementById('finaltotal').innerHTML)
+                  * (1 - (document.getElementById('reductionpour').value / 100));
+              document.getElementById('finaltotal').innerHTML = result.toFixed(3) ;
+
+          }
+        })
         function submit(event) {
             var array = [];
             event.preventDefault();
@@ -183,7 +245,8 @@ http://www.tooplate.com/view/2099-scenic
                 }
 console.log(array);
                 });
-            const json = JSON.stringify({ "qty": array });
+            const reduc = parseInt(document.getElementById('reductionpour').value) ;
+            const json = JSON.stringify({ "qty": array , 'reduction': reduc});
             console.log(json);
             axios.post("http://127.0.0.1:8000/ajoutcom",json).then(function (res){
                 window.location.replace(res.data.link);
@@ -191,9 +254,13 @@ console.log(array);
         }
 document.getElementById("checksub").addEventListener("click",submit);
         function  Delete(event){
+
             event.preventDefault();
+
+            var vrai = 1-(document.getElementById('reductionpour').value/100) ;
+            document.getElementById('finaltotal').innerHTML = document.getElementById('finaltotal').innerHTML - (event.target.parentNode.previousSibling.parentNode.lastChild.previousSibling.previousSibling.previousSibling.lastChild.previousSibling.innerHTML*vrai) ;
  var x =   event.target.parentNode.parentNode.parentNode;
- console.log( x);
+ //console.log( x);
  x.style.display = "none" ;
             var l = event.target.href;
       var id =    l.substring(l.indexOf("#")+1,l.length);
@@ -206,9 +273,10 @@ console.log(response);
         });
 
     function Change(event){
-        document.getElementById('finaltotal').innerHTML=document.getElementById('finaltotal').innerHTML-this.
+        var vrai = 1-(document.getElementById('reductionpour').value/100) ;
+        document.getElementById('finaltotal').innerHTML=document.getElementById('finaltotal').innerHTML-(this.
             parentNode.parentNode.parentNode.lastChild.previousSibling.previousSibling.previousSibling.childNodes[1].
-            innerHTML+event.target.value *this.parentNode.nextSibling.innerHTML;
+            innerHTML)*vrai+(event.target.value *this.parentNode.nextSibling.innerHTML)*vrai;
 this.parentNode.parentNode.parentNode.lastChild.previousSibling.
     previousSibling.previousSibling.childNodes[1].innerHTML=  event.target.value *this.parentNode.nextSibling.innerHTML
     }
