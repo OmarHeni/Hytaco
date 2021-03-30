@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Security\AppAuthBackAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SecurityController extends AbstractController
 {
@@ -28,11 +31,14 @@ class SecurityController extends AbstractController
         return $this->render('back/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+
     /**
      * @Route("/logout", name="app_logout")
      */
-    public function logout()
+    public function logout(UrlGeneratorInterface $urlGenerator,TokenStorageInterface $tokenStorage)
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        $tokenStorage->setToken();
+
+        return new RedirectResponse($urlGenerator->generate("app_login"));
     }
 }

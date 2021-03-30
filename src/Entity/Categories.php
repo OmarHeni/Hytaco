@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Vich\Uploadable
@@ -25,11 +26,13 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="*donnez le nom svp")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="*remplir le champ description svp")
      */
     private $description;
 

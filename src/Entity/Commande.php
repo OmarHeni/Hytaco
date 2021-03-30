@@ -46,6 +46,11 @@ class Commande
      */
     private $prix;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $statue;
+
 
 
     public function __construct()
@@ -114,6 +119,18 @@ class Commande
     public function setPrix(float $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getStatue(): ?string
+    {
+        return $this->statue;
+    }
+
+    public function setStatue(?string $statue): self
+    {
+        $this->statue = $statue;
 
         return $this;
     }

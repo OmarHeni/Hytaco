@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Categories;
 use App\Entity\Programmes;
+use App\Entity\Transporteur;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +17,11 @@ class ProgrammesType extends AbstractType
         $builder
             ->add('nom')
             ->add('date')
-        ;
+            ->add('duree')
+            ->add('details')
+            ->add('transporteur',EntityType::class,['class'=>Transporteur::class,'choice_label'=>'nom','multiple'=>false]);
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

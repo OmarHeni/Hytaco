@@ -22,7 +22,17 @@ class LocauxController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/locauxf", name="locauxxf")
+     */
+    public function afflocaux(): Response
+    {
+        $en=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findAll();
 
+        return $this->render('front/locaux.html.twig', [
+            'locx' => $en,
+        ]);
+    }
     /**
      * @Route("/SupprimerLocaux/{id}",name="deletelocaux")
      */
@@ -45,7 +55,7 @@ class LocauxController extends AbstractController
     function Add(Request $request)
     {
         $locaux=new Locaux();
-        $user=$this->getUser();
+        $us= $this->getUser();
         $form=$this->createForm(LocauxType::class, $locaux);
         $en=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findAll();
         $form->handleRequest($request);
@@ -56,9 +66,19 @@ class LocauxController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('ajouterlocaux');
         }
+        if($request->isMethod("POST"))
+        {
+            $nom = $request->get('nom');
+            $locaux=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findBy(array('nom'=>$nom));
+            return $this->render('back/locaux.html.twig',
+                [
+                    'form'=>$form->createView(), 'loc'=>$locaux , 'locaux'=>$en,'us'=>$us
+                ]
+            );
+        }
         return $this->render('back/locaux.html.twig',
             [
-                'form'=>$form->createView(), 'loc'=>$en, 'us'=>$user
+                'form'=>$form->createView(), 'loc'=>$en , 'locaux'=>$en,'us'=>$us
             ]
         );
     }
@@ -72,8 +92,10 @@ class LocauxController extends AbstractController
     function modifier(LocauxRepository $repository,$id,Request $request)
     {
         $locaux=$repository->find($id);
+        $us= $this->getUser();
         $form=$this->createForm(LocauxType::class,$locaux);
         $en=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findAll();
+        $enn=$this->getDoctrine()->getManager()->getRepository(Locaux::class)->findAll();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
@@ -83,7 +105,7 @@ class LocauxController extends AbstractController
         }
         return $this->render('back/locaux.html.twig',
             [
-                'form'=>$form->createView(), 'loc'=>$en
+                'form'=>$form->createView(), 'loc'=>$en,'us'=>$us, 'locaux'=>$enn
             ]
         );
     }

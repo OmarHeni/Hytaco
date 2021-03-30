@@ -67,6 +67,7 @@ class Sponsors
 
 
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +154,8 @@ class Sponsors
     {
         $this->imageFile = $imageFile;
     }
+
+
 
 
 

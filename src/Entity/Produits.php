@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\PostlikeRepository;
+
 
 
 /**
@@ -25,20 +28,24 @@ class Produits
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="*nom est obligatoire")
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="*donnez le prix svp")
      * @ORM\Column(type="float")
      */
     private $prix;
 
     /**
+     * @Assert\NotBlank(message="*remplir le champ description svp ")
      * @ORM\Column(type="string", length=255)
      */
     private $description;
 
     /**
+     * @Assert\NotBlank(message="*quantite d'une produit est obligatoire")
      * @ORM\Column(type="integer")
      */
     private $quantite;
@@ -70,9 +77,15 @@ class Produits
      */
     private $commandes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="post")
+     */
+    private $like;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
 
@@ -219,5 +232,48 @@ class Produits
         return $this;
     }
 
+    /**
+     * @return Collection|Postlike[]
+     */
+    public function getLike(): Collection
+    {
+        return $this->like;
+    }
 
+    public function addLike(Postlike $like): self
+    {
+        if (!$this->like->contains($like)) {
+            $this->like[] = $like;
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Postlike $like): self
+    {
+        if ($this->like->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * permet de savaoir si cet article est like par un utilisateur
+     * @param Utilisateur $user
+     * @return boolean
+     */
+    public function islikedByUser(Utilisateur $user ):bool{
+        foreach ($this->like as $like)
+        {
+            if ($like->getUser() == $user)
+                return true;
+        }
+        return false;
+
+    }
 }

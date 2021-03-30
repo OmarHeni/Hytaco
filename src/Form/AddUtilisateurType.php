@@ -11,6 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\CallbackTransformer;
+
+
 class AddUtilisateurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,6 +40,7 @@ class AddUtilisateurType extends AbstractType
                 'required'=>false
             ])
             ->add('Telephone')
+
             ->add('Submit',SubmitType::class);
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(

@@ -44,18 +44,18 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      * @Assert\Length(min="6",minMessage="Votre mot de passe doit etre superieur a 6 caractéres")
      * @Assert\EqualTo(propertyPath="confirmPassword",message="Votre mot de passe doit etre identitique au mot de passe de confirmation")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Adresse;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string|null
      */
@@ -66,21 +66,22 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $imageFile;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $Telephone;
 
     /**
      * @Assert\NotBlank(message="le nom ne doit pas etre vide")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="le prenom ne doit pas etre vide")
      */
     private $prenom;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="utilisateur")
@@ -103,11 +104,46 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $alerts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="user")
+     */
+    private $like;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PostLikes::class, mappedBy="user")
+     */
+    private $likes;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activationToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $change_token;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $githubId;
+
+    public $captcha;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $googleId;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
         $this->produits = new ArrayCollection();
         $this->alerts = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->like = new ArrayCollection();
+
     }
 
 
@@ -161,12 +197,12 @@ class Utilisateur implements UserInterface, \Serializable
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -198,7 +234,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->Adresse;
     }
 
-    public function setAdresse(string $Adresse): self
+    public function setAdresse(?string $Adresse): self
     {
         $this->Adresse = $Adresse;
 
@@ -210,7 +246,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->Telephone;
     }
 
-    public function setTelephone(int $Telephone): self
+    public function setTelephone(?int $Telephone): self
     {
         $this->Telephone = $Telephone;
 
@@ -254,7 +290,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -266,7 +302,7 @@ class Utilisateur implements UserInterface, \Serializable
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -380,6 +416,127 @@ class Utilisateur implements UserInterface, \Serializable
 
         return $this;
     }
+
+    /**
+     * @return Collection|Postlike[]
+     */
+    public function getLike(): Collection
+    {
+        return $this->like;
+    }
+
+    public function addLike(Postlike $like): self
+    {
+        if (!$this->like->contains($like)) {
+            $this->like[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Postlike $like): self
+    {
+        if ($this->like->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection|PostLikes[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLikes(PostLikes $likes): self
+    {
+        if (!$this->likes->contains($likes)) {
+            $this->likes[] = $likes;
+            $likes->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikes(PostLikes $likes): self
+    {
+        if ($this->likes->removeElement($likes)) {
+            // set the owning side to null (unless already changed)
+            if ($likes->getUser() === $this) {
+                $likes->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    /**
+     * @param string|null $activationToken
+     * @return $this
+     */
+    public function setActivationToken( $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function isVerified () : bool{
+        return($this->activationToken==null);
+    }
+
+    public function getChangeToken(): ?string
+    {
+        return $this->change_token;
+    }
+
+    public function setChangeToken(?string $change_token): self
+    {
+        $this->change_token = $change_token;
+
+        return $this;
+    }
+
+    public function getGithubId(): ?int
+    {
+        return $this->githubId;
+    }
+
+    public function setGithubId(?int $githubId): self
+    {
+        $this->githubId = $githubId;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): self
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
 
 
 }

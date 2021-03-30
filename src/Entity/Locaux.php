@@ -6,6 +6,10 @@ use App\Repository\LocauxRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  *  * @Vich\Uploadable
@@ -20,24 +24,27 @@ class Locaux
      */
     private $id;
 
+
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Nom obligatoire")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank(message="Adresse obligatoire")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Description obligatoire")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
      * @var string|null
      */
     private $imageName;
@@ -46,6 +53,11 @@ class Locaux
      * @var File|null
      */
     private $imageFile;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $note;
 
     public function getId(): ?int
     {
@@ -121,4 +133,20 @@ class Locaux
         $this->imageFile = $imageFile;
     }
 
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(?int $note): self
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
 }
+
+
+
+

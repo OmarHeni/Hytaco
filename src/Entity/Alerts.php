@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AlertsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
 
 /**
  * @ORM\Entity(repositoryClass=AlertsRepository::class)
@@ -17,10 +18,6 @@ class Alerts
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $type;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -28,9 +25,10 @@ class Alerts
     private $localisation;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="date")
      */
-    private $service;
+    private $date;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -38,31 +36,45 @@ class Alerts
     private $rapport;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="integer")
      */
-    private $adresse;
+    private $telephone;
 
     /**
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="alerts")
      */
     private $utilisateur;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $mail;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Programmes::class, inversedBy="alerts")
+     */
+    private $programme;
+    /**
+     * @CaptchaAssert\ValidCaptcha(
+     *      message = "CAPTCHA validation failed, try again."
+     * )
+     */
+    protected $captchaCode;
+
+    public function getCaptchaCode()
+    {
+        return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getLocalisation(): ?string
     {
@@ -76,14 +88,14 @@ class Alerts
         return $this;
     }
 
-    public function getService(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->service;
+        return $this->date;
     }
 
-    public function setService(string $service): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->service = $service;
+        $this->date = $date;
 
         return $this;
     }
@@ -100,14 +112,14 @@ class Alerts
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->adresse;
+        return $this->telephone;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setTelephone(string $telephone): self
     {
-        $this->adresse = $adresse;
+        $this->telephone = $telephone;
 
         return $this;
     }
@@ -120,6 +132,30 @@ class Alerts
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getProgramme(): ?Programmes
+    {
+        return $this->programme;
+    }
+
+    public function setProgramme(?Programmes $programme): self
+    {
+        $this->programme = $programme;
 
         return $this;
     }
