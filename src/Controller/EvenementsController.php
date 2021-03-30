@@ -156,13 +156,13 @@ class EvenementsController extends AbstractController
     }
 
     /**
-     * @Route("/post/{id}/like", name="post_likess")
+     * @Route("/post/{id}/likes", name="post_likess")
      * @param Evenements $post
      * @param EntityManagerInterface $entityManager
      * @param PostLikeRepository $likeRepo
      * @return Response
      */
-    public function like(Evenements $post,EntityManagerInterface $entityManager,PostLikesRepository $likeRepo):Response{
+    public function likes(Evenements $post,EntityManagerInterface $entityManager,PostLikesRepository $likeRepo):Response{
 
 
         $user = $this->getUser();
@@ -171,16 +171,16 @@ class EvenementsController extends AbstractController
         }
 
         if ($post->isLikedByUser($user)) {
-            $like = $likeRepo->findOneBy(['post' => $post, 'user' => $user]);
-            $entityManager->remove($like);
+            $likes = $likeRepo->findOneBy(['post' => $post, 'user' => $user]);
+            $entityManager->remove($likes);
             $entityManager->flush();
             return $this->json(['code' => 200,'message' =>'Like supprime', 'likes' => $likeRepo->count(['post'=> $post])], 200);
         }
-        $like = new PostLikes();
-        $like->setPost($post)
+        $likes = new PostLikes();
+        $likes->setPost($post)
             ->setUser($user);
 
-        $entityManager->persist($like);
+        $entityManager->persist($likes);
         $entityManager->flush();
 
         return $this->json(['code' =>200,'message' =>'Like bien ajoute',

@@ -20,43 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii">
-      <change afterPath="$PROJECT_DIR$/public/images/en.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/fr.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/PropositionController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/TranslationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/PostLikes.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Proposition.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/PropositionType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/PostLikesRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/PropositionRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/back/listp.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/back/proposition.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front/js/templatemo-script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front/proposition.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translations/messages+intl-icu.fr.xlf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translations/security.fr.xlf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translations/validators.fr.xlf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/campi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/campi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/translation.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/translation.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210326090252.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210330112618.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/EvenementsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EvenementsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FrontaccController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FrontaccController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SponsorsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SponsorsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Evenements.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Sponsors.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Sponsors.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Produits.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Produits.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Utilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Utilisateur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/EvenementsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EvenementsType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SponsorsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SponsorsType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/evenements.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/evenements.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/sponsors.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/sponsors.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/back/proposition.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/proposition.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/front/evenements.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/evenements.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/front/prod.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/prod.html.twig" afterDir="false" />
     </list>
@@ -324,7 +293,7 @@
       <workItem from="1616836326048" duration="19480000" />
       <workItem from="1617006717160" duration="1377000" />
       <workItem from="1617008239303" duration="10297000" />
-      <workItem from="1617021154183" duration="11912000" />
+      <workItem from="1617021154183" duration="14084000" />
     </task>
     <servers />
   </component>

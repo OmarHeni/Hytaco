@@ -125,12 +125,12 @@
                               <img src="images/properties" class="img-responsive" alt="">
 
                               <div class="project-overlay">
-                                   <div class="project-info">
+                                   <div class="project-info" style="color: #00FF00">
                                         <h5>{% trans %}Name of Event{% endtrans %}:  {{ e.nom }} </h5>
                                         <h5>{% trans %}Our Event Starts{% endtrans %}: {{ e.date|date("m/d/Y") }}</h5>
                                         <h5>{% trans %}Our Event Ends {% endtrans %}: {{ e.datef|date("m/d/Y") }}</h5>
                                         <h5>{% trans %}Adress{% endtrans %} : {{ e.Lieu }}</h5>
-                                        <h5>    <a href="#">{{ e.nbrplace }}</a> </h5>
+                                        <h5> {{ e.nbrplace }}</h5>
 
 
                                    </div>
@@ -187,11 +187,6 @@
                          <div class="col-md-4 col-sm-4 item">
                               <div class="team-item">
                                    <img style="height: 200px; width: 200px" src="images/properties/{{ s.imageName }}" alt="Bicycle" class="card-img-top">
-                                   <div class="team-overlay">
-                                        <ul class="social-icon">
-                                             <li><a href="/afficher?id={{ s.id }}" class="fa fa-twitter"></a></li>
-                                        </ul>
-                                   </div>
                               </div>
 
                               <p>{{ s.nom }}</p>

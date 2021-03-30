@@ -80,7 +80,7 @@ class Produits
     /**
      * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="post")
      */
-    private $likes;
+    private $like;
 
     public function __construct()
     {
@@ -235,15 +235,15 @@ class Produits
     /**
      * @return Collection|Postlike[]
      */
-    public function getLikes(): Collection
+    public function getLike(): Collection
     {
-        return $this->likes;
+        return $this->like;
     }
 
     public function addLike(Postlike $like): self
     {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
+        if (!$this->like->contains($like)) {
+            $this->like[] = $like;
             $like->setPost($this);
         }
 
@@ -252,7 +252,7 @@ class Produits
 
     public function removeLike(Postlike $like): self
     {
-        if ($this->likes->removeElement($like)) {
+        if ($this->like->removeElement($like)) {
             // set the owning side to null (unless already changed)
             if ($like->getPost() === $this) {
                 $like->setPost(null);
@@ -268,7 +268,7 @@ class Produits
      * @return boolean
      */
     public function islikedByUser(Utilisateur $user ):bool{
-        foreach ($this->likes as $like)
+        foreach ($this->like as $like)
         {
             if ($like->getUser() == $user)
                 return true;

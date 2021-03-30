@@ -106,12 +106,12 @@ class Utilisateur implements UserInterface, \Serializable
     /**
      * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="user")
      */
-    private $likes;
+    private $like;
 
     /**
      * @ORM\OneToMany(targetEntity=PostLikes::class, mappedBy="user")
      */
-    private $like;
+    private $likes;
 
     public function __construct()
     {
@@ -119,6 +119,8 @@ class Utilisateur implements UserInterface, \Serializable
         $this->produits = new ArrayCollection();
         $this->alerts = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->like = new ArrayCollection();
+
     }
 
 
@@ -395,15 +397,15 @@ class Utilisateur implements UserInterface, \Serializable
     /**
      * @return Collection|Postlike[]
      */
-    public function getLikes(): Collection
+    public function getLike(): Collection
     {
-        return $this->likes;
+        return $this->like;
     }
 
     public function addLike(Postlike $like): self
     {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
+        if (!$this->like->contains($like)) {
+            $this->like[] = $like;
             $like->setUser($this);
         }
 
@@ -412,7 +414,7 @@ class Utilisateur implements UserInterface, \Serializable
 
     public function removeLike(Postlike $like): self
     {
-        if ($this->likes->removeElement($like)) {
+        if ($this->like->removeElement($like)) {
             // set the owning side to null (unless already changed)
             if ($like->getUser() === $this) {
                 $like->setUser(null);
@@ -426,27 +428,27 @@ class Utilisateur implements UserInterface, \Serializable
     /**
      * @return Collection|PostLikes[]
      */
-    public function getLike(): Collection
+    public function getLikes(): Collection
     {
-        return $this->like;
+        return $this->likes;
     }
 
-    public function addLikes(PostLikes $like): self
+    public function addLikes(PostLikes $likes): self
     {
-        if (!$this->like->contains($like)) {
-            $this->like[] = $like;
-            $like->setUser($this);
+        if (!$this->likes->contains($likes)) {
+            $this->likes[] = $likes;
+            $likes->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeLikes(PostLikes $like): self
+    public function removeLikes(PostLikes $likes): self
     {
-        if ($this->likes->removeElement($like)) {
+        if ($this->likes->removeElement($likes)) {
             // set the owning side to null (unless already changed)
-            if ($like->getUser() === $this) {
-                $like->setUser(null);
+            if ($likes->getUser() === $this) {
+                $likes->setUser(null);
             }
         }
 
