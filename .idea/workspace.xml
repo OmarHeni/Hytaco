@@ -19,11 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/alertes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/alertes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/evenements.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/evenements.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -288,7 +284,7 @@
       <workItem from="1616836326048" duration="19480000" />
       <workItem from="1617006717160" duration="1377000" />
       <workItem from="1617008239303" duration="10297000" />
-      <workItem from="1617021154183" duration="15364000" />
+      <workItem from="1617021154183" duration="15843000" />
     </task>
     <servers />
   </component>
