@@ -19,6 +19,8 @@ class EvenementsType extends AbstractType
             ->add('date')
             ->add('imageFile',FileType::class,['required'=>false])
             ->add('nbrplace')
+            ->add('datef')
+            ->add('Lieu')
         ;
 
     }

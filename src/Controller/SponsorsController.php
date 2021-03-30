@@ -26,6 +26,20 @@ class SponsorsController extends AbstractController
         ]);
     }
 
+    /**
+     * @param SponsorsRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/afficher", name="afficher")
+     */
+    public function afficher(SponsorsRepository $repository)
+    {
+        //$en=$this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
+        // var_dump($en);
+        $en = $repository->findAll();
+        return $this->render('front/acceuil.html.twig ',
+            ['sponsor' => $en]);
+    }
+
 
 
     /**
@@ -34,6 +48,10 @@ class SponsorsController extends AbstractController
     public function supprimerSponsor (Sponsors $sponsors,  EntityManagerInterface $entityManager){
         $entityManager->remove($sponsors);
         $entityManager->flush();
+        $this->addFlash(
+            'info',
+            'Deleted successfuly'
+        );
         return $this->redirectToRoute('ajoutsponsors');
     }
 
@@ -45,7 +63,7 @@ class SponsorsController extends AbstractController
         $user=$this->getUser();
         $en=$this->getDoctrine()->getManager()->getRepository(Sponsors::class)->findAll();
         $sponsors=new Sponsors();
-        $sponsors->getEvenements($this->getUser());
+        //  $sponsors->getEvenements($this->getUser());
         $form=$this->createForm(SponsorsType::class , $sponsors);
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()){
@@ -57,6 +75,10 @@ class SponsorsController extends AbstractController
                 );
             $mailer->send($message);
             $em->flush();
+            $this->addFlash(
+                'info',
+                'Added successfuly'
+            );
             return $this->redirectToRoute('ajoutsponsors');
         }
         return $this->render('back/sponsors.html.twig', ['form'=>$form->createView(),'formations'=>$en, 'us'=>$user
@@ -79,6 +101,10 @@ class SponsorsController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $em->flush();
+            $this->addFlash(
+                'info',
+                'Edited successfuly'
+            );
             return $this->redirectToRoute('ajoutsponsors');
         }
         return $this->render('back/sponsors.html.twig',

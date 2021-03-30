@@ -108,6 +108,11 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PostLikes::class, mappedBy="user")
+     */
+    private $like;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -418,4 +423,33 @@ class Utilisateur implements UserInterface, \Serializable
     }
 
 
+    /**
+     * @return Collection|PostLikes[]
+     */
+    public function getLike(): Collection
+    {
+        return $this->like;
+    }
+
+    public function addLikes(PostLikes $like): self
+    {
+        if (!$this->like->contains($like)) {
+            $this->like[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikes(PostLikes $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

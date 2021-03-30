@@ -63,10 +63,6 @@ class Sponsors
      */
     private $imageFile;
 
-    public function __construct()
-    {
-        $this->evenements = new ArrayCollection();
-    }
 
 
 
@@ -159,32 +155,7 @@ class Sponsors
         $this->imageFile = $imageFile;
     }
 
-    /**
-     * @return Collection|Evenements[]
-     */
-    public function getEvenements(): Collection
-    {
-        return $this->evenements;
-    }
 
-    public function addEvenement(Evenements $evenement): self
-    {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements[] = $evenement;
-            $evenement->addSponsor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvenement(Evenements $evenement): self
-    {
-        if ($this->evenements->removeElement($evenement)) {
-            $evenement->removeSponsor($this);
-        }
-
-        return $this;
-    }
 
 
 

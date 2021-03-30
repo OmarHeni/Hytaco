@@ -98,15 +98,6 @@ class FrontaccController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/evenementf", name="frontevenements")
-     */
-    public function evenements(): Response
-    {
-        return $this->render('front/evenements.html.twig', [
-            'controller_name' => 'FrontaccController',
-        ]);
-    }
 
 
     /**

@@ -3,15 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Evenements;
+use App\Entity\PostLikes;
+use App\Entity\Sponsors;
 use App\Form\EvenementsType;
+use App\Repository\PostLikesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Repository\RepositoryFactory;
+use Doctrine\Persistence\ObjectManager;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Repository\EvenementsRepository;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Dompdf\Options;
 
 class EvenementsController extends AbstractController
 {
@@ -25,6 +32,43 @@ class EvenementsController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EvenementsRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/listp", name="listp")
+     */
+    public function Affichagep(EvenementsRepository $repository)
+    {
+        //$en=$this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
+        // var_dump($en);
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $en = $repository->findAll();
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('back/listp.html.twig ',
+            ['formations' => $en]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+    }
+
 
     /**
      * @param EvenementsRepository $repository
@@ -33,11 +77,13 @@ class EvenementsController extends AbstractController
      */
     public function Affichage(EvenementsRepository $repository)
     {
+        $sp=$this->getDoctrine()->getManager()->getRepository(Sponsors::class)->findAll();
+
         //$en=$this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
         // var_dump($en);
         $en = $repository->findAll();
         return $this->render('front/evenements.html.twig ',
-            ['event' => $en]);
+            ['events' => $en,'sponsor' => $sp]);
     }
 
     /**
@@ -47,6 +93,10 @@ class EvenementsController extends AbstractController
     {
         $entityManager->remove($event);
         $entityManager->flush();
+        $this->addFlash(
+            'info',
+            'Deleted successfuly'
+        );
         return $this->redirectToRoute('evenements');
     }
 
@@ -66,6 +116,10 @@ class EvenementsController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);
             $em->flush();
+            $this->addFlash(
+                'info',
+                'Added successfuly'
+            );
             return $this->redirectToRoute('evenements');
         }
         return $this->render('back/evenements.html.twig', ['form' => $form->createView(), 'formations' => $en, 'us' => $user
@@ -79,7 +133,7 @@ class EvenementsController extends AbstractController
      * @Route("/ModifierEvenements/{id}",name="modifierevenement")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    function modifier(EvenementsRepository $repository,$id,Request $request)
+    function modifier(EvenementsRepository $repository,$id,Request $request,TranslatorInterface $translator)
     {
         $user = $this->getUser();
         $sponsors = $repository->find($id);
@@ -89,6 +143,8 @@ class EvenementsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+            $message = $translator->trans('Event modified successfuly');
+            $this->addFlash('message',$message);
             return $this->redirectToRoute('evenements');
         }
         return $this->render('back/evenements.html.twig',
@@ -98,6 +154,41 @@ class EvenementsController extends AbstractController
         );
 
     }
+
+    /**
+     * @Route("/post/{id}/like", name="post_likess")
+     * @param Evenements $post
+     * @param EntityManagerInterface $entityManager
+     * @param PostLikeRepository $likeRepo
+     * @return Response
+     */
+    public function like(Evenements $post,EntityManagerInterface $entityManager,PostLikesRepository $likeRepo):Response{
+
+
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->json(['code' => 403, 'message' => 'Vous devez être connecté !'], 403);
+        }
+
+        if ($post->isLikedByUser($user)) {
+            $like = $likeRepo->findOneBy(['post' => $post, 'user' => $user]);
+            $entityManager->remove($like);
+            $entityManager->flush();
+            return $this->json(['code' => 200,'message' =>'Like supprime', 'likes' => $likeRepo->count(['post'=> $post])], 200);
+        }
+        $like = new PostLikes();
+        $like->setPost($post)
+            ->setUser($user);
+
+        $entityManager->persist($like);
+        $entityManager->flush();
+
+        return $this->json(['code' =>200,'message' =>'Like bien ajoute',
+            'likes' => $likeRepo->count(['post'=> $post])
+        ],200);
+    }
+
+
 
 
 }
