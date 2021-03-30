@@ -19,45 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii">
-      <change afterPath="$PROJECT_DIR$/src/Entity/Coupon.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/CouponType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/CouponRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Security/AppGithub.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Security/AppGoogle.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/back/coupon.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front/activation.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front/erreur.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front/payement.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/campi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/campi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/tooplate-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/tooplate-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PanierController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PanierController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Security2Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security2Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UtilisateurController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UtilisateurController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Utilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Utilisateur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/AddUtilisateurType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AddUtilisateurType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UtilisateurRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UtilisateurRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AppAuthBackAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AppAuthBackAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AppAuthFrontAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AppAuthFrontAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/EmailVerifier.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/back/utilisateurs.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/utilisateurs.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/acceuil.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/acceuil.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/loginf.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/loginf.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/panier.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/panier.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/prod.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/prod.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="ce6c6f35-525b-40a0-955b-c13cadc8eefa" name="Default Changelist" comment="taherbekriii" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -258,15 +220,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\web\campi\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\web\web\Hytaco\config\packages" />
       <recent name="C:\xampp\web\web\Hytaco\templates\front" />
       <recent name="C:\xampp\web\web\Hytaco\templates\back" />
       <recent name="C:\xampp\web\web\Hytaco\src\Security" />
       <recent name="C:\xampp\web\web\Hytaco\src\Repository" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\web\campi\templates" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
