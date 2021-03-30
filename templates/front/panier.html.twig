@@ -75,7 +75,14 @@ http://www.tooplate.com/view/2099-scenic
      </div>
 </div>
 
-
+<div id="popup1" class="overlay">
+    <div class="popup">
+        <h2>Reduction</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content" >
+        </div>
+    </div>
+</div>
 
 <br><br><br><br><br><br><br>
 <div class="wrap cf">
@@ -120,8 +127,8 @@ http://www.tooplate.com/view/2099-scenic
         </ul>
     </div>
 {% endfor %}
-    <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
-        <a href="#" class="btn"></a></div>
+    <div class="promoCode"><label for="promo">Have A Promo Code?</label><input id="promoc" type="text" name="promo" placholder="Enter Code" />
+        <a href="#popup1" class="btn" id="promob"></a></div>
 
 
     <div class="container">
@@ -130,12 +137,7 @@ http://www.tooplate.com/view/2099-scenic
     <hr>
     <br>
 
-    <div class="btn-group btn-group" data-toggle="buttons">
-        <label class="btn active">
-            <input type="checkbox" name='email1' checked><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i><span> Enligne Payement
-        </label>
 
-    </div>
 
 </div>
 </div>
@@ -149,7 +151,9 @@ http://www.tooplate.com/view/2099-scenic
             <li class="totalRow"><span class="label">Livraison</span><span class="value">0</span></li>
             <li class="totalRow final"><span class="label">Total</span><span class="value" id="finaltotal"> {{ total }}</span></li>
             <li class="totalRow"><a href="#" class="btn continue" id ="checksub">Checkout</a></li>
+
         </ul>
+        <input type="hidden" value="0" id ="reductionpour">
     </div>
 </div>
 <footer>
@@ -202,6 +206,35 @@ http://www.tooplate.com/view/2099-scenic
 {% block javascripts %}
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+        document.querySelectorAll('.close').forEach(function (close) {
+            close.addEventListener("click", function (e) {
+                e.preventDefault();
+             var  overlay =  document.getElementById('popup1')
+                    overlay.style.visibility = "hidden";
+                    overlay.style.opacity = 0;
+
+            });
+        });
+        document.getElementById("promob").addEventListener("click",async function (event){
+            event.preventDefault();
+      var res =     await axios.get("http://127.0.0.1:8000/getpour?code="+document.getElementById("promoc").value);
+          if (res.status=='200') {
+          var overlay =    document.getElementById('popup1');
+                  overlay.style.visibility="visible";
+                  overlay.style.opacity = 1 ;
+              document.querySelectorAll('.content').forEach(function (popup) {
+                  popup.innerHTML = "Vouz avez appliqué une reduction de "+res.data.pourcentage+"%"
+              });
+              var result = parseFloat(document.getElementById('finaltotal').innerHTML)
+                  / (1 - (document.getElementById('reductionpour').value / 100));
+              document.getElementById('finaltotal').innerHTML = result.toFixed(3)
+              document.getElementById('reductionpour').value = parseInt(res.data.pourcentage);
+               result  = parseFloat(document.getElementById('finaltotal').innerHTML)
+                  * (1 - (document.getElementById('reductionpour').value / 100));
+              document.getElementById('finaltotal').innerHTML = result.toFixed(3) ;
+
+          }
+        })
         function submit(event) {
             var array = [];
             event.preventDefault();
@@ -212,7 +245,8 @@ http://www.tooplate.com/view/2099-scenic
                 }
 console.log(array);
                 });
-            const json = JSON.stringify({ "qty": array });
+            const reduc = parseInt(document.getElementById('reductionpour').value) ;
+            const json = JSON.stringify({ "qty": array , 'reduction': reduc});
             console.log(json);
             axios.post("http://127.0.0.1:8000/ajoutcom",json).then(function (res){
                 window.location.replace(res.data.link);
@@ -220,8 +254,11 @@ console.log(array);
         }
 document.getElementById("checksub").addEventListener("click",submit);
         function  Delete(event){
+
             event.preventDefault();
-            document.getElementById('finaltotal').innerHTML = document.getElementById('finaltotal').innerHTML - event.target.parentNode.previousSibling.parentNode.lastChild.previousSibling.previousSibling.previousSibling.lastChild.previousSibling.innerHTML ;
+
+            var vrai = 1-(document.getElementById('reductionpour').value/100) ;
+            document.getElementById('finaltotal').innerHTML = document.getElementById('finaltotal').innerHTML - (event.target.parentNode.previousSibling.parentNode.lastChild.previousSibling.previousSibling.previousSibling.lastChild.previousSibling.innerHTML*vrai) ;
  var x =   event.target.parentNode.parentNode.parentNode;
  //console.log( x);
  x.style.display = "none" ;
@@ -236,9 +273,10 @@ console.log(response);
         });
 
     function Change(event){
-        document.getElementById('finaltotal').innerHTML=document.getElementById('finaltotal').innerHTML-this.
+        var vrai = 1-(document.getElementById('reductionpour').value/100) ;
+        document.getElementById('finaltotal').innerHTML=document.getElementById('finaltotal').innerHTML-(this.
             parentNode.parentNode.parentNode.lastChild.previousSibling.previousSibling.previousSibling.childNodes[1].
-            innerHTML+event.target.value *this.parentNode.nextSibling.innerHTML;
+            innerHTML)*vrai+(event.target.value *this.parentNode.nextSibling.innerHTML)*vrai;
 this.parentNode.parentNode.parentNode.lastChild.previousSibling.
     previousSibling.previousSibling.childNodes[1].innerHTML=  event.target.value *this.parentNode.nextSibling.innerHTML
     }

@@ -41,6 +41,27 @@ class Security2Controller extends AbstractController
         return $client->redirect(['read:user','user:email']);
 
     }
+    /**
+     *
+     * @Route("/connect/google", name="connect_google_start")
+     */
+    public function connectAction(ClientRegistry $clientRegistry)
+    {
+        // on Symfony 3.3 or lower, $clientRegistry = $this->get('knpu.oauth2.registry');
+
+        // will redirect to Facebook!
+        return $clientRegistry
+            ->getClient('google') // key used in config/packages/knpu_oauth2_client.yaml
+            ->redirect();
+    }
+
+     /**
+     * @Route("/connect/google/check", name="connect_google_check")
+     */
+    public function connectCheckAction(Request $request, ClientRegistry $clientRegistry)
+    {
+
+    }
 
     /**
      * @Route("/logoutf", name="app_logoutf")

@@ -117,6 +117,11 @@ class Utilisateur implements UserInterface, \Serializable
 
 public $captcha;
 
+/**
+ * @ORM\Column(type="string", length=255, nullable=true)
+ */
+private $googleId;
+
 
 
     public function __construct()
@@ -409,6 +414,18 @@ public function getGithubId(): ?int
 public function setGithubId(?int $githubId): self
 {
     $this->githubId = $githubId;
+
+    return $this;
+}
+
+public function getGoogleId(): ?string
+{
+    return $this->googleId;
+}
+
+public function setGoogleId(?string $googleId): self
+{
+    $this->googleId = $googleId;
 
     return $this;
 }

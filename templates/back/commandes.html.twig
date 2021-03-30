@@ -91,7 +91,7 @@
                             <td><a href="" class="white-text templatemo-sort-by">#ID <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Client <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Date <span class="caret"></span></a></td>
-                            <td><a href="" class="white-text templatemo-sort-by">Type <span class="caret"></span></a></td>
+                            <td><a href="" class="white-text templatemo-sort-by">Quantite <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Profit <span class="caret"></span></a></td>
                             <td><a href="" class="white-text templatemo-sort-by">Produit <span class="caret"></span></a></td>
                             <td>Delete</td>
@@ -102,8 +102,8 @@
                             <td>{{com.id}}</td>
                             <td>{{ com.utilisateur.nom }}</td>
                             <td>{{ com.dateCommande|date("m/d/Y")}}</td>
-                            <td>Achat</td>
-                            <td>{{ 0.95*com.prix }}</td>
+                            <td>{{ com.quantite }}</td>
+                            <td>{{ com.prix }}</td>
                             <td>{{ com.produit.nom }}</td>
                             <td><a href="{{ path("delcom",{'id':com.id}) }}" class="templatemo-link">Delete</a></td>
                         </tr>
