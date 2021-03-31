@@ -25,7 +25,6 @@
       <change afterPath="$PROJECT_DIR$/templates/front/consult.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/campi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/campi.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20210330212151.php" beforeDir="false" />
@@ -253,15 +252,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\web\campi\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\web\web\Hytaco\templates\back" />
       <recent name="C:\xampp\web\web\Hytaco\templates\front" />
       <recent name="C:\xampp\web\web\Hytaco\src\Repository" />
       <recent name="C:\xampp\web\web\Hytaco\src\Form" />
       <recent name="C:\xampp\web\web\Hytaco\src\Entity" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\web\campi\templates" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
