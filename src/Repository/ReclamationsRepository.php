@@ -47,4 +47,10 @@ class ReclamationsRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function stat1()
+    {
+        $query= $this->getEntityManager()
+            ->createQuery('select o.type,count(o.id) as nbdep from App\Entity\Reclamations o group by o.type');
+        return $query->getResult();
+    }
 }

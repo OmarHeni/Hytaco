@@ -19,7 +19,6 @@ class AlertsType extends AbstractType
         $builder
             ->add('programme',EntityType::class,['class'=>Programmes::class,'choice_label'=>'nom','multiple'=>false])
             ->add('localisation')
-            ->add('date')
             ->add('rapport',TextareaType::class)
             ->add('telephone')
             ->add('mail')

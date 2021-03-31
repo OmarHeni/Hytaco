@@ -61,6 +61,7 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
             ->setNom($owner->getName())
             ->setRoles(['ROLE_CLIENT'])
             ->setPassword($this->encoder->encodePassword($user,md5(uniqid())))
+            ->setRoles(["ROLE_CLIENT"])
         ;
 
         $this->getEntityManager()->persist($user);

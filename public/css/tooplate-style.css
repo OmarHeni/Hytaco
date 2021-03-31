@@ -193,11 +193,11 @@ a:hover, a:active, a:focus {
   background-size: cover !important;
 }
 
-#locaux,#aboutlocaux,#alerts,#team,footer {
+#locaux,#aboutlocaux,#alerts,#team,#programme,footer {
   background: #ffffff;
 }
 
-#aboutproject,#abouteven,#aboutlocaux,#alerts,#team
+#aboutproject,#abouteven,#aboutlocaux,#alerts,#programme,#team
 {
   padding-top: 100px;
   padding-bottom: 100px;

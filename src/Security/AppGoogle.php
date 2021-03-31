@@ -78,6 +78,7 @@ class AppGoogle extends SocialAuthenticator
         $user->setEmail($email);
         $user->setPassword($this->encoder->encodePassword($user,md5(uniqid())));
         $user->setNom($googleUser->getName());
+        $user->setRoles(["ROLE_CLIENT"]);
         $this->em->persist($user);
         $this->em->flush();
 

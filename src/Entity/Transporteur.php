@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints\UniqueValidator;
 use App\Repository\TransporteurRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints\Unique;
+use Symfony\Component\Validator\Constraints\CountValidator;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
 /**
  * @ORM\Entity(repositoryClass=TransporteurRepository::class)
  */
@@ -24,6 +28,12 @@ class Transporteur
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 8,
+     *     minMessage = " les nombres doivent être supérieurs à 8 chiffres",
+     *     maxMessage = " les nombres doivent être inférieurs à 8 chiffres",
+     * )
      */
     private $numero;
 
@@ -36,9 +46,13 @@ class Transporteur
      * @ORM\Column(type="string", length=50)
      */
     private $adresse;
-
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Entity
+     * @UniqueEntity("mail")
+     */
+    /**
+     * @ORM\Column(name = "mail", type="string", length=50 , unique=true)
+     * @Assert\Email
      */
     private $mail;
 

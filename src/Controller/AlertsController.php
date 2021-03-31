@@ -86,6 +86,7 @@ class AlertsController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+            $alerts->setDate(new \DateTime());
             $em=$this->getDoctrine()->getManager();
             $em->persist($alerts);
             $message = (new \Swift_Message('Alerte!'))

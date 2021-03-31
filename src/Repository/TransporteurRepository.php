@@ -19,6 +19,16 @@ class TransporteurRepository extends ServiceEntityRepository
         parent::__construct($registry, Transporteur::class);
     }
 
+    public function tridesc(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Transporteur s order by s.nom DESC');
+        return $query->getResult();
+    }
+    public function triasc(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Transporteur s order by s.nom ASC');
+        return $query->getResult();
+    }
     // /**
     //  * @return Transporteur[] Returns an array of Transporteur objects
     //  */

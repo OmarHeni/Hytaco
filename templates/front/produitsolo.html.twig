@@ -199,26 +199,24 @@
 </section>
 </footer>
 
-
-<!-- Categories Section Begin -->
+<!-- Featured Section End -->
 <section class="categories">
     <div class="container">
         <div class="row">
             <div class="categories__slider owl-carousel">
                 {% for pu in pubicite %}
 
-                <div class="col-lg-3" align="center">
-                    <img style="height: 90px; width: 90px" src="images/properties/{{ pu.imageName }}" class="categories__item set-bg">
-                   <h5><a href="{{ pu.lien }}" >{{ pu.nom }} </a></h5>
-                </div>
+                    <div class="col-lg-3" align="center">
+                        <img style="height: 60px; width: 300px" src="images/properties/{{ pu.imageName }}" class="categories__item set-bg">
+                        <div align="center"><h5><a href="{{ pu.lien }}" >{{ pu.nom }} </a></h5></div>
+                    </div>
                 {% endfor %}
 
             </div>
 
-            </div>
         </div>
+    </div>
 </section>
-<!-- Categories Section End -->
 
     <footer>
 
