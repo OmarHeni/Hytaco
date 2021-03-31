@@ -3,7 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\LivreursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
 
 /**
  * @ORM\Entity(repositoryClass=LivreursRepository::class)
@@ -19,6 +24,13 @@ class Livreurs
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 8,
+     *     minMessage = " les nombres doivent être supérieurs à 8 chiffres",
+     *     maxMessage = " les nombres doivent être inférieurs à 8 chiffres",
+     * )
+
      */
     private $telephone;
 
@@ -29,6 +41,8 @@ class Livreurs
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\Email
      */
     private $mail;
 
@@ -36,6 +50,16 @@ class Livreurs
      * @ORM\Column(type="string", length=50)
      */
     private $nom;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Livraisons::class, mappedBy="livreur")
+     */
+    private $livraisons;
+
+    public function __construct()
+    {
+        $this->livraisons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +110,36 @@ class Livreurs
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Livraisons[]
+     */
+    public function getLivraisons(): Collection
+    {
+        return $this->livraisons;
+    }
+
+    public function addLivraison(Livraisons $livraison): self
+    {
+        if (!$this->livraisons->contains($livraison)) {
+            $this->livraisons[] = $livraison;
+            $livraison->setLivreur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivraison(Livraisons $livraison): self
+    {
+        if ($this->livraisons->removeElement($livraison)) {
+            // set the owning side to null (unless already changed)
+            if ($livraison->getLivreur() === $this) {
+                $livraison->setLivreur(null);
+            }
+        }
 
         return $this;
     }

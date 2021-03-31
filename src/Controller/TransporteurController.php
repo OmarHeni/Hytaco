@@ -9,6 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+
 
 class TransporteurController extends AbstractController
 {
@@ -40,10 +44,11 @@ class TransporteurController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route ("/transporteurs",name="ajoutertransporteur")
      */
-    function Add(Request $request)
+    function Add(Request $request,\Swift_Mailer $mailer)
     {
-        $user=$this->getUser();
         $transporteur=new Transporteur();
+        $user=$this->getUser();
+
         $form=$this->createForm(TransporteurType::class, $transporteur);
         $en=$this->getDoctrine()->getManager()->getRepository(Transporteur::class)->findAll();
         $form->handleRequest($request);
@@ -51,14 +56,25 @@ class TransporteurController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $em->persist($transporteur);
+            $message = (new \Swift_Message('Bienvenue'))
+                ->setFrom('hytacocampi21@gmail.com')
+                ->setTo($transporteur->getMail())
+                ->setBody(
+                    'Bienvenue, vous êtes officiellement le chauffeur de Hytaco, veuillez attendre votre affectation!'
+                )
+            ;
+            $mailer->send($message);
             $em->flush();
             return $this->redirectToRoute('ajoutertransporteur');
+
         }
+
         return $this->render('back/transporteur.html.twig',
             [
-                'form'=>$form->createView(), 'trans'=>$en, 'us'=>$user
+                'form'=>$form->createView(), 'trans'=>$en,'us'=>$user
             ]
         );
+
     }
 
 
@@ -70,6 +86,7 @@ class TransporteurController extends AbstractController
     function modifier(TransporteurRepository $repository,$id,Request $request)
     {
         $transporteur=$repository->find($id);
+        $user=$this->getUser();
         $form=$this->createForm(TransporteurType::class,$transporteur);
         $en=$this->getDoctrine()->getManager()->getRepository(Transporteur::class)->findAll();
         $form->handleRequest($request);
@@ -81,8 +98,36 @@ class TransporteurController extends AbstractController
         }
         return $this->render('back/transporteur.html.twig',
             [
-                'form'=>$form->createView(), 'trans'=>$en
+                'form'=>$form->createView(), 'trans'=>$en,'us'=>$user
             ]
         );
     }
+    /**
+     * @Route("tridesc",name="tridesc")
+     */
+    public function tridesc(TransporteurRepository $repo, Request $request)
+    {
+
+        $articles = $repo->tridesc();
+
+        return $this->render('front/consult.html.twig', [
+            'trans' => $articles,
+        ]);
+    }
+    /**
+     * @Route("triasc", name="triasc")
+     */
+    public function triasc(TransporteurRepository $repo, Request $request)
+    {
+
+        $articles =
+            $repo->triasc();
+
+
+        return $this->render('front/consult.html.twig', [
+            'trans' => $articles,
+        ]);
+    }
+
+
 }

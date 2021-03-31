@@ -193,6 +193,25 @@
 
 
 
+<section id="programme" class="parallax-section" >
+
+     <div class="container">
+          <div class="row">
+               <div class="col-md-offset-1 col-md-10 col-sm-12">
+                    <div class="col-md-offset-1 col-md-10 col-sm-4 item">
+                         <h3>Transporteurs</h3>
+                         <h4>Ici, vous pouvez trouver les meilleurs transporteurs choisis par notre equipe et nos utilisateurs.</h4>
+                         <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
+                              <div class="section-btn">
+                                   <a href="/fronttransds"> <button  type="submit" id="cf-submit" name="submit"><span data-hover="Consulter"> <h3>Transporteurs</h3></span></button></a>
+                              </div>
+                         </div>
+               </div>
+          </div>
+     </div>
+     </div>
+</section>
+
 
 
 
@@ -210,45 +229,42 @@
                </div>
 
                <div class="clearfix"></div>
-
-               <div class="col-md-offset-2 col-md-8 col-sm-12">
-                    <!-- CONTACT FORM HERE -->
-                    <form id="contact-form" action="#" method="get" role="form">
-
+               <table>
+                    <div class="col-md-offset-2 col-md-8 col-sm-12">
+                         <!-- CONTACT FORM HERE -->
+                         {{form_start(form)}}
                          <!-- IF MAIL SENT SUCCESSFULLY -->
                          <h6 class="text-success">Your message has been sent successfully. </h6>
 
                          <!-- IF MAIL SENDING UNSUCCESSFULL -->
                          <h6 class="text-danger">E-mail must be valid and message must be longer than 1 character.</h6>
 
-                         <div class="col-md-6 col-sm-6">
-                              <input type="text" class="form-control" id="cf-name" name="cf-name" placeholder="Name">
-                         </div>
+
 
                          <div class="col-md-6 col-sm-6">
-                              <input type="email" class="form-control" id="cf-email" name="cf-email" placeholder="Email Address">
+                              {{ form_widget(form.email,{'attr': {'class': 'form-control','placeholder':'email'}}) }}
                          </div>
 
                          <div class="col-md-12 col-sm-12">
-                              <input type="text" class="form-control" id="cf-subject" name="subject" placeholder="Subject">
-                              <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>
+                              {{ form_widget(form.type,{'attr': {'class': 'form-control','placeholder':'type'}}) }}
+                              {{ form_widget(form.description,{'attr': {'class': 'form-control','placeholder':'description'}}) }}
                          </div>
+                    </div>
+               </table>
 
-                         <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
-                              <div class="section-btn">
-                                   <button type="submit" class="form-control" id="cf-submit" name="submit"><span data-hover="Send Message">Send Message</span></button>
-                              </div>
-                         </div>
-                    </form>
+               <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
+                    <div class="section-btn">
+                         <button type="submit" class="form-control" id="cf-submit" name="submit"><span data-hover="envoyez!">Faire une Réclamation</span></button>
+                    </div>
                </div>
-
+               {{form_end(form)}}
           </div>
+
+     </div>
      </div>
 </section>
 
 <!-- FOOTER -->
-
-
 
 
 

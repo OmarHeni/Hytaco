@@ -8,6 +8,7 @@ use App\Repository\ReclamationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReclamationsController extends AbstractController
@@ -42,9 +43,9 @@ class ReclamationsController extends AbstractController
      */
     function Add(Request $request)
     {
+        $reclamations=new Reclamations();
         $user=$this->getUser();
 
-        $reclamations=new Reclamations();
         $form=$this->createForm(ReclamationsType::class, $reclamations);
         $en=$this->getDoctrine()->getManager()->getRepository(Reclamations::class)->findAll();
         $form->handleRequest($request);
@@ -57,7 +58,7 @@ class ReclamationsController extends AbstractController
         }
         return $this->render('back/reclamations.html.twig',
             [
-                'form'=>$form->createView(), 'reclam'=>$en, 'us'=>$user
+                'form'=>$form->createView(), 'reclam'=>$en,'us'=>$user
             ]
         );
     }
@@ -70,6 +71,8 @@ class ReclamationsController extends AbstractController
     function modifier(ReclamationsRepository $repository,$id,Request $request)
     {
         $reclamations=$repository->find($id);
+        $user=$this->getUser();
+
         $form=$this->createForm(ReclamationsType::class,$reclamations);
         $en=$this->getDoctrine()->getManager()->getRepository(Reclamations::class)->findAll();
         $form->handleRequest($request);
@@ -81,8 +84,36 @@ class ReclamationsController extends AbstractController
         }
         return $this->render('back/reclamations.html.twig',
             [
-                'form'=>$form->createView(), 'reclam'=>$en
+                'form'=>$form->createView(), 'reclam'=>$en,'us'=>$user
             ]
         );
     }
+    /**
+     *  @Route("/statR", name="SR")
+     */
+
+
+    public function static (ReclamationsRepository $repo)
+    {
+        $ob = new Highchart();
+        $ob->chart->renderTo('linechart');
+        $ob->title->text('Statistique par rapport au type du réclamation client 2021');
+        $ob->plotOptions->pie(array(
+            'allowPointSelect'  => true,
+            'cursor'    => 'pointer',
+            'dataLabels'    => array('enabled' => false),
+            'showInLegend'  => true
+        ));
+        $offre=$repo->stat1();
+        $data =array();
+        foreach ($offre as $values)
+        {
+            $a =array($values['type'],intval($values['nbdep']));
+            array_push($data,$a);
+        }
+
+        $ob->series(array(array('type' => 'pie','name' => 'Browser share', 'data' => $data)));
+        return $this->render('back/reclamationsChart.html.twig', array(
+            'chart' => $ob
+        ));}
 }
