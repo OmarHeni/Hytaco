@@ -92,7 +92,6 @@ class ReclamationsController extends AbstractController
      *  @Route("/statR", name="SR")
      */
 
-
     public function static (ReclamationsRepository $repo)
     {
         $ob = new Highchart();

@@ -19,11 +19,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Repository\EvenementsRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Dompdf\Options;
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EvenementsController extends AbstractController
 {
     /**
      * @Route("/evenements", name="evenements")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(): Response
     {
@@ -35,6 +37,7 @@ class EvenementsController extends AbstractController
     /**
      * @param EvenementsRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/listp", name="listp")
      */
     public function Affichagep(EvenementsRepository $repository)
@@ -103,6 +106,7 @@ class EvenementsController extends AbstractController
 
     /**
      * @Route("/evenement", name="evenements")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function AjouterEvenement(Request $request)
     {

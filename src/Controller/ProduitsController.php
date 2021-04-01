@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Knp\Component\Pager\PaginatorInterface;
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class ProduitsController extends AbstractController
 {    private $up ;

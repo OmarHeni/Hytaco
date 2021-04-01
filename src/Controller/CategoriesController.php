@@ -11,10 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class CategoriesController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/categoriess", name="categoriess")
      */
     public function index(): Response
@@ -38,6 +40,7 @@ class CategoriesController extends AbstractController
 
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route ("/categorie",name="ajoutercategories")

@@ -63,6 +63,16 @@ class Sponsors
      */
     private $imageFile;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Evenements::class, mappedBy="sponsors")
+     */
+    private $evenements;
+
+    public function __construct()
+    {
+        $this->evenements = new ArrayCollection();
+    }
+
 
 
 
@@ -153,6 +163,33 @@ class Sponsors
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
+    }
+
+    /**
+     * @return Collection|Evenements[]
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    public function addEvenement(Evenements $evenement): self
+    {
+        if (!$this->evenements->contains($evenement)) {
+            $this->evenements[] = $evenement;
+            $evenement->addSponsor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenements $evenement): self
+    {
+        if ($this->evenements->removeElement($evenement)) {
+            $evenement->removeSponsor($this);
+        }
+
+        return $this;
     }
 
 

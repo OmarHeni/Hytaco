@@ -22,6 +22,8 @@ class SponsorsType extends AbstractType
             ->add('mail')
             ->add('numero')
             ->add('imageFile',FileType::class,['required'=>false])
+            ->add('evenements',EntityType::class,['class'=>Evenements::class,'choice_label'=>'nom','multiple'=>true]);
+
         ;    }
 
     public function configureOptions(OptionsResolver $resolver)

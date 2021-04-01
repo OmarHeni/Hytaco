@@ -44,6 +44,7 @@ class CommandeController extends AbstractController
     }
     /**
      * @Route("/commandes", name="commande")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(CommandeRepository $cr): Response
     {
@@ -123,6 +124,7 @@ return $this->json(['code' => 500, 'Exception' => $e], 500);
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route ("/affcoupon",name="affcoupon")
      */
     function Addcoupon(Request $request)

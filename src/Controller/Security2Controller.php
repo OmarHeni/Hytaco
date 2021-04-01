@@ -12,6 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Routing\Annotation\Route ;
 use Symfony\Component\HttpFoundation\Request ;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class Security2Controller extends AbstractController
 {

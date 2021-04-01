@@ -58,6 +58,7 @@ class BackaccController extends AbstractController
     }
 
     /**
+     *@IsGranted("ROLE_ADMIN")
      * @Route("/listutili", name="bloglistutili")
      */
     public function listutili(): Response
@@ -128,7 +129,7 @@ class BackaccController extends AbstractController
         $user=$this->getUser();
 
         return $this->render('back/Fournisseurs.html.twig', [
-            'controller_name' => 'BackaccController','uss'=>$user
+            'controller_name' => 'BackaccController','us'=>$user
         ]);
     }
 
@@ -165,6 +166,7 @@ $us = $this->getUser();
 
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/preferences", name="blogperf")
      */
     public function preferences(): Response
@@ -175,6 +177,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/datav", name="blogdata")
      */
     public function datav(): Response
@@ -231,6 +234,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/manage", name="blogmanage")
      */
     public function manage(): Response
@@ -243,6 +247,7 @@ $us = $this->getUser();
 
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/programmess", name="blogprogrammes")
      */
     public function programmes(): Response
@@ -253,6 +258,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/evenements", name="blogevenements")
      */
     public function evenements(): Response
@@ -263,6 +269,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/sponsors", name="blogsponsors")
      */
     public function sponsors(): Response
@@ -283,6 +290,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/categories", name="blogcategories")
      */
     public function categories(): Response
@@ -293,6 +301,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/produits", name="blogproduits")
      */
     public function produits(): Response
@@ -305,6 +314,7 @@ $us = $this->getUser();
 
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/livraisons", name="bloglivraisons")
      */
     public function livraisons(): Response
@@ -316,6 +326,7 @@ $us = $this->getUser();
 
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/livreurs", name="bloglivr")
      */
     public function livreurs(): Response
@@ -326,6 +337,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/transporteur", name="blogtransporteur")
      */
     public function transporteur(): Response
@@ -336,6 +348,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/alertes", name="blogalertes")
      */
     public function alertes(): Response
@@ -346,6 +359,7 @@ $us = $this->getUser();
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/reclamations", name="blogrec")
      */
     public function reclamations(): Response

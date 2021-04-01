@@ -129,7 +129,10 @@
                                         <h5>{% trans %}Name of Event{% endtrans %}:  {{ e.nom }} </h5>
                                         <h5>{% trans %}Our Event Starts{% endtrans %}: {{ e.date|date("m/d/Y") }}</h5>
                                         <h5>{% trans %}Our Event Ends {% endtrans %}: {{ e.datef|date("m/d/Y") }}</h5>
-                                        <h5>{% trans %}Adress{% endtrans %} : {{ e.Lieu }}</h5>
+                                        <h5>{% trans %}Adress{% endtrans %} : {{ e.Lieu }}
+                                             {% for  sponsor in e.sponsors %}
+                                        <h5>{% trans %}sponsor{% endtrans %} : {{ sponsor.nom  }}</h5>
+                                             {% endfor %}
                                         <h5> {{ e.nbrplace }}</h5>
                                    </div>
                               </div>
@@ -191,6 +194,10 @@
                               <p>{{ s.adresse }}</p>
                               <p>{{ s.numero }}</p>
                               <p>{{ s.mail }}</p>
+                              {% for  evenement in s.evenements %}
+                                   <td>{{ evenement.nom }}</td>
+
+                              {% endfor %}
                          </div>
 
                     {% endfor %}

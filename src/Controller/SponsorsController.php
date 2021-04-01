@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 class SponsorsController extends AbstractController

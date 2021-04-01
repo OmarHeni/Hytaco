@@ -69,10 +69,16 @@ class Evenements
      */
     private $like;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Sponsors::class, inversedBy="evenements")
+     */
+    private $sponsors;
+
 
     public function __construct()
     {
         $this->likes = new ArrayCollection();
+        $this->sponsors = new ArrayCollection();
     }
 
 
@@ -223,6 +229,30 @@ class Evenements
         }
 
         return false;
+    }
+
+    /**
+     * @return Collection|Sponsors[]
+     */
+    public function getSponsors(): Collection
+    {
+        return $this->sponsors;
+    }
+
+    public function addSponsor(Sponsors $sponsor): self
+    {
+        if (!$this->sponsors->contains($sponsor)) {
+            $this->sponsors[] = $sponsor;
+        }
+
+        return $this;
+    }
+
+    public function removeSponsor(Sponsors $sponsor): self
+    {
+        $this->sponsors->removeElement($sponsor);
+
+        return $this;
     }
 
 

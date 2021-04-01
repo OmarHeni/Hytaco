@@ -49,41 +49,49 @@
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="/statfour"><i class="fa fa-bar-chart fa-fw"></i>Statistiques</a></li>
                 <li><a href="/produitfour"><i class="fa fa-tags fa-fw"></i>produits</a></li>
-                <li><a href="/alerts"><i class="fa fa-bullhorn fa-fw"></i>alertes</a></li>
+                <li><a href="/reclamfour"><i class="fa fa-bullhorn fa-fw"></i>Reclamation</a></li>
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
-                <li><a href="/login"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+                <li><a href="/logout"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+
             </ul>
         </nav>
     </div>
-    <!-- Main content -->
+
     <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-top-nav-container">
             <div class="row">
                 <nav class="templatemo-top-nav col-lg-12 col-md-12">
                     <ul class="text-uppercase">
 
-                        <li><a href="/fournisseur" class="active">
+                        <li><a href="/blog" class="active">
                                 {{ us.prenom }}
                                 {{ us.nom }}
+                                <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
                             </a></li>
-                        <li><a href="/fournisseurc/{{ us.id }}">Profile</a></li>
-                        <li><a href="/listadmin">Administrateurs</a></li>
-                        <li><a href="/statfour">Statistiques</a></li>
+                        <li><a href="/profile">Profile</a></li>
+                        <li><a href="/listutili">Administrateurs</a></li>
                         <li><a href="/visitorf">Campi</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
         <div class="templatemo-content-container">
-
-
             <div class="templatemo-content-container">
                 <div class="templatemo-content-widget white-bg">
                     {{ form_start(form) }}
                     <h2 class="margin-bottom-10" align="center">Ajouter une reclamation</h2>
+                    <div class="row form-group">
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <label for="inputFirstName">Email</label>
+                            {#  <input type="text" name="type" class="form-control" id="inputFirstName" placeholder="Type"> #}
+                            {{ form_widget(form.email,{'attr': {'class': 'form-control','placeholder':'email'}}) }}
+
+                        </div>
+
+                    </div>
+
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="inputFirstName">Type</label>
@@ -101,8 +109,6 @@
                             {{ form_widget(form.description,{'attr': {'class': 'form-control','placeholder':'description'}}) }}
                         </div>
                     </div>
-
-
 
                     <div class="form-group text-right">
                         <button type="submit" class="templatemo-blue-button">Ajouter</button>
@@ -123,6 +129,8 @@
 <!-- JS -->
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>        <!-- jQuery -->
 <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
-<script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+<script type="text/javascript" src="js/templatemo-script.js"></script>
+<script src="//code.jquery.com/jquery.js"></script>
+
 </body>
 </html>

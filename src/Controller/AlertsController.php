@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 class AlertsController extends AbstractController
@@ -46,6 +47,7 @@ class AlertsController extends AbstractController
     }
 
     /**
+     *@IsGranted("ROLE_ADMIN")
      * @Route("/alerts",name="afficheralerts")
      */
     public function Affiche(AlertsRepository $repository)

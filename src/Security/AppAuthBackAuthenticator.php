@@ -91,6 +91,7 @@ class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
+
     public function getPassword($credentials): ?string
     {
         return $credentials['password'];
@@ -100,16 +101,14 @@ class AppAuthBackAuthenticator extends AbstractFormLoginAuthenticator implements
     {
         $session =  $request->getSession()->get('email');
         $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(array('email'=>$session));
-        if ($user) {
+        if ($user)
+        {
             if ($user->getRoles() == ["ROLE_FOUR","ROLE_USER"]) {
-                return new RedirectResponse($this->urlGenerator->generate("blog"));
+                return new RedirectResponse($this->urlGenerator->generate("blogg"));
             }
-            if ($this->getLoginUrl() == "/loginf") {
-                return new RedirectResponse($this->urlGenerator->generate("panier"));
-                //
-            }
+
             //if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($this->urlGenerator->generate("blog"));
+            return new RedirectResponse($this->urlGenerator->generate("bloggg"));
             // }*/
         }
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
