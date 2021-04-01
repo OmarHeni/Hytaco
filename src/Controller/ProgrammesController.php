@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Knp\Component\Pager\PaginatorInterface;
 class ProgrammesController extends AbstractController
 {
     /**
@@ -27,9 +27,14 @@ class ProgrammesController extends AbstractController
     /**
      * @Route("/programmesf", name="programmesf")
      */
-    public function affprog(): Response
+    public function affprog(Request $request,PaginatorInterface $paginator): Response
     {
-        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        $en = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll(),
+            $request->query->getInt('page', 1),
+            2
+        );
+
         return $this->render('front/programmes.html.twig', [
             'controller_name' => 'ProgrammesController','progs'=>$en
         ]);
@@ -153,6 +158,65 @@ class ProgrammesController extends AbstractController
                 'form'=>$form->createView(), 'prog'=>$en,'us'=>$us
             ]
         );
+    }
+
+/**
+* @Route("trisalairedesc",name="trisalairedesc")
+*/
+    public function trisaldesc(ProgrammesRepository $repo, Request $request,\Swift_Mailer $mailer)
+    {
+
+        $articles =
+            $repo->trisaldesc();
+        $us= $this->getUser();
+        $programmes = new Programmes();
+        $form=$this->createForm(ProgrammesType::class, $programmes);
+        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $message = (new \Swift_Message('Nouvelle programme'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($programmes->getTransporteur()->getMail())
+                ->setBody(
+                    'Vouz etes le transporteur du programme ' . $programmes->getNom());
+            $status = $mailer->send($message);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($programmes);
+            $em->flush();
+        }
+        return $this->render('back/programmes.html.twig', [
+            'prog' => $articles,'us'=>$us,'form'=>$form->createView()
+        ]);
+
+    }
+
+/**
+* @Route("trisalaireasc",name="trisalaireasc")
+*/
+    public function trisalasc(ProgrammesRepository $repo, Request $request,\Swift_Mailer $mailer)
+    {
+
+        $articles =
+            $repo->trisalasc();
+        $us= $this->getUser();
+        $programmes = new Programmes();
+        $form=$this->createForm(ProgrammesType::class, $programmes);
+        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $message = (new \Swift_Message('Nouvelle programme'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($programmes->getTransporteur()->getMail())
+                ->setBody(
+                    'Vouz etes le transporteur du programme ' . $programmes->getNom());
+            $status = $mailer->send($message);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($programmes);
+            $em->flush();
+        }
+        return $this->render('back/programmes.html.twig', [
+            'prog' => $articles,'us'=>$us,'form'=>$form->createView()
+        ]);
     }
 
 

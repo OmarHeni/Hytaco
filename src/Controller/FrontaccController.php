@@ -98,15 +98,6 @@ class FrontaccController extends AbstractController
     }
 
 
-    /**
-     * @Route("/ajoutprog", name="ajoutprog")
-     */
-    public function ajoutprog(): Response
-    {
-        return $this->render('front/ajouterprogramme.html.twig', [
-            'controller_name' => 'FrontaccController',
-        ]);
-    }
 
 
 

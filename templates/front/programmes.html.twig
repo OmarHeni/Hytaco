@@ -119,7 +119,11 @@
      </div>
 </section>
 
-
+<div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
+     <div class="section-btn">
+          <a href="/programmesfront" class="form-control" id="cf-submit" name="submit"><span data-hover="Ajouter un programme">Ajouter un programme</span></a>
+     </div>
+</div>
 
 <br><br><br>
 <footer>
@@ -162,6 +166,22 @@
                <div class="clearfix"></div>
 
 
+          </div>
+     </div>
+     <div class="pagination-area pb-115 text-center">
+          <div class="container">
+               <div class="row">
+                    <div class="col-xl-12">
+                         <div class="single-wrap d-flex justify-content-center">
+                              <nav aria-label="Page navigation example">
+                                   <ul class="pagination justify-content-start">
+                                        <li class="page-item"><a class="page-link" href="">{{ knp_pagination_render(progs) }}
+                                             </a></li>
+                                   </ul>
+                              </nav>
+                         </div>
+                    </div>
+               </div>
           </div>
      </div>
 </footer>
