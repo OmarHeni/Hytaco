@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client as Client;
 
 class ReclamationsController extends AbstractController
 {

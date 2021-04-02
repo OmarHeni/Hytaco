@@ -84,15 +84,15 @@
         <!-- MENU LINKS -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/programmesf" class="smoothScroll">{% trans %}Programs{% endtrans %}</a></li>
-                <li><a href="/evenementf" class="smoothScroll">{% trans %}Events{% endtrans %}</a></li>
-                <li><a href="/accueil#aboutlocaux" class="smoothScroll">{% trans %}Local{% endtrans %}</a></li>
-                <li><a href="/accueil#team" class="smoothScroll">{% trans %}Categories{% endtrans %}</a></li>
-                <li><a href="/alertsf" class="smoothScroll">{% trans %}Alert{% endtrans %}</a></li>
-                <li><a href="/accueil#alerts" class="smoothScroll">{% trans %}Claims{% endtrans %}</a></li>
-                <li><a href="/proposition" class="smoothScroll">{% trans %}Propositions{% endtrans %}</a></li>
-                <li><a href="/logoutf" class="smoothScroll">{% trans %}Log Out{% endtrans %}</a></li>
-
+                <li><a href="/programmesf" class="smoothScroll">Programmes</a></li>
+                <li><a href="/evenementf" class="smoothScroll">Evenements</a></li>
+                <li><a href="#team" class="smoothScroll">Categories</a></li>
+                <li><a href="#aboutlocaux" class="smoothScroll">Locaux</a></li>
+                <li><a href="/alertsf" class="smoothScroll">Alertes</a></li>
+                <li><a href="#alerts" class="smoothScroll">Reclamations</a></li>
+                <li><a href="/proposition" class="smoothScroll">Propositions</a></li>
+                <li><a href="/panier" class="smoothScroll">Panier</a></li>
+                <li><a href="/logoutf" class="smoothScroll">Deconnexion</a></li>
 
 
             </ul>
@@ -189,39 +189,27 @@
             {{ form_start(form1) }}
 
             <div class="col-md-12 col-sm-12">
-                {{ form_widget(form1.nom,{'attr': {'class': 'form-control','placeholder':'nom de l evenement'}}) }}
-                {# <input type="text" class="form-control" id="inputFirstName" placeholder="nom">#}
+                {#  <input type="text" name="type" class="form-control" id="cf-type" placeholder="Type"> #}
+                {{ form_widget(form1.nom,{'attr': {'class': 'form-control','placeholder':'Nom Proposé'}}) }}
+
             </div>
 
             <div class="col-md-4 col-sm-4" style="margin-left: 250px" >
-                {{ form_widget(form1.date,{'attr': {'class': 'form-control','placeholder':'nom de l evenement'}}) }}
-                {# <input type="text" class="form-control" id="inputFirstName" placeholder="Date">#}
+                {#  <input type="text" name="adresse" class="form-control" id="cf-localisation" placeholder="adresse"> #}
+                {{ form_widget(form1.date,{'attr': {'class': 'form-control','placeholder':'Date'}}) }}
             </div>
 
             <div class="col-md-12 col-sm-12">
-                {{ form_widget(form1.datef,{'attr': {'class': 'form-control','placeholder':'nom de l evenement'}})}}
-                {# <input type="text" class="form-control" id="inputFirstName" placeholder="Date">#}
+                {#  <input type="text" name="localisation" class="form-control" id="inputFirstName" placeholder="Localisation">#}
+                {{ form_widget(form1.nombrePlace,{'attr': {'class': 'form-control','placeholder':'Nombre de Place Proposés'}}) }}
             </div>
 
             <div class="col-md-12 col-sm-12">
-                {{ form_widget(form1.Lieu,{'attr': {'class': 'form-control','placeholder':'nom de l evenement'}}) }}
-                {# <input type="text" class="form-control" id="inputFirstName" placeholder="Date">#}
+                {#  <input type="text" name="localisation" class="form-control" id="inputFirstName" placeholder="Localisation">#}
+                {{ form_widget(form1.mail,{'attr': {'class': 'form-control','placeholder':'Email'}}) }}
             </div>
 
-            <div class="col-md-12 col-sm-12">
-                {#  <option value="html">Admin</option>>#}
-                {{ form_widget(form1.sponsors,{'attr': {'class': 'form-control','placeholder':'sponsors'}}) }}
 
-            <div class="col-md-12 col-sm-12">
-
-            {{ form_widget(form1.nbrplace,{'attr': {'class': 'form-control','placeholder':'nom de l nbrplace'}}) }}
-            {# <input type="nbrplace" class="form-control" id="inputFirstName" placeholder="nbrplace">#}
-            </div>
-
-            <div class="col-md-12 col-sm-12">
-            {# <input type="file" name="fileToUpload" id="fileToUpload" class="filestyle" data-buttonName="btn-primary" data-buttonBefore="true" data-icon="false">#}
-            {{ form_widget(form1.imageFile,{'attr': {'class': 'form-control','placeholder':'image'}}) }}
-            </div>
 
         </div>
         {# <input type="captchaCode" class="form-control" id="inputFirstName" placeholder="captchaCode">#}

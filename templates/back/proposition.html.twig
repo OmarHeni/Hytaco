@@ -48,13 +48,13 @@
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="/datav"><i class="fa fa-bar-chart fa-fw"></i>{% trans %}Statics{% endtrans %}</a></li>
                 <li><a href="/map"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
                 <li><a href="/utilisateur"><i class="fa fa-user fa-fw"></i>{% trans %}Users{% endtrans %}</a></li>
                 <li><a href="/programmes"><i class="fa fa-flag fa-fw"></i>{% trans %}Programs{% endtrans %}</a></li>
                 <li><a href="/evenement"><i class="fa fa fa-calendar fa-fw"></i>{% trans %} Event{% endtrans %}</a></li>
                 <li><a href="/sponsor"><i class="fa fa-building fa-fw"></i>{% trans %}Sponsors{% endtrans %}</a></li>
+                <li><a href="/afficheP" class="active"><i class="fa fa-comments fa-fw"></i>{% trans %}Propos{% endtrans %}</a></li>
                 <li><a href="/locaux"><i class="fa fa-location-arrow fa-fw"></i>{% trans %}Local{% endtrans %}</a></li>
                 <li><a href="/categorie"><i class="fa fa-tags fa-fw"></i>{% trans %}Categories{% endtrans %}</a></li>
                 <li><a href="/produit"><i class="fa fa-tags fa-fw"></i>{% trans %}Products{% endtrans %}</a></li>
@@ -64,7 +64,9 @@
                 <li><a href="/transporteurs"><i class="fa fa-male fa-fw"></i>{% trans %}Carrier{% endtrans %}</a></li>
                 <li><a href="/alerts"><i class="fa fa-bullhorn fa-fw"></i>{% trans %}Alert{% endtrans %}</a></li>
                 <li><a href="/reclamation"><i class="fa fa-comments fa-fw"></i>{% trans %}Claims{% endtrans %}</a></li>
-                <li><a href="/login"><i class="fa fa-eject fa-fw"></i>{% trans %}Sign Out{% endtrans %}</a></li>
+                <li><a href="/logout"><i class="fa fa-eject fa-fw"></i>{% trans %}Sign Out{% endtrans %}</a></li>
+
+
             </ul>
         </nav>
     </div>
@@ -156,6 +158,9 @@
 <script type="text/javascript" src="js/templatemo-script.js"></script>        <!-- Templatemo Script -->
 
 
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 
 
 <script>

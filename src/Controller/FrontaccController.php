@@ -6,10 +6,12 @@ use App\Entity\Categories;
 use App\Entity\Evenements;
 use App\Entity\Livreurs;
 use App\Entity\Programmes;
+use App\Entity\Proposition;
 use App\Entity\Utilisateur;
 use App\Form\EvenementsType;
 use App\Form\LivreursType;
 use App\Form\ProgrammesType;
+use App\Form\PropositionType;
 use App\Repository\EvenementsRepository;
 use App\Repository\LivreursRepository;
 use App\Repository\ProgrammesRepository;
@@ -31,6 +33,8 @@ use App\Entity\Reclamations;
 use App\Form\ReclamationsType;
 use App\Repository\PostlikRepository;
 use App\Entity\Postlik;
+use Symfony\Component\Form\FormTypeInterface;
+use Twilio\Rest\Client as Client;
 
 class FrontaccController extends AbstractController
 {
@@ -50,6 +54,21 @@ class FrontaccController extends AbstractController
         {
             $em=$this->getDoctrine()->getManager();
             $em->persist($reclamations);
+            $sid = 'AC7a9556cc27688eb285cd7c087969f154';
+            $token = 'd9481607275f11408ff25970b48522bc';
+            $client = new Client($sid, $token);
+
+            // Use the client to do fun stuff like send text messages!
+            $client->messages->create(
+            // the number you'd like to send the message to
+                '+21623393985',
+                [
+                    // A Twilio phone number you purchased at twilio.com/console
+                    'from' => '+19852352706',
+                    // the body of the text message you'd like to send
+                    'body' => 'Bonjour votre reclamation sera prise en consideration!'
+                ]
+            );
             $message = (new \Swift_Message('Madame, Monsieur, '))
                 ->setFrom('hytacocampi21@gmail.com')
                 ->setTo($reclamations->getEmail())
@@ -162,13 +181,13 @@ class FrontaccController extends AbstractController
 
 
     /**
-     * @Route ("/post/{id}/like",name="post_lik")
+     * @Route ("/post/{id}/lik",name="post_lik")
      * @param Commentaire $commentaire
      * @param PostlikRepository $likerepo
      *
      * @return Response
      */
-    public function like (Commentaire $commentaire,PostlikRepository $likerepo,EntityManagerInterface $entityManager):Response
+    public function lik (Commentaire $commentaire,PostlikRepository $likerepo,EntityManagerInterface $entityManager):Response
     { $user=$this->getUser();
         if(!$user) return $this->json([
             'code'=> 403,
@@ -235,12 +254,12 @@ class FrontaccController extends AbstractController
     function Proposition(Request $request,\Swift_Mailer $mailer)
     {
         $transporteur=new Transporteur();
-        $evenement=new Evenements();
+        $proposition=new Proposition();
         $livreur=new Livreurs();
         $programme=new Programmes();
 
         $form=$this->createForm(TransporteurType::class, $transporteur);
-        $form1=$this->createForm(EvenementsType::class,$evenement);
+        $form1=$this->createForm(PropositionType::class,$proposition);
         $form2=$this->createForm(LivreursType::class,$livreur);
         $form3=$this->createForm(ProgrammesType::class,$programme);
 $users=$this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->findByRole('ROLE_ADMIN');
@@ -265,22 +284,20 @@ $users=$this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->fi
                     );
                 $status = $mailer->send($message);
             }
-                return $this->redirectToRoute('frontacc');
-
-
+                return $this->redirectToRoute('transaffiched');
         }
 
         if($form1->isSubmitted() && $form1->isValid())
         {
             $em1=$this->getDoctrine()->getManager();
-            $em1->persist($evenement);
+            $em1->persist($proposition);
 
 
             $message1 = (new \Swift_Message('Bienvenue'))
                 ->setFrom('HYTACOCAMPII@gmail.com')
-                ->setTo($evenement->getMail())
+                ->setTo($proposition->getMail())
                 ->setBody(
-                    'Bienvenue, votre demande est bien recu!'
+                    'Bienvenue, votre proposition est bien recu!'
                 )
             ;
             $mailer->send($message1);
@@ -317,14 +334,14 @@ $users=$this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->fi
 
             $message3 = (new \Swift_Message('Bienvenue'))
                 ->setFrom('HYTACOCAMPII@gmail.com')
-                ->setTo($programme->getMail())
+                ->setTo($programme->getTransporteur()->getMail())
                 ->setBody(
                     'Bienvenue, votre proposition est bien recu!'
                 )
             ;
             $mailer->send($message3);
             $em3->flush();
-            return $this->redirectToRoute('programmesf');
+            return $this->redirectToRoute('programmesff');
 
         }
 
