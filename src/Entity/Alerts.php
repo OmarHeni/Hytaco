@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AlertsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AlertsRepository::class)
@@ -21,6 +22,7 @@ class Alerts
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="localisation obligatoire")
      */
     private $localisation;
 
@@ -35,8 +37,17 @@ class Alerts
      */
     private $rapport;
 
+
+
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 8,
+     *     minMessage = " les nombres doivent être supérieurs à 8 chiffres",
+     *     maxMessage = " les nombres doivent être inférieurs à 8 chiffres",
+     * )
+     * @Assert\NotBlank(message="Le numéro de telephonne doit etre à 8 chiffres")
      */
     private $telephone;
 
@@ -47,6 +58,11 @@ class Alerts
 
     /**
      * @ORM\Column(type="string", length=50)
+     *   @Assert\Email(
+     *     message = "l' email '{{ value }}' n'est pas valid"
+     * )
+     * @Assert\NotBlank(message="mail obligatoire")
+
      */
     private $mail;
 

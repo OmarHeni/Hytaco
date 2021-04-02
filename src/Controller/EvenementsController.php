@@ -42,6 +42,8 @@ class EvenementsController extends AbstractController
      */
     public function Affichagep(EvenementsRepository $repository)
     {
+        $user = $this->getUser();
+
         //$en=$this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
         // var_dump($en);
         // Configure Dompdf according to your needs
@@ -54,7 +56,7 @@ class EvenementsController extends AbstractController
 
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('back/listp.html.twig ',
-            ['formations' => $en]);
+            ['formations' => $en, 'us' => $user]);
 
         // Load HTML to Dompdf
         $dompdf->loadHtml($html);

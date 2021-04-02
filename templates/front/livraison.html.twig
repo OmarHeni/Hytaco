@@ -107,12 +107,14 @@ http://www.tooplate.com/view/2099-scenic
                          <div class="col-md-6 col-sm-6">
                               {{ form_row(form.datelivraison,{'attr':{'class':'form-control'}}) }}
                          </div>
-
-                             <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
-                              <div class="section-btn">
-                                   <input type="submit" value="Submit">
-                              </div>
-                             </div>
+                    <div class="col-md-6 col-sm-6">
+                         {{ form_row(form.livreur,{'attr':{'class':'form-control'}}) }}
+                    </div>
+                    <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
+                         <div class="section-btn">
+                              <button type="submit"  class="form-control" id="cf-submit" name="submit"><span data-hover="Send Message">Send </span></button>
+                         </div>
+                    </div>
                          </div>
 
                    {{form_end(form)}}
@@ -176,6 +178,8 @@ http://www.tooplate.com/view/2099-scenic
 <script src="js/modernizr.custom.js"></script>
 <script src="js/smoothscroll.js"></script>
 <script src="js/custom.js"></script>
+<script>
 
+</script>
 </body>
 </html>

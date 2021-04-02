@@ -122,7 +122,7 @@
                          <h4>Ici, vous pouvez nous envoyer une alerte si quelque chose s'est mal passé durant le programme.</h4>
                     </div>
                </div>
-
+               {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
                <div class="clearfix"></div>
                <div class="col-md-offset-2 col-md-8 col-sm-12">
                     <!-- CONTACT FORM HERE -->
@@ -132,26 +132,32 @@
 
                     <div class="col-md-12 col-sm-12">
                               {#  <input type="text" name="localisation" class="form-control" id="inputFirstName" placeholder="Localisation">#}
-                              {{ form_widget(form.localisation,{'attr': {'class': 'form-control','placeholder':'localisation'}}) }}
-                         </div>
+                         {{ form_widget(form.localisation,{'attr': {'class': 'form-control','placeholder':'localisation'}}) }}
+                         {{ form_errors(form.localisation) }}
+                    </div>
                     <div class="col-md-12 col-sm-12">
                          {#  <input type="text" name="mail" class="form-control" id="cf-localisation" placeholder="mail"> #}
                          {{ form_widget(form.mail,{'attr': {'class': 'form-control','placeholder':'mail'}}) }}
                     </div>
                     <div class="col-md-12 col-sm-12">
-                    {#  <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>#}
+                    {# <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>#}
                              {{ form_widget(form.telephone,{'attr': {'class': 'form-control','placeholder':'telephone'}}) }}
+                         {{ form_errors(form.telephone) }}
+
                     </div>
                     <div class="col-md-12 col-sm-12">
                          <h4>Choisissez votre programme</h4>
-                         {#  <input type="programme" name="type" class="form-control" id="cf-type" placeholder="programmes"> #}
+                         {{ form_errors(form.programme) }}
+                         {# <input type="programme" name="type" class="form-control" id="cf-type" placeholder="programmes"> #}
                          {{ form_widget(form.programme, { 'attr':  {'class': 'form-control','placeholder':'programmes'}}) }}
+
                     </div>
                          <div class="col-md-12 col-sm-12">
 
                          {#  <textarea class="form-control" rows="50" id="cf-message" name="cf-message" placeholder="Message"></textarea>#}
                               {{ form_widget(form.rapport,{'attr': {'class': 'form-control','placeholder':'rapport'}}) }}
-                    </div>
+
+                         </div>
 
 
 

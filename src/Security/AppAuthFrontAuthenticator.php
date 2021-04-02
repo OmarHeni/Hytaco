@@ -94,9 +94,7 @@ class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implement
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($this->urlGenerator->generate($targetPath));
-        }
+
             return new RedirectResponse($this->urlGenerator->generate("frontacc"));
             //
 
