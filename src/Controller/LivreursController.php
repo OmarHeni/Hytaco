@@ -39,7 +39,24 @@ class LivreursController extends AbstractController
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route ("/addlivreur/{nom}/{adresse}/{telephone}/{mail}",name="addliv")
+     */
+    function Addliv($nom,$adresse,$telephone,$mail)
+    {
+        $livr = new Livreurs();
+        $livr->setNom($nom)
+            ->setAdresse($adresse)
+            ->setMail($mail)
+            ->setTelephone($telephone);
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($livr);
+        $em->flush();
+        return $this->redirectToRoute('ajouterlivreurs');
 
+    }
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response

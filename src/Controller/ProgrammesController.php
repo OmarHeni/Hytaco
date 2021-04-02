@@ -8,11 +8,11 @@ use App\Form\ProgrammesType;
 use App\Repository\ProduitsRepository;
 use App\Repository\ProgrammesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Knp\Component\Pager\PaginatorInterface;
 class ProgrammesController extends AbstractController
 {
     /**
@@ -25,17 +25,35 @@ class ProgrammesController extends AbstractController
         ]);
     }
     /**
-     * @Route("/programmesf", name="programmesf")
+     * @Route("/programmesf", name="programmesff")
      */
-    public function affprog(): Response
+    public function affprog(Request $request,PaginatorInterface $paginator): Response
     {
-        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
-        return $this->render('front/programmes.html.twig', [
+        $en = $paginator->paginate(
+            $this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll(),
+            $request->query->getInt('page', 1),
+            2
+        );
+
+        return $this->render('front/programme.html.twig', [
             'controller_name' => 'ProgrammesController','progs'=>$en
         ]);
     }
-
-
+    /**
+     * @Route("/Participe", name="participer")
+     */
+    public function participe(Request $request): Response
+    {
+        /** @var Programmes $prog */
+        $prog=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->find($request->get('idp'));
+        if ($this->getUser()) {
+            $prog->addParticipant($this->getUser());
+            $this->getDoctrine()->getManager()->flush();
+            return $this->json(['message'=>'Vous avez été ajouté avec sucess'],200);
+        }else {
+            return $this->json(['message'=>'Veuillez se connecter']);
+        }
+    }
     /**
      * @Route("/SupprimerProgrammes/{id}",name="deleteprogrammes")
      */
@@ -75,17 +93,41 @@ class ProgrammesController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('ajouterprogrammes');
         }
-        if($request->isMethod("POST"))
+
+        return $this->render('back/programme.html.twig',
+            [
+                'form'=>$form->createView(), 'prog'=>$en,'us'=>$us
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route ("/programmesfront",name="ajouterprogrammesfront")
+     */
+    function Addfront(Request $request,\Swift_Mailer $mailer)
+    {
+        $programmes=new Programmes();
+        $us= $this->getUser();
+        $form=$this->createForm(ProgrammesType::class, $programmes);
+        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
         {
-            $nom = $request->get('nom');
-            $programmes=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findBy(array('nom'=>$nom));
-            return $this->render('back/programmes.html.twig',
-                [
-                    'form'=>$form->createView(), 'prog'=>$programmes,'us'=>$us
-                ]
-            );
+            $message = (new \Swift_Message('Nouvelle programme'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($programmes->getTransporteur()->getMail())
+                ->setBody(
+                    'Vouz etes le transporteur du programme '.$programmes->getNom());
+            $status= $mailer->send($message);
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($programmes);
+            $em->flush();
+            return $this->redirectToRoute('ajouterprogrammesfront');
         }
-        return $this->render('back/programmes.html.twig',
+
+        return $this->render('front/ajouterprogramme.html.twig',
             [
                 'form'=>$form->createView(), 'prog'=>$en,'us'=>$us
             ]
@@ -111,11 +153,70 @@ class ProgrammesController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('ajouterprogrammes');
         }
-        return $this->render('back/programmes.html.twig',
+        return $this->render('back/programme.html.twig',
             [
                 'form'=>$form->createView(), 'prog'=>$en,'us'=>$us
             ]
         );
+    }
+
+    /**
+     * @Route("trisalairedesc",name="trisalairedesc")
+     */
+    public function trisaldesc(ProgrammesRepository $repo, Request $request,\Swift_Mailer $mailer)
+    {
+
+        $articles =
+            $repo->trisaldesc();
+        $us= $this->getUser();
+        $programmes = new Programmes();
+        $form=$this->createForm(ProgrammesType::class, $programmes);
+        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $message = (new \Swift_Message('Nouvelle programme'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($programmes->getTransporteur()->getMail())
+                ->setBody(
+                    'Vouz etes le transporteur du programme ' . $programmes->getNom());
+            $status = $mailer->send($message);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($programmes);
+            $em->flush();
+        }
+        return $this->render('back/programme.html.twig', [
+            'prog' => $articles,'us'=>$us,'form'=>$form->createView()
+        ]);
+
+    }
+
+    /**
+     * @Route("trisalaireasc",name="trisalaireasc")
+     */
+    public function trisalasc(ProgrammesRepository $repo, Request $request,\Swift_Mailer $mailer)
+    {
+
+        $articles =
+            $repo->trisalasc();
+        $us= $this->getUser();
+        $programmes = new Programmes();
+        $form=$this->createForm(ProgrammesType::class, $programmes);
+        $en=$this->getDoctrine()->getManager()->getRepository(Programmes::class)->findAll();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $message = (new \Swift_Message('Nouvelle programme'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($programmes->getTransporteur()->getMail())
+                ->setBody(
+                    'Vouz etes le transporteur du programme ' . $programmes->getNom());
+            $status = $mailer->send($message);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($programmes);
+            $em->flush();
+        }
+        return $this->render('back/programme.html.twig', [
+            'prog' => $articles,'us'=>$us,'form'=>$form->createView()
+        ]);
     }
 
 

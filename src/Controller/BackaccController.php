@@ -85,6 +85,20 @@ class BackaccController extends AbstractController
 
 
     /**
+     * @Route("/produitfour", name="produitfourr")
+     */
+    public function produitfour(): Response
+    {
+        $user=$this->getUser();
+        $en=$this->getDoctrine()->getManager()->getRepository(Produits::class)->findAll();
+        $users = $this->up->findByRole('ROLE_ADMIN');
+        return $this->render('back/produitfour.html.twig', [
+            'controller_name' => 'BackaccController', 'uss'=>$user,"users"=>$users,'prod'=>$en
+        ]);
+    }
+
+
+    /**
      * @Route ("/fournisseurc/{id}",name="edit_four")
      */
     public function Edit_fournisseur($id,Request $request,UserPasswordEncoderInterface $encoder)
@@ -246,127 +260,5 @@ $us = $this->getUser();
     }
 
 
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/programmess", name="blogprogrammes")
-     */
-    public function programmes(): Response
-    {
-        return $this->render('back/programmes.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/evenements", name="blogevenements")
-     */
-    public function evenements(): Response
-    {
-        return $this->render('back/evenements.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/sponsors", name="blogsponsors")
-     */
-    public function sponsors(): Response
-    {
-        return $this->render('back/sponsors.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @Route("/locauxx", name="bloglocaux")
-     */
-    public function locauxx(): Response
-    {
-        return $this->render('back/locaux.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/categories", name="blogcategories")
-     */
-    public function categories(): Response
-    {
-        return $this->render('back/categories.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/produits", name="blogproduits")
-     */
-    public function produits(): Response
-    {
-        return $this->render('back/produits.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/livraisons", name="bloglivraisons")
-     */
-    public function livraisons(): Response
-    {
-        return $this->render('back/livraisons.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/livreurs", name="bloglivr")
-     */
-    public function livreurs(): Response
-    {
-        return $this->render('back/livreurs.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/transporteur", name="blogtransporteur")
-     */
-    public function transporteur(): Response
-    {
-        return $this->render('back/transporteur.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/alertes", name="blogalertes")
-     */
-    public function alertes(): Response
-    {
-        return $this->render('back/alertes.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/reclamations", name="blogrec")
-     */
-    public function reclamations(): Response
-    {
-        return $this->render('back/reclamations.html.twig', [
-            'controller_name' => 'BackaccController',
-        ]);
-    }
 
 }

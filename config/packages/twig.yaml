@@ -5,3 +5,5 @@ twig:
     exception_controller: null
     globals:
         locales: '%app.locales%'
+    form_theme:
+        - '@FOSCKEditor/form/ckeditor_widget.html.twig'

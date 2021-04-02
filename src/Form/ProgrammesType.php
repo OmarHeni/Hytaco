@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Categories;
 use App\Entity\Programmes;
+use App\Entity\Locaux;
 use App\Entity\Transporteur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,8 +19,9 @@ class ProgrammesType extends AbstractType
             ->add('nom')
             ->add('date')
             ->add('duree')
-            ->add('details')
-            ->add('transporteur',EntityType::class,['class'=>Transporteur::class,'choice_label'=>'nom','multiple'=>false]);
+            ->add('details' )
+            ->add('transporteur',EntityType::class,['class'=>Transporteur::class,'choice_label'=>'nom','multiple'=>false])
+            ->add('locale',EntityType::class,['class'=>Locaux::class,'choice_label'=>'nom','multiple'=>false]);;
 
 
     }

@@ -18,7 +18,16 @@ class LocauxRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Locaux::class);
     }
-
+    public function trisaldesc(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Locaux s order by s.nom DESC');
+        return $query->getResult();
+    }
+    public function trisalasc(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Locaux s order by s.nom ASC');
+        return $query->getResult();
+    }
     // /**
     //  * @return Locaux[] Returns an array of Locaux objects
     //  */

@@ -20,7 +20,7 @@ class CommandeController extends AbstractController
 
     public function affcoms(CommandeRepository $cr): Response
     {
-         $i = 0;
+        $i = 0;
         $array= [];
         $array2=[];
         $stats = $cr->findAllPerDate();
@@ -38,19 +38,19 @@ class CommandeController extends AbstractController
             $array2[]=$array;
             $array=[];
         }
-          return $this->json($array2);
+        return $this->json($array2);
 
 
     }
     /**
      * @Route("/commandes", name="commande")
-     * @IsGranted("ROLE_ADMIN")
      */
     public function index(CommandeRepository $cr): Response
     {
-   $coms =  $cr->findAll();
+        $coms =  $cr->findAll();
+        $us = $this->getUser();
         return $this->render('back/commandes.html.twig', [
-            'commandes' => $coms
+            'commandes' => $coms,'us'=>$us
         ]);
     }
     /**
@@ -72,18 +72,18 @@ class CommandeController extends AbstractController
         if ($content = $request->getContent()) {
             $json = json_decode($content, true);
         }
-$com = $cr->find($json['id']);
-      $com->setPrix(($com->getPrix()/$com->getQuantite())*$json['qty']);
+        $com = $cr->find($json['id']);
+        $com->setPrix(($com->getPrix()/$com->getQuantite())*$json['qty']);
         $com->setQuantite($json['qty']);
         $this->getDoctrine()->getManager()->flush();
         return $this->json(['id'=>$json['id']],200);
     } catch (\Exception $e) {
-return $this->json(['code' => 500, 'Exception' => $e], 500);
-}
-     /*   $coms =  $cr->find($id);
-        return $this->render('back/commandes.html.twig', [
-            'commandes' => $coms,
-        ]);*/
+        return $this->json(['code' => 500, 'Exception' => $e], 500);
+    }
+        /*   $coms =  $cr->find($id);
+           return $this->render('back/commandes.html.twig', [
+               'commandes' => $coms,
+           ]);*/
     }
     /**
      * @Route("/delcom/{id}", name="delcom")
@@ -92,7 +92,7 @@ return $this->json(['code' => 500, 'Exception' => $e], 500);
     {
         $com = $cr->findOneBy(array('id'=>$id));
         $em = $this->getDoctrine()->getManager();
-       $em->remove($com);
+        $em->remove($com);
         $em->flush();
         return $this->redirect('/commandes');
     }
@@ -124,7 +124,6 @@ return $this->json(['code' => 500, 'Exception' => $e], 500);
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @IsGranted("ROLE_ADMIN")
      * @Route ("/affcoupon",name="affcoupon")
      */
     function Addcoupon(Request $request)

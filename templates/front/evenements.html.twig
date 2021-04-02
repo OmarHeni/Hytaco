@@ -75,14 +75,14 @@
           <!-- MENU LINKS -->
           <div class="collapse navbar-collapse">
                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/accueil#aboutproject" class="smoothScroll">{% trans %}Programs{% endtrans %}</a></li>
-                    <li><a href="/evenementf" class="smoothScroll">{% trans %}Events{% endtrans %}</a></li>
+                    <li><a href="/programmesf#aboutproject" class="smoothScroll">{% trans %}Programs{% endtrans %}</a></li>
+                    <li><a href="/affiche" class="smoothScroll">{% trans %}Events{% endtrans %}</a></li>
                     <li><a href="/accueil#aboutlocaux" class="smoothScroll">{% trans %}Local{% endtrans %}</a></li>
                     <li><a href="/accueil#team" class="smoothScroll">{% trans %}Categories{% endtrans %}</a></li>
                     <li><a href="/alertsf" class="smoothScroll">{% trans %}Alert{% endtrans %}</a></li>
                     <li><a href="/accueil#alerts" class="smoothScroll">{% trans %}Claims{% endtrans %}</a></li>
-                    <li><a href="/profilef" class="smoothScroll">{% trans %}Profil{% endtrans %}</a></li>
-                    <li><a href="#" class="smoothScroll">{% trans %}Log Out{% endtrans %}</a></li>
+                    <li><a href="/proposition" class="smoothScroll">{% trans %}Propositions{% endtrans %}</a></li>
+                    <li><a href="/logoutf" class="smoothScroll">{% trans %}Log Out{% endtrans %}</a></li>
 
 
                </ul>
@@ -110,63 +110,56 @@
 
           </div>
      </div>
-     {%for e in events%}
-          <div class="container">
 
-               <div class="row">
+     <div class="container">
 
+          <div class="row">
 
+               {%for e in events%}
 
-                    <div class="col-md-offset-3 col-md-6 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
 
                          <!-- PROJECT ITEM -->
                          <div class="project-item">
-                              <a href="#"><img style="height: 350px; width: 600px" src="images/properties/{{ e.imageName }}" alt="Bicycle" class="card-img-top"></a>
+                              <a href="#"><img style="height: 380px; width: 380px" src="images/properties/{{ e.imageName }}" alt="Bicycle" class="card-img-top"></a>
                               <img src="images/properties" class="img-responsive" alt="">
 
                               <div class="project-overlay">
-                                   <div class="project-info" style="color: #00FF00">
+                                   <div class="project-info" style="color:#006400">
                                         <h5>{% trans %}Name of Event{% endtrans %}:  {{ e.nom }} </h5>
                                         <h5>{% trans %}Our Event Starts{% endtrans %}: {{ e.date|date("m/d/Y") }}</h5>
                                         <h5>{% trans %}Our Event Ends {% endtrans %}: {{ e.datef|date("m/d/Y") }}</h5>
-                                        <h5>{% trans %}Adress{% endtrans %} : {{ e.Lieu }}
-                                             {% for  sponsor in e.sponsors %}
-                                        <h5>{% trans %}sponsor{% endtrans %} : {{ sponsor.nom  }}</h5>
-                                             {% endfor %}
+                                        <h5>{% trans %}Adress{% endtrans %} : {{ e.Lieu }}</h5>
                                         <h5> {{ e.nbrplace }}</h5>
+
+
                                    </div>
                               </div>
                               </a>
                          </div>
+                         <div class="col-md-6 col-sm-6">
+                              {#  <p>{% trans %}More Details{% endtrans %}: {{ e.description }}</p>#}
+                              <a href="{{ path('post_likess', {'id': e.id}) }}" class="btn btn-link js-like">
+
+                                   {% if app.user and e.likedByUser(app.user) %}
+                                        <i class="fas fa-thumbs-up"></i>
+                                   {% else %}
+                                        <i class="far fa-thumbs-up"></i>
+                                   {% endif %}
+                                   <span class="js-like">{{e.likes | length }}&nbsp;</span>
+                                   <span class="js-label">{% trans %}Like{% endtrans %}</span>
+
+                              </a>
+                         </div>
+
                     </div>
 
 
 
+               {% endfor %}
 
-               </div>
           </div>
-          <div class="col-md-offset-3 col-md-8 col-sm-6">
-               {#  <p>{% trans %}More Details{% endtrans %}: {{ e.description }}</p>#}
-               <a href="{{ path('post_likess', {'id': e.id}) }}" class="btn btn-link js-like">
-
-                    {% if app.user and e.likedByUser(app.user) %}
-                         <i class="fas fa-thumbs-up"></i>
-                    {% else %}
-                         <i class="far fa-thumbs-up"></i>
-                    {% endif %}
-                    <span class="js-like">{{e.likes | length }}&nbsp;</span>
-                    <span class="js-label">{% trans %}Like{% endtrans %}</span>
-
-               </a>
-          </div>
-     {% endfor %}
-     <div><a href="/propositionf" class="primary-btn">Suggestion</a></div>
-</section>
-
-
-
-
-
+     </div>
 
 
 <!-- TEAM -->
@@ -213,10 +206,6 @@
 
 
 
-
-
-
-
 <footer>
 
 
@@ -243,8 +232,8 @@
 
                <div class="col-md-3 col-sm-12">
 
-                    {# <h3>A propos de nous</h3>
-                    <p>Nous somme un groupe de 6 personnes de l'etabliseement ESPRIT<br> avec une seule motivation , créer<br>le premier site de camping en Tunisie.</p>#}
+                    <h3>A propos de nous</h3>
+                    <p>Nous somme un groupe de 6 personnes de l'etabliseement ESPRIT<br> avec une seule motivation , créer<br>le premier site de camping en Tunisie.</p>
                     <ul class="social-icon">
                          <li><a href="#" class="fa fa-twitter"></a></li>
                          <li><a href="#" class="fa fa-facebook"></a></li>
@@ -253,7 +242,6 @@
                     </ul>
 
                </div>
-
                <div class="clearfix"></div>
 
 

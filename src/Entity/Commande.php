@@ -51,6 +51,11 @@ class Commande
      */
     private $statue;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Livraisons::class, inversedBy="commandes")
+     */
+    private $livraison;
+
 
 
     public function __construct()
@@ -131,6 +136,18 @@ class Commande
     public function setStatue(?string $statue): self
     {
         $this->statue = $statue;
+
+        return $this;
+    }
+
+    public function getLivraison(): ?Livraisons
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(?Livraisons $livraison): self
+    {
+        $this->livraison = $livraison;
 
         return $this;
     }

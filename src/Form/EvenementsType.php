@@ -22,9 +22,6 @@ class EvenementsType extends AbstractType
             ->add('datef')
             ->add('Lieu')
             ->add('sponsors',EntityType::class,['class'=>Sponsors::class,'choice_label'=>'nom','multiple'=>true]);
-
-        ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

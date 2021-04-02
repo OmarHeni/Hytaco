@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LocauxRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -58,6 +60,27 @@ class Locaux
      * @ORM\Column(type="integer", nullable=true)
      */
     private $note;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="locaux")
+     */
+    private $commentaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Programmes::class, mappedBy="locale")
+     */
+    private $programmes;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $googleMap;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+        $this->programmes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -141,6 +164,78 @@ class Locaux
     public function setNote(?int $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setManyToOne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getManyToOne() === $this) {
+                $commentaire->setManyToOne(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Programmes[]
+     */
+    public function getProgrammes(): Collection
+    {
+        return $this->programmes;
+    }
+
+    public function addProgramme(Programmes $programme): self
+    {
+        if (!$this->programmes->contains($programme)) {
+            $this->programmes[] = $programme;
+            $programme->setLocale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgramme(Programmes $programme): self
+    {
+        if ($this->programmes->removeElement($programme)) {
+            // set the owning side to null (unless already changed)
+            if ($programme->getLocale() === $this) {
+                $programme->setLocale(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getGoogleMap(): ?string
+    {
+        return $this->googleMap;
+    }
+
+    public function setGoogleMap(?string $googleMap): self
+    {
+        $this->googleMap = $googleMap;
 
         return $this;
     }

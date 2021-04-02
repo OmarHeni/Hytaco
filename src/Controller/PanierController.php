@@ -16,6 +16,7 @@ use App\Entity\Produits;
 use App\Entity\Commande ;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use KnpU\OAuth2ClientBundle\Client\Provider\StripeClient ;
 
 class PanierController extends AbstractController
 {
@@ -28,10 +29,8 @@ class PanierController extends AbstractController
      */
     public function payement(Request $request,CommandeRepository $rp) : Response{
         if ($request->isMethod('POST')) {
-
             foreach ($request->query->all() as $key => $value) {
                 if ($key !== "amount") {
-
                     $commande = $rp->find(intval ($value));
                     $commande->setStatue("Payé");
                     $this->getDoctrine()->getManager()->flush();
@@ -45,13 +44,13 @@ class PanierController extends AbstractController
                            'source' => $request->request->get('stripeToken'),
                            'description' => 'My First Test Charge (created for API docs)',
                        ]);
-                       return new RedirectResponse($this->generateUrl('frontacc'));
+                       return new RedirectResponse('http://127.0.0.1:8000/livraisonf?'.http_build_query($request->query->all()));
                    }
                 }
             }
-
                 return $this->render('front/payement.html.twig');
     }
+
     /**
      * @Route("/panier", name="panier")
      */
@@ -141,7 +140,7 @@ class PanierController extends AbstractController
                         return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/erreur?er=cette quantite n'existe pas"], 200);
                     }
                 }
-                $idC['amount']=$total ;
+                $idC['amount']=$total*$vrai ;
                 $this->session->set('Pid', []);
                 return $this->json(['code' => 200, 'link' => "http://127.0.0.1:8000/pay?".http_build_query($idC)], 200);
             }

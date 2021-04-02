@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class ReclamationsType extends AbstractType
 {
@@ -15,7 +16,10 @@ class ReclamationsType extends AbstractType
         $builder
             ->add('email')
             ->add('type')
-            ->add('description',TextareaType::class)
+            ->add('description',CKEditorType::class,array(
+                'config' => array(
+                    'uiColor' => '#ffffff',
+                )))
         ;
     }
 

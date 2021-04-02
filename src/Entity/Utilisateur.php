@@ -115,6 +115,23 @@ class Utilisateur implements UserInterface, \Serializable
     private $likes;
 
     /**
+     * @ORM\OneToMany(targetEntity=Postlik::class, mappedBy="user")
+     */
+    private $lik;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Programmes::class, mappedBy="participants")
+     */
+    private $programmes;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+     */
+    private $commentaires;
+
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $activationToken;
@@ -143,6 +160,9 @@ class Utilisateur implements UserInterface, \Serializable
         $this->alerts = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->like = new ArrayCollection();
+        $this->lik = new ArrayCollection();
+        $this->programmes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
 
     }
 
@@ -537,6 +557,90 @@ class Utilisateur implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return Collection|Programmes[]
+     */
+    public function getProgrammes(): Collection
+    {
+        return $this->programmes;
+    }
 
+    public function addProgramme(Programmes $programme): self
+    {
+        if (!$this->programmes->contains($programme)) {
+            $this->programmes[] = $programme;
+            $programme->addParticipant($this);
+        }
 
+        return $this;
+    }
+
+    public function removeProgramme(Programmes $programme): self
+    {
+        if ($this->programmes->removeElement($programme)) {
+            $programme->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Postlik[]
+     */
+    public function getLik(): Collection
+    {
+        return $this->lik;
+    }
+
+    public function addLik(Postlike $lik): self
+    {
+        if (!$this->lik->contains($lik)) {
+            $this->lik[] = $lik;
+            $lik->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLik(Postlik $lik): self
+    {
+        if ($this->lik->removeElement($lik)) {
+            // set the owning side to null (unless already changed)
+            if ($lik->getUser() === $this) {
+                $lik->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -83,7 +83,7 @@
                         <li><a href="/profile">{% trans %}Profil{% endtrans %}</a></li>
                         <li><a href="/listutili">{% trans %}Administrator{% endtrans %}</a></li>
                         <li><a href="/datav">{% trans %}Statics{% endtrans %}</a></li>
-                        <li><a href="/visitorf">Campi</a></li>
+                        <li><a href="/accueil">Campi</a></li>
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
                         {% for locale in locales %}
@@ -147,9 +147,12 @@
                                 <td>{{ f.Lieu }}</td>
                                 <td>{{ f.nbrplace }}</td>
                                 {#   <td>{{ f.description }}</td>#}
+                                <td>
+
                                 {% for  sponsor in f.sponsors %}
-                                <td>{{ sponsor.nom }}</td>
+                                {{ sponsor.nom }}
                                 {% endfor %}
+                                </td>
                                 <td><img style="height: 200px; width: 200px" src="images/properties/{{ f.imageName }}" alt="Bicycle" class="img-circle img-thumbnail"></td>
                                 <td><a href="/ModifierEvenements/{{f.id}}" class="templatemo-edit-btn">Edit</a></td>
                                 <td><a onclick="return confirm('Voulez vous vraiment supprimer cet evenement');" href={{  path("supprimer",{'id':f.id})}}>Delete</a></td>

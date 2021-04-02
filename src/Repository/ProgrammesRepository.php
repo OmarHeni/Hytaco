@@ -18,7 +18,16 @@ class ProgrammesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Programmes::class);
     }
-
+    public function trisaldesc(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Programmes s order by s.duree DESC');
+        return $query->getResult();
+    }
+    public function trisalasc(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Programmes s order by s.duree ASC');
+        return $query->getResult();
+    }
     // /**
     //  * @return Programmes[] Returns an array of Programmes objects
     //  */

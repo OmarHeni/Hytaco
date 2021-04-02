@@ -39,6 +39,26 @@ class TransporteurController extends AbstractController
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route ("/addtransporteur/{nom}/{adresse}/{numero}/{type}/{mail}",name="addtran")
+     */
+    function Addtran ($nom,$adresse,$numero,$type,$mail)
+    {
+        $tran = new Transporteur();
+        $tran->setNom($nom)
+            ->setAdresse($adresse)
+            ->setMail($mail)
+            ->setNumero($numero)
+            ->setType($type);
+
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($tran);
+        $em->flush();
+        return $this->redirectToRoute('ajoutertransporteur');
+
+    }
 
     /**
      * @param Request $request

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Livraisons;
 use  Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -27,9 +28,15 @@ class LivraisonsController extends AbstractController
     /**
      * @Route("/SupprimerLivraisons/{id}",name="deletelivraisons")
      */
-    function Delete($id,LivraisonsRepository $repository)
+    function Delete($id,LivraisonsRepository $repository, \Swift_Mailer $mailer)
     {
         $livraisons=$repository->find($id);
+        $body = 'La livrasion #'.strval($id).'a été supprimée';
+        $message = (new \Swift_Message('Livraison annulé'))
+            ->setFrom('HYTACOCAMPII@gmail.com')
+            ->setTo($livraisons->getLivreur()->getMail())
+            ->setBody($body);
+        $mailer->send($message);
         $em=$this->getDoctrine()->getManager();
         $em->remove($livraisons);
         $em->flush();//mise a jour
@@ -43,7 +50,7 @@ class LivraisonsController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route ("/livraison",name="ajouterlivraisons")
      */
-    function Add(Request $request)
+    function Add(Request $request , \Swift_Mailer $mailer)
     {
         $user=$this->getUser();
         $livraisons=new Livraisons();
@@ -51,7 +58,12 @@ class LivraisonsController extends AbstractController
         $en=$this->getDoctrine()->getManager()->getRepository(Livraisons::class)->findAll();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
-        {
+        { $body = 'une livraison a été ajouté d un adresse '.$livraisons->getAdresse();
+            $message = (new \Swift_Message('Livraison ajouté'))
+                ->setFrom('HYTACOCAMPII@gmail.com')
+                ->setTo($livraisons->getLivreur()->getMail())
+                ->setBody($body);
+            $mailer->send($message);
             $em=$this->getDoctrine()->getManager();
             $em->persist($livraisons);
             $em->flush();
@@ -60,6 +72,36 @@ class LivraisonsController extends AbstractController
         return $this->render('back/livraisons.html.twig',
             [
                 'form'=>$form->createView(), 'livr'=>$en ,'us'=>$user
+            ]
+        );
+    }
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route ("/livraisonf",name="ajouterlivraisonsf")
+     */
+    function Addlivf(Request $request)
+    {
+        $user=$this->getUser();
+        $livraisons=new Livraisons();
+        $form=$this->createForm(LivraisonsType::class, $livraisons);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $array = $request->query->all() ;
+            unset($array['amount']);
+            foreach ($array as $value) {
+                $commande =    $this->getDoctrine()->getManager()->getRepository(Commande::class)->find($value);
+                $livraisons->addCommande($commande);
+            }
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($livraisons);
+            $em->flush();
+            return $this->redirectToRoute('frontacc');
+        }
+        return $this->render('front/livraison.html.twig',
+            [
+                'form'=>$form->createView() ,'us'=>$user
             ]
         );
     }

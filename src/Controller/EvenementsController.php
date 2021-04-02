@@ -114,7 +114,6 @@ class EvenementsController extends AbstractController
         $en = $this->getDoctrine()->getManager()->getRepository(Evenements::class)->findAll();
         $evenement = new Evenements();
         $form = $this->createForm(EvenementsType::class, $evenement);
-
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
@@ -122,7 +121,7 @@ class EvenementsController extends AbstractController
             $em->flush();
             $this->addFlash(
                 'info',
-                'Added successfuly'
+                'Added Successfuly'
             );
             return $this->redirectToRoute('evenements');
         }

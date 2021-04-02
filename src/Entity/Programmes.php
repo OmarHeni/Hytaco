@@ -56,6 +56,16 @@ class Programmes
      */
     private $alerts;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Locaux::class, inversedBy="programmes")
+     */
+    private $locale;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Utilisateur::class, inversedBy="programmes")
+     */
+    private $participants;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -129,6 +139,7 @@ class Programmes
     public function __construct()
     {
         $this->alerts = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
 
@@ -159,6 +170,42 @@ class Programmes
                 $alert->setProgramme(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocale(): ?Locaux
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?Locaux $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Utilisateur $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Utilisateur $participant): self
+    {
+        $this->participants->removeElement($participant);
 
         return $this;
     }

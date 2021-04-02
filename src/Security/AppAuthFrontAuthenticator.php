@@ -97,7 +97,7 @@ class AppAuthFrontAuthenticator extends AbstractFormLoginAuthenticator implement
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($this->urlGenerator->generate($targetPath));
         }
-            return new RedirectResponse($this->urlGenerator->generate("panier"));
+            return new RedirectResponse($this->urlGenerator->generate("frontacc"));
             //
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));

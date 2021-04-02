@@ -9,17 +9,16 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href={{asset("css/font-awesome.min.css")}} rel="stylesheet">
+    <link href={{ asset("css/bootstrap.min.css") }} rel="stylesheet">
+    <link href="{{asset("css/templatemo-style.css")}}" rel="stylesheet">
+    <link href="{{asset("css/owl.theme.css")}}" rel="stylesheet">
+    <link href="{{asset("css/owl.carousel.css")}}" rel="stylesheet">
+    <link href="{{asset("css/templatemo-green.css")}}" rel="stylesheet">
+    <link href="{{asset("css/tooplate-style.css")}}" rel="stylesheet">
+    <link href="{{asset("css/magnific-popup.css")}}" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-
-    <link rel="stylesheet" href="css/owl.theme.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-
-    <link rel="stylesheet" href="css/templatemo-green.css">
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="css/tooplate-style.css">
 
 </head>
 <body>
@@ -101,15 +100,27 @@
                             <div class="d-flex flex-row comment-row">
 
                                 <div class="comment-text active w-100">
-                                    <h6 class="font-medium">Hassene</h6>
+                                    <h6 class="font-medium">{{ c.user.nom }}  {{ c.user.prenom }}</h6>
                                     <span class="m-b-15 d-block">{{ c.message}}</span>
                                     <div class="comment-footer">
 
-                                        <td><a  href="{{ path ('supprimer',{'id':c.id}) }}">Supprimer</a></td>
+                                        <td><a  href="{{ path ('supprimercom',{'id':c.id}) }}">Supprimer</a></td>
                                         <span class="action-icons active">
 
                                                 <a href="javascript:void(0)"><i class="icon-close"></i></a>
-                                                <a href="javascript:void(0)"><i class="ti-heart text-danger"></i></a>
+                                                <a href="{{ path('post_lik',{'id':c.id}) }}" class="btn btn-link js-like">
+                                                   {% if app.user and c.islikedByUser(app.user) %}
+                                                       <i class="fas fa-thumbs-up "></i>
+
+                                                   {% else %}
+                                                       <i class="far fa-thumbs-up"></i>
+                                                   {% endif %}
+                                                   <span class="js-likes">{{ c.lik | length }}</span>
+
+                                                   <span class="js-label">j'aime</span>
+
+
+                                               </a>
                                             </span>
                                     </div>
                                 </div>
@@ -213,6 +224,45 @@
 <script >
     var d = new Date();
     document.getElementById("datedemande").valueAsDate=d;
+
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+
+
+
+    function onClickBtnLike(event){
+        event.preventDefault();
+        const url = this.href;
+        const spanCount = this.querySelector('span.js-likes');
+        const icone = this.querySelector('i');
+
+        axios.get(url).then(function (response){
+
+
+
+            spanCount.textContent = response.data.likes;
+            if (icone.classList.contains('fas')) {
+                icone.classList.replace('fas','far');
+            }
+            else {icone.classList.replace('far','fas');
+            }
+        }).catch(function (error){
+            if(error.response.status === 403 )
+            {
+                window.alert("vous ne pouvez pas liker un article si vous etes pas connecte !")
+
+            }
+        });
+    }
+    document.querySelectorAll('a.js-like').forEach(function(link){
+        link.addEventListener('click',onClickBtnLike);
+    })
+
+
+
+
 
 </script>
 </body>

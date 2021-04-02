@@ -58,15 +58,14 @@
           <!-- MENU LINKS -->
           <div class="collapse navbar-collapse">
                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/programmef" class="smoothScroll">Programmes</a></li>
+                    <li><a href="/programmesf" class="smoothScroll">Programmes</a></li>
                     <li><a href="/evenementf" class="smoothScroll">Evenements</a></li>
                     <li><a href="#team" class="smoothScroll">Categories</a></li>
                     <li><a href="#aboutlocaux" class="smoothScroll">Locaux</a></li>
                     <li><a href="/alertsf" class="smoothScroll">Alertes</a></li>
                     <li><a href="#alerts" class="smoothScroll">Reclamations</a></li>
-                    <li><a href="/profilef" class="smoothScroll">Profile</a></li>
-                    <li><a href="#" class="smoothScroll">Deconnexion</a></li>
-                    <li><a href="#" class="smoothScroll">Deconnexion</a></li>
+                    <li><a href="/proposition" class="smoothScroll">Propositions</a></li>
+                    <li><a href="/logoutf" class="smoothScroll">Deconnexion</a></li>
                </ul>
           </div>
 
@@ -113,34 +112,37 @@
 
 
 
-<!-- PROJECT -->
-<section id="aboutlocaux" class="parallax-section">
-     <div class="container">
-          {% for loc in locx %}
+<
 
-               <div class="row">
-                    <div class="col-md-6 col-sm-4">
+
+
+<section id="locaux" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               {% for loc in locx %}
+
+                    <div class="col-md-6 col-sm-6">
                          <!-- PROJECT ITEM -->
                          <div class="project-item">
-                              <a href="images/properties/{{ loc.imageName }}" class="image-popup">
-                                   <img src="images/properties/{{ loc.imageName }}" class="img-responsive" alt="mllm">
 
-                                   <div class="project-overlay">
-                                        <div class="project-info">
-                                             <h3>{{ loc.nom }}</h3>
-                                             <a href="/commentairef">Conversation</a>
+                              <img src="images/properties/{{ loc.imageName }}" class="img-responsive">
 
-                                        </div>
+                              <div class="project-overlay">
+                                   <div class="project-info">
+                                        <h1>{{ loc.nom }}</h1>
+                                        <a href="/commentairesf/{{ loc.id }}">Conversation</a>
                                    </div>
+                              </div>
                               </a>
                          </div>
                     </div>
-
-               </div>
-          {% endfor %}
-
+               {% endfor %}
+          </div>
      </div>
 </section>
+
+
 
 
 
@@ -188,33 +190,6 @@
 
 
 
-
-
-
-
-<section id="programme" class="parallax-section" >
-
-     <div class="container">
-          <div class="row">
-               <div class="col-md-offset-1 col-md-10 col-sm-12">
-                    <div class="col-md-offset-1 col-md-10 col-sm-4 item">
-                         <h3>Transporteurs</h3>
-                         <h4>Ici, vous pouvez trouver les meilleurs transporteurs choisis par notre equipe et nos utilisateurs.</h4>
-                         <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
-                              <div class="section-btn">
-                                   <a href="/fronttransds"> <button  type="submit" id="cf-submit" name="submit"><span data-hover="Consulter"> <h3>Transporteurs</h3></span></button></a>
-                              </div>
-                         </div>
-               </div>
-          </div>
-     </div>
-     </div>
-</section>
-
-
-
-
-
 <!-- CONTACT -->
 <section id="alerts" class="parallax-section" >
      <div class="container">
@@ -240,7 +215,7 @@
 
 
 
-                         <div class="col-md-6 col-sm-6">
+                         <div class="col-md-12 col-sm-12">
                               {{ form_widget(form.email,{'attr': {'class': 'form-control','placeholder':'email'}}) }}
                          </div>
 

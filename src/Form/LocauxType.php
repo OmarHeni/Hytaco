@@ -15,6 +15,8 @@ class LocauxType extends AbstractType
         $builder
             ->add('nom')
             ->add('adresse')
+            ->add('googleMap')
+
             ->add('description')
             ->add('imageFile',FileType::class,[
                 'required'=>false

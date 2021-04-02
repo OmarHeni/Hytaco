@@ -148,7 +148,7 @@ public function activation ($token, UtilisateurRepository $up){
         $en->persist($user);
         $en->flush();
     }
-    return new RedirectResponse($this->urlGenerator->generate("frontproduits"));
+    return new RedirectResponse($this->urlGenerator->generate("frontacc"));
   /*  $en=$this->getDoctrine()->getManager();
     $en->persist($user);
     $en->flush();
