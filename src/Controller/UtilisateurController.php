@@ -23,6 +23,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class UtilisateurController extends AbstractController
 {
@@ -68,6 +69,58 @@ class UtilisateurController extends AbstractController
                 ['form'=>$form->Createview()]);
         }
     }
+
+/**
+     * @Route("/CheckUser", name="CheckUser")
+     */
+public function CheckUser (Request $request,UserPasswordEncoderInterface $encoder,NormalizerInterface  $Normalizer){
+    $em= $this->getDoctrine()->getManager();
+    $user= $em->getRepository(Utilisateur::class)->findOneBy(['email'=>$request->get('email')]);
+   if($user) {
+       $jsonContent = $Normalizer->normalize($user, 'json', ['groups' => 'post:read']);
+    if ($encoder->isPasswordValid($user,$request->get('password'))) {
+        return new Response(json_encode($jsonContent));
+    }
+   }
+            return $this->json(['status'=>'pas trouve'],404);
+
+}
+ /**
+     * @Route("/addClient", name="addClient")
+     */
+     public function AddClient (Request $request,UserPasswordEncoderInterface $encoder){
+         $em= $this->getDoctrine()->getManager();
+         $utilisateur = new Utilisateur();
+         $utilisateur->setNom($request->get('nom'));
+         $utilisateur->setPrenom($request->get('prenom'));
+         $utilisateur->setEmail($request->get('email'));
+         $utilisateur->setPassword($request->get('password'));
+         $hash = $encoder->encodePassword($utilisateur,$utilisateur->getPassword());
+         $utilisateur->setPassword($hash);
+         $utilisateur->setTelephone($request->get('telephone'));
+         $utilisateur->setAdresse($request->get('adresse'));
+         $utilisateur->setActivationToken(md5(uniqid()));
+         $utilisateur->setRoles(['ROLE_CLIENT']);
+         $em->persist($utilisateur);
+         $em->flush();
+         return $this->json(['ok'=>200],200);
+     }
+    /**
+     * @Route("/EditClient", name="EditClient")
+     */
+     public function EditClient (Request $request,UserPasswordEncoderInterface $encoder){
+     	$utilisateur = $this->up->find($request->get('id'));
+         $em= $this->getDoctrine()->getManager();
+         $utilisateur->setNom($request->get('nom'));
+         $utilisateur->setPrenom($request->get('prenom'));
+         $utilisateur->setEmail($request->get('email'));        
+         $utilisateur->setTelephone($request->get('telephone'));
+         $utilisateur->setAdresse($request->get('adresse'));
+         $em->persist($utilisateur);
+         $em->flush();
+         return $this->json(['ok'=>200],200);
+     }
+
     /**
      * @Route("/utilisateur", name="utilisateur_back")
      */
@@ -84,7 +137,7 @@ class UtilisateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
 
-        /*    $hash = $encoder->encodePassword($user,$user->getPassword());
+           $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);
            $this->em->persist($user);
            $this->em->flush();
@@ -97,7 +150,7 @@ class UtilisateurController extends AbstractController
                     'text/html'
                 )
             ;
-           $status= $mailer->send($message);*/
+           $status= $mailer->send($message);
             return $this->redirect("/utilisateur");
         }
         else {

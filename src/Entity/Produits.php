@@ -66,13 +66,17 @@ class Produits
     private $utilisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="produit")
+     * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="produit")
      */
-    private $commandes;
+    private $ligneCommandes;
+
+
+
 
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->ligneCommandes = new ArrayCollection();
     }
 
 
@@ -189,37 +193,40 @@ class Produits
         return $this;
     }
 
-    /**
-     * @return Collection|Commande[]
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
 
-    public function addCommande(Commande $commande): self
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes[] = $commande;
-            $commande->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): self
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getProduit() === $this) {
-                $commande->setProduit(null);
-            }
-        }
-
-        return $this;
-    }
 public function Existe ():bool{
         return ($this->quantite>0);
 }
+
+/**
+ * @return Collection|LigneCommande[]
+ */
+public function getLigneCommandes(): Collection
+{
+    return $this->ligneCommandes;
+}
+
+public function addLigneCommande(LigneCommande $ligneCommande): self
+{
+    if (!$this->ligneCommandes->contains($ligneCommande)) {
+        $this->ligneCommandes[] = $ligneCommande;
+        $ligneCommande->setProduit($this);
+    }
+
+    return $this;
+}
+
+public function removeLigneCommande(LigneCommande $ligneCommande): self
+{
+    if ($this->ligneCommandes->removeElement($ligneCommande)) {
+        // set the owning side to null (unless already changed)
+        if ($ligneCommande->getProduit() === $this) {
+            $ligneCommande->setProduit(null);
+        }
+    }
+
+    return $this;
+}
+
 
 }

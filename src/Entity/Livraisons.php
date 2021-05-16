@@ -27,6 +27,11 @@ class Livraisons
      */
     private $adresse;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Commande::class, mappedBy="livraison", cascade={"persist", "remove"})
+     */
+    private $commande;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,28 @@ class Livraisons
     public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($commande === null && $this->commande !== null) {
+            $this->commande->setLivraison(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($commande !== null && $commande->getLivraison() !== $this) {
+            $commande->setLivraison($this);
+        }
+
+        $this->commande = $commande;
 
         return $this;
     }

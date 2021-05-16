@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity ;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
@@ -27,12 +28,14 @@ class Utilisateur implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="l' email ne doit pas être vide")
+     * @Groups("post:read")
      *   @Assert\Email(
      *     message = "l' email '{{ value }}' n'est pas valid"
      * )
@@ -40,12 +43,14 @@ class Utilisateur implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="json")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
+     * @Groups("post:read")
      * @ORM\Column(type="string",nullable=true)
      * @Assert\Length(min="6",minMessage="Votre mot de passe doit etre superieur a 6 caractéres")
      * @Assert\EqualTo(propertyPath="confirmPassword",message="Votre mot de passe doit etre identitique au mot de passe de confirmation")
@@ -53,10 +58,12 @@ class Utilisateur implements UserInterface, \Serializable
     private $password;
 
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Adresse;
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string|null
@@ -68,17 +75,20 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $imageFile;
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $Telephone;
 
     /**
+     * @Groups("post:read")
      * @Assert\NotBlank(message="le nom ne doit pas etre vide")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="le prenom ne doit pas etre vide")
      */

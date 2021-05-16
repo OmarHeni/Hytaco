@@ -124,7 +124,7 @@
                 <h5>{{ p.prix }}</h5>
                 <p class="card-text">{{ p.description }}</p>
                   <p style="display: none">{{ p.id }}</p>
-                  <a href="#"  class ="input" id="a{{ p.id }}">
+                  <a href="#"  class ="input" data-id="{{ p.id }}" id="a{{ p.id }}">
                       <div class="cadreAj"><div class="fas fa-cart-plus" id ="f{{p.id}}"></div></div></a>
               </div>
              <!-- <div class="card-footer">
@@ -212,7 +212,7 @@
             event.preventDefault();
             if ($(this).children().children().css("color")!="rgb(77, 196, 125)"){
 
-                var id =         event.target.id.substring(1,event.target.id.length);
+                var id =         $(this).data("id");
             axios.get("http://127.0.0.1:8000/ajoutpanier/"+id).then(function (res){
                 console.log(response);
             });

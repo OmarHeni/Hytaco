@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Coupon;
+use App\Entity\LigneCommande;
+use App\Entity\Utilisateur;
 use App\Repository\CommandeRepository;
 use App\Repository\CouponRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +25,48 @@ class PanierController extends AbstractController
     {
         $this->session = $session;
     }
+
     /**
+     * @Route("/AjoutComm",name="AjoutComm")
+     */
+    public function AjoutComm(Request $request,CommandeRepository $rp) : Response
+    {$total = 0;
+        $commande = new Commande();
+        $commande->setDateCommande(new \DateTime());
+        $commande->setStatue("Non Paye");
+        $en = $this->getDoctrine()->getManager();
+
+        $en->persist($commande);
+        $en->flush();
+        foreach ($request->query->all() as $key => $value) {
+            if ($key == "user") {
+                $user =  $this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->find($value);
+                $commande->setUtilisateur($user);
+
+
+            }else {
+                $ligne = new LigneCommande();
+                /** @var Produits $prod */
+                $prod =  $this->getDoctrine()->getManager()->getRepository(Produits::class)->find($key);
+                $ligne->setQuantite($value);
+                $ligne->setProduit($prod);
+                $ligne->setPrix($prod->getPrix()*$value);
+                $ligne->setCommande($commande);
+                $en = $this->getDoctrine()->getManager();
+
+                $en->persist($ligne);
+                $en->flush();
+
+                $total += $prod->getPrix()*$value ;
+            }
+
+            }
+        $commande->setPrix($total);
+        $en->persist($commande);
+        $en->flush();
+        return  $this->json(["ok"=>200],200);
+    }
+        /**
      * @Route("/pay",name="payement")
      */
     public function payement(Request $request,CommandeRepository $rp) : Response{

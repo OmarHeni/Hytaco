@@ -26,23 +26,16 @@ class Commande
 
     /**
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="commandes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $utilisateur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Produits::class, inversedBy="commandes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $produit;
+
+
+
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantite;
-
-    /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $prix;
 
@@ -51,12 +44,27 @@ class Commande
      */
     private $statue;
 
+    /**
+     * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="commande")
+     */
+    private $ligneCommandes;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Livraisons::class, inversedBy="commande", cascade={"persist", "remove"})
+     */
+    private $livraison;
+
 
 
     public function __construct()
     {
-        $this->produits = new ArrayCollection();
+        $this->ligneCommandes = new ArrayCollection();
     }
+
+
+
+
+
 
     public function getId(): ?int
     {
@@ -87,29 +95,9 @@ class Commande
         return $this;
     }
 
-    public function getProduit(): ?Produits
-    {
-        return $this->produit;
-    }
 
-    public function setProduit(?Produits $produit): self
-    {
-        $this->produit = $produit;
 
-        return $this;
-    }
 
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(int $quantite): self
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
 
     public function getPrix(): ?float
     {
@@ -134,6 +122,49 @@ class Commande
 
         return $this;
     }
+
+    /**
+     * @return Collection|LigneCommande[]
+     */
+    public function getLigneCommandes(): Collection
+    {
+        return $this->ligneCommandes;
+    }
+
+    public function addLigneCommande(LigneCommande $ligneCommande): self
+    {
+        if (!$this->ligneCommandes->contains($ligneCommande)) {
+            $this->ligneCommandes[] = $ligneCommande;
+            $ligneCommande->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneCommande(LigneCommande $ligneCommande): self
+    {
+        if ($this->ligneCommandes->removeElement($ligneCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneCommande->getCommande() === $this) {
+                $ligneCommande->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLivraison(): ?Livraisons
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(?Livraisons $livraison): self
+    {
+        $this->livraison = $livraison;
+
+        return $this;
+    }
+
 
 
 }
